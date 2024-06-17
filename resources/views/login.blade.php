@@ -36,7 +36,7 @@
 								</div>
 							</div>
 							<div class="col-6 text-right">
-								<a href="forget.html" class="forget-link">Quên mật khẩu</a>
+								<a href="{{ route('forget') }}" class="forget-link">Quên mật khẩu</a>
 							</div>
 						</div>
 

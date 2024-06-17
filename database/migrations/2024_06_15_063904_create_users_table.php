@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedInteger('id_role'); // Khóa ngoại (integer unsigned)
             $table->string('signature')->nullable();
             $table->unsignedInteger('id_specialist')->nullable();
+            $table->string('token')->nullable();
 
             // Định nghĩa khóa ngoại
             $table->foreign('id_role')->references('id_role')->on('roles');

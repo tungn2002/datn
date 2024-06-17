@@ -19,19 +19,26 @@
 						<img src="image/logo.png" width="150px">
 					</div>
 					<div class="reset-form d-block">
-						<form class="reset-password-form">
+						<form class="reset-password-form" action="{{ url('quenmk') }}" method="post">
+						@csrf
+
 							<h4 class="mb-3">Lấy lại mật khẩu</h4>
 							<p class="mb-3 text-white">
 								Please enter your email address and we will send you a password reset link
 							</p>
 							<div class="form-input">
 								<span><i class="fa fa-envelope"></i></span>
-								<input type="email" placeholder="Email Address" required>
+								<input type="email" name="email" placeholder="Email Address" required>
 							</div>
 							<div class="mb-3">
 								<button type="submit" class="btn">Đặt lại</button>
 							</div>
 						</form>
+						@if (\Session::has('message'))
+                        <div class="alert alert-success">
+                        <strong>{!! \Session::get('message') !!}</strong>
+                        </div>
+                    @endif
 					</div>
 					<div class="reset-confirmation d-none">
 						<div class="mb-4">
@@ -51,20 +58,6 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">
-		function PasswordReset() {
-			$('form.reset-password-form').on('submit', function(e){
-				e.preventDefault();
-				$('.reset-form')
-				.removeClass('d-block')
-				.addClass('d-none');
-				$('.reset-confirmation').addClass('d-block');
-			});
-		}
-
-		window.addEventListener('load',function(){
-			PasswordReset();
-		});
-	</script>
+	
 </body>
 </html>
