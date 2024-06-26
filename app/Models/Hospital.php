@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Hospital extends Model
 {
     use HasFactory;
-    protected $table = 'hospital';
+    protected $table = 'hospitals';
+    protected $primaryKey = 'id_hospital';
 
     protected $fillable = [
         'hospitalname',
         'address',
     ];
+
+    public $timestamps = false;
+
 }

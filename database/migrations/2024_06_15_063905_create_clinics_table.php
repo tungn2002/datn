@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('clinics', function (Blueprint $table) {
             $table->increments('id_clinic'); 
             $table->string('clinicname');
-            $table->unsignedInteger('id_h'); // Khóa ngoại đến hospital
-            $table->unsignedInteger('id_ms'); // Khóa ngoại đến service
+            $table->unsignedInteger('id_hospital'); // Khóa ngoại đến hospital
+            $table->unsignedInteger('id_service'); // Khóa ngoại đến service
 
-            $table->foreign('id_h')->references('id_hospital')->on('hospitals');
-            $table->foreign('id_ms')->references('id_service')->on('services');
+            $table->foreign('id_hospital')->references('id_hospital')->on('hospitals');
+            $table->foreign('id_service')->references('id_service')->on('services');
+            
         });
     }
 

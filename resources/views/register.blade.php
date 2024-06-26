@@ -15,7 +15,7 @@
 			<div class="col-lg-6 col-md-6 form-container">
 				<div class="col-lg-8 col-md-12 col-sm-9 col-xs-12 form-box text-center">
 					<div class="logo mt-5 mb-3">
-						<img src="image/logo.png" width="150px">
+						<img src="{{ asset('image/logo.png') }}" width="150px">
 					</div>
 					<div class="heading mb-3">
 						<h4>Create an account</h4>
@@ -54,8 +54,17 @@
                         <strong>{!! \Session::get('message') !!}</strong>
                         </div>
                     @endif
+					@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 						<div class="text-black">Bạn đã có tài khoản?
-							<a href="login.html" class="login-link">Đăng nhập</a>
+							<a href="{{ route('login') }}" class="login-link">Đăng nhập</a>
 
 						</div>
 					</form>

@@ -15,19 +15,19 @@
 			<div class="col-lg-6 col-md-6 form-container">
 				<div class="col-lg-8 col-md-12 col-sm-9 col-xs-12 form-box text-center">
 					<div class="logo mt-5 mb-3">
-						<img src="image/logo.png" width="150px">
+						<img src="{{ asset('image/logo.png') }}" width="150px">
 					</div>
 					<div class="heading mb-3">
 						<h4>Nhập tài khoản để đăng nhập</h4>
 					</div>
-					<form>
+					<form action="{{ url('dangnhap') }}" method="post">@csrf
 						<div class="form-input">
 							<span><i class="fa fa-envelope"></i></span>
-							<input type="email" placeholder="Email Address" required>
+							<input type="email" name="email" placeholder="Email Address" required>
 						</div>
 						<div class="form-input">
 							<span><i class="fa fa-lock"></i></span>
-							<input type="password" placeholder="Password" required>
+							<input type="password" name="password" placeholder="Password" required>
 						</div>
 						<div class="row mb-3">
 							<div class="col-6 d-flex">
@@ -43,9 +43,23 @@
 						<div class="mb-3"><button type="submit" class="btn">Đăng nhập</button></div>
 					
 						<div>Chưa có tài khoản?
-							<a href="register.html" class="register-link">Đăng ký</a>
+							<a href="{{ route('register') }}" class="register-link">Đăng ký</a>
 						</div>
 					</form>
+					@if (\Session::has('message'))
+                        <div class="alert alert-success">
+                        <strong>{!! \Session::get('message') !!}</strong>
+                        </div>
+                    @endif
+					@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 				</div>
 			</div>
 

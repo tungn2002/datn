@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('detail');
             $table->double('price');
             $table->unsignedInteger('id_specialist'); // Khóa ngoại đến specialist
+            $table->string('image');
 
             $table->foreign('id_specialist')->references('id_specialist')->on('specialists');
         });

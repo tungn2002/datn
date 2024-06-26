@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Clinic extends Model
 {
     use HasFactory;
-    protected $table = 'clinic';
+    protected $table = 'clinics';
+    protected $primaryKey = 'id_clinic';
+    public $timestamps = false;
 
     protected $fillable = [
         'clinicname',
-        'id_h',
-        'id_ms', // Foreign key for service
+        'id_hospital',
+        'id_service', // Foreign key for service
     ];
 
 }
