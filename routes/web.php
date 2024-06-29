@@ -8,6 +8,12 @@ use App\Http\Controllers\SpecialistController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ClinicController;
 use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\PMController;
+use App\Http\Controllers\PrescriptionController;
+
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\PatientRecordController;
+use App\Http\Controllers\MedicalResultController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -38,6 +44,9 @@ Route::get('/trangchu', [UserController::class, 'trangchu'])->name('trangchu');
 Route::get('/profile', [UserController::class, 'profile'])->name('profile');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
+Route::get('/profile2', [UserController::class, 'profile2'])->name('profile2');
+Route::get('/profile3', [UserController::class, 'profile3'])->name('profile3');
+
 
 ///
 Route::post('/editprofile', [UserController::class, 'editprofile']);
@@ -45,7 +54,12 @@ Route::post('/editprofile', [UserController::class, 'editprofile']);
 //
 
 Route::get('/servicef', [ServiceController::class, 'servicef'])->name('servicef');
+Route::get('/serviceff/{id}', [ServiceController::class, 'serviceff'])->name('serviceff');
+Route::get('/servicefff/{id}/{day}', [ServiceController::class, 'servicefff'])->name('servicefff');
 
+Route::get('/serviceffff/{id}', [ServiceController::class, 'serviceffff'])->name('serviceffff');
+
+Route::post('/addmrsv', [ServiceController::class, 'addmrsv'])->name('addmrsv');
 
 //admin
 Route::get('/admin1', [UserController::class, 'admin1'])->name('admin1');
@@ -66,12 +80,13 @@ Route::post('capnhatsp/id={id}', [SpecialistController::class, 'update'])->name(
 
 
 //role
-
+/*
 Route::get('/role', [RoleController::class, 'index'])->name('role-index');
 
 Route::post('/addrole', [RoleController::class, 'store']);
 Route::post('/xoarole', [RoleController::class, 'destroy'])->name('xoarole');
 Route::post('capnhatrole/id={id}', [RoleController::class, 'update'])->name('capnhatrole');
+*/
 //service
 
 Route::get('/service', [ServiceController::class, 'index'])->name('service-index');
@@ -94,3 +109,79 @@ Route::get('/medicine', [MedicineController::class, 'index'])->name('medicine-in
 Route::post('/addmedicine', [MedicineController::class, 'store']);
 Route::post('/xoamedicine', [MedicineController::class, 'destroy'])->name('xoamedicine');
 Route::post('capnhatmedicine/id={id}', [MedicineController::class, 'update'])->name('capnhatmedicine');
+
+/*
+Route::get('/pm', [PMController::class, 'index'])->name('pm-index');
+
+Route::post('/addpm', [PMController::class, 'store']);
+Route::post('/xoapm', [PMController::class, 'destroy'])->name('xoapm');
+Route::post('capnhatpm/id={id}', [PMController::class, 'update'])->name('capnhatpm');
+*/
+//pre 
+Route::get('/pre', [PrescriptionController::class, 'index'])->name('pre-index');
+
+Route::post('/addpre', [PrescriptionController::class, 'store']);
+Route::post('/xoapre', [PrescriptionController::class, 'destroy'])->name('xoapre');
+Route::post('capnhatpre/id={id}', [PrescriptionController::class, 'update'])->name('capnhatpre');
+
+//user
+Route::get('/user', [UserController::class, 'index2'])->name('user-index');
+
+Route::post('/adduser', [UserController::class, 'store2']);
+Route::post('/xoauser', [UserController::class, 'destroy'])->name('xoauser');
+Route::post('capnhatuser/id={id}', [UserController::class, 'update'])->name('capnhatuser');
+
+
+//appoi
+Route::get('/app', [AppointmentController::class, 'index'])->name('app-index');
+
+Route::post('/addapp', [AppointmentController::class, 'store']);
+Route::post('/xoaapp', [AppointmentController::class, 'destroy'])->name('xoaapp');
+Route::post('capnhatapp/id={id}', [AppointmentController::class, 'update'])->name('capnhatapp');
+
+
+//pr ho so
+Route::get('/pr', [PatientRecordController::class, 'index'])->name('pr-index');
+
+Route::post('/addpr', [PatientRecordController::class, 'store']);
+Route::post('/xoapr', [PatientRecordController::class, 'destroy'])->name('xoapr');
+Route::post('capnhatpr/id={id}', [PatientRecordController::class, 'update'])->name('capnhatpr');
+
+
+
+//kq
+Route::get('/mr', [MedicalResultController::class, 'index'])->name('mr-index');
+
+Route::post('/addmr', [MedicalResultController::class, 'store']);
+Route::post('/xoamr', [MedicalResultController::class, 'destroy'])->name('xoamr');
+Route::post('capnhatmr/id={id}', [MedicalResultController::class, 'update'])->name('capnhatmr');
+
+
+
+
+//pr ho so user
+Route::get('/themhoso', [PatientRecordController::class, 'themhoso'])->name('themhoso');
+
+Route::post('/addhoso', [PatientRecordController::class, 'addhoso']);
+Route::post('/xoahoso', [PatientRecordController::class, 'destroy'])->name('xoahoso');
+Route::post('capnhathoso/id={id}', [PatientRecordController::class, 'update'])->name('capnhathoso');
+
+//employ
+Route::get('/empl', [UserController::class, 'empl'])->name('empl');
+Route::get('/empl_choduyet', [UserController::class, 'choduyet_empl'])->name('empl_choduyet');
+Route::get('/xacnhanduyet/{id}', [UserController::class, 'xacnhanduyet'])->name('xacnhanduyet');
+
+Route::get('/empl_chothanhtoan', [UserController::class, 'chothanhtoan_empl'])->name('empl_chothanhtoan');
+Route::get('/xacnhanthanhtoan/{id}', [UserController::class, 'xacnhanthanhtoan'])->name('xacnhanthanhtoan');
+
+Route::get('/empl_dathanhtoan', [UserController::class, 'dathanhtoan_empl'])->name('empl_dathanhtoan');
+
+//doctor
+Route::get('/doctor', [UserController::class, 'doctor'])->name('doctor');
+Route::get('/lichlamviec', [UserController::class, 'lichlamviec'])->name('lichlamviec');
+
+Route::get('/lichlamviecf/{date}', [UserController::class, 'lichlamviecf'])->name('lichlamviecf');
+Route::get('/lichlamviecdetail/{id}', [UserController::class, 'lichlamviecdetail'])->name('lichlamviecdetail');
+Route::post('/capnhatkq/{id}', [UserController::class, 'capnhatkq'])->name('capnhatkq');
+
+Route::get('/themdonthuoc/{id}', [UserController::class, 'themdonthuoc'])->name('themdonthuoc');

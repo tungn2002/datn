@@ -14,13 +14,12 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id_message');
             $table->unsignedInteger('id_cons'); // Khóa ngoại đến consult
-            $table->unsignedInteger('sender_id'); // Khóa ngoại đến users
+            $table->unsignedInteger('sender_id'); 
             $table->text('content');
             $table->dateTime('time');
             $table->string('status');
 
-            $table->foreign('id_cons')->references('id_cons')->on('consult');
-            $table->foreign('sender_id')->references('id_user')->on('users');
+            $table->foreign('id_cons')->references('id_cons')->on('consults');
         });
     }
 

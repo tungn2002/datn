@@ -115,66 +115,37 @@
 
   <div class="page-section">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-8">
-          <div class="row">
+    <div class="card mb-3" style="height: 220px; overflow: hidden;">
+  <div class="row no-gutters">
+    <div class="col-md-4" style="height: 100%;">
+      <img src="{{ asset('image/' . $service->image) }}" class="card-img" alt="..." style="height: 100%; object-fit: cover;">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">Dịch vụ: {{$service->servicename}}</h5>
+        <p class="card-text">Giá: {{$service->price}} đồng</p>
+        <p class="card-text">Phòng: {{$clinic1->clinicname}} </p>
 
-          @isset($clinic)
-          @foreach ($clinic as $item)
-            <div class="col-sm-6 py-3">
-              <div class="card-blog">
-                <div class="header">
-                  <div class="post-category">
-                    <a href="#">{{$item->price}} đ</a>
-                  </div>
-                    <img src=" {{ asset('image/' . $item->image) }}" style=" width: 100%;height: 100%;object-fit: cover;" alt="">
-                </div>
-                <div class="body">
-                  <h5 class="post-title"><a href="{{ route('serviceff', ['id' => $item->id_clinic]) }}">{{$item->servicename}}</a></h5>
-                  <div class="site-info">
-                    <div class="avatar mr-2">
-                      <div class="avatar-img">
-                        <img src="{{ asset('image/' . $item->avatar) }}" alt="">
-                      </div>
-                      <span>{{$item->name}}</span>
-                    </div>
-                    <div class="site-info"> Phòng: 
-                    {{$item->clinicname}}
-                  </div>
-                   
-                  </div>
-                </div>
-              </div>
+      </div>
+    </div>
+  </div>
+</div>
+            <div class="card mb-3" style="height: 300px">
+            @if (count($app))
+    <h2>Chọn ngày:</h2>
+    <div class="btn-group">
+        @foreach ($app as $item)
+            <a href="{{ route('serviceffff', ['id' => $item->id_appointment]) }}" class="btn btn-primary">{{ $item->time }}</a>
+        @endforeach
+    </div>
+@else
+    <p>Không có lịch hẹn nào.</p>
+@endif
             </div>
-            @endforeach
-                        @endisset
-                        @isset($clinic)
-    <div class="container-footer-kt">
-            <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $clinic->links('pagination::bootstrap-4') }}
-            </nav>
-        </div>
-    @endisset
-        <div class="col-lg-4">
-          <div class="sidebar">
-            <div class="sidebar-block">
-              <h3 class="sidebar-title">Tìm kiếm</h3>
-              <form action="#" class="search-form">
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Type a keyword and hit enter">
-                  <button type="submit" class="btn"><i class="fas fa-search"></i></span></button>
-                </div>
-              </form>
-            </div>
-           
-            <div class="sidebar-block">
-              <h3 class="sidebar-title">Paragraph</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>
-            </div>
-          </div>
-        </div> 
-      </div> <!-- .row -->
 
+            <div class="card mb-3 " style="height: 400px">
+              <p style="margin-left: 3em;margin-top: 3em; font-size: 1em;"> Chi tiết dịch vụ:<br> {{$service->detail}}</p>
+            </div>
     </div> <!-- .container -->
     
   </div> <!-- .page-section -->

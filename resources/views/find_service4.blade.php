@@ -113,68 +113,34 @@
     </div> <!-- .banner-section -->
   </div> <!-- .page-banner -->
 
-  <div class="page-section">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8">
-          <div class="row">
-
-          @isset($clinic)
-          @foreach ($clinic as $item)
-            <div class="col-sm-6 py-3">
-              <div class="card-blog">
-                <div class="header">
-                  <div class="post-category">
-                    <a href="#">{{$item->price}} đ</a>
-                  </div>
-                    <img src=" {{ asset('image/' . $item->image) }}" style=" width: 100%;height: 100%;object-fit: cover;" alt="">
-                </div>
-                <div class="body">
-                  <h5 class="post-title"><a href="{{ route('serviceff', ['id' => $item->id_clinic]) }}">{{$item->servicename}}</a></h5>
-                  <div class="site-info">
-                    <div class="avatar mr-2">
-                      <div class="avatar-img">
-                        <img src="{{ asset('image/' . $item->avatar) }}" alt="">
-                      </div>
-                      <span>{{$item->name}}</span>
+ 
+            <div class="card mb-3" style="height: 300px">
+            <form action="{{ url('addmrsv') }}" method="post">
+            @csrf
+            <input type="text" name="id_sch" value="{{$idapp}}"hidden>
+            <div class="row mb-3">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Lý Do</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="reason" id="inputEmail3">
                     </div>
-                    <div class="site-info"> Phòng: 
-                    {{$item->clinicname}}
-                  </div>
-                   
-                  </div>
                 </div>
-              </div>
-            </div>
-            @endforeach
-                        @endisset
-                        @isset($clinic)
-    <div class="container-footer-kt">
-            <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $clinic->links('pagination::bootstrap-4') }}
-            </nav>
-        </div>
-    @endisset
-        <div class="col-lg-4">
-          <div class="sidebar">
-            <div class="sidebar-block">
-              <h3 class="sidebar-title">Tìm kiếm</h3>
-              <form action="#" class="search-form">
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Type a keyword and hit enter">
-                  <button type="submit" class="btn"><i class="fas fa-search"></i></span></button>
+              <div class="row mb-3">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Hồ sơ bệnh nhân:</label>
+                    <div class="col-sm-10">
+                        <select class="inp-tmnv form-select" name="id_mr" id="phongban" >
+                            <option value=""></option>
+                            @foreach ($pr as $item)
+                                <option value="{{$item->id_pr}}">{{$item->prname}}</option>
+                            @endforeach
+                        </select>
+                    </div> 
                 </div>
-              </form>
+                <button>Xác nhận</button>
+            </form>
             </div>
-           
-            <div class="sidebar-block">
-              <h3 class="sidebar-title">Paragraph</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>
-            </div>
-          </div>
-        </div> 
-      </div> <!-- .row -->
 
+            <div class="card mb-3 " style="height: 400px">
+            </div>
     </div> <!-- .container -->
     
   </div> <!-- .page-section -->

@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('token')->nullable();
 
             // Định nghĩa khóa ngoại
-            $table->foreign('id_role')->references('id_role')->on('roles');
             $table->foreign('id_specialist')->references('id_specialist')->on('specialists');
 
         });

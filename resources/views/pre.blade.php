@@ -51,14 +51,14 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="{{ route('admin1') }}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="index.html" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                   
-                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Bệnh viện</a>
+                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Bệnh viện</a>
                     <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Chuyên khoa</a>
                     <a href="{{ route('service-index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Dịch vụ</a>
                     <a href="{{ route('clinic-index') }}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Phòng khám</a>
                     <a href="{{ route('medicine-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Thuốc</a>
-                    <a href="{{ route('pre-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Đơn</a>
+                    <a href="{{ route('pre-index') }}" class="nav-item nav-link active"><i class="fa fa-table me-2"></i>Đơn</a>
                     <a href="{{ route('app-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Lịch khám</a>
                     <a href="{{ route('pr-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Hồ sơ bệnh nhân</a>
                     <a href="{{ route('mr-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Kết quả khám</a>
@@ -109,32 +109,36 @@
             </nav>
             <!-- Navbar End -->
 
+
             <!-- Blank Start -->
 
             <div class="container-fluid pt-4 px-4 ">
-            <h4>Bệnh viện</h4>
+            <h4>Đơn</h4>
 
                 <h1></h1>
             <div class="col-sm-12 col-xl-6"  style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
                         <div class="bg-light rounded h-100 p-4">
                             <h6 class="mb-4">Horizontal Form</h6>
-                            <form  action="{{ url('addhospital') }}" method="post" >
+                            <form  action="{{ url('addpre') }}" method="post" >
                             @csrf
 
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Tên bệnh viện</label>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Tên bệnh nhân</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="hospitalname" id="inputEmail3">
+                                        <input type="text" class="form-control" name="name" id="inputEmail3">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Địa chỉ</label>
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Chuẩn đoán</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="address" id="inputPassword3">
+                                        <input type="text" class="form-control" name="diagnostic" id="inputPassword3">
                                     </div>
                                 </div>
-                                
-                               
+                                <div class="form-group mb-3">
+                                    <label for="birthday">Ngày kê đơn:</label>
+                                    <input type="date" class="form-control" id="day" name="day">
+                                    </div>
+    
                                 <button type="submit" class="btn btn-primary">Thêm</button>
                             </form>
                             @if (\Session::has('message'))
@@ -161,20 +165,23 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Tên</th>
-            <th>Địa chỉ</th>
+            <th>Tên bệnh nhân</th>
+            <th>Chuẩn đoán</th>
+            <th>Ngày kê đơn</th>
+
             <th class="text-center">Tùy chọn</th>
         </tr>
     </thead>
-    @isset($hospital)
-                            @foreach ($hospital as $item)
+    @isset($prescription)
+                            @foreach ($prescription as $item)
                             <tr>
-                                <td>{{$item->id_hospital}}</td>
-                                <td>{{$item->hospitalname}}</td>
-                                <td>{{$item->address}}</td>
+                                <td>{{$item->id_pre}}</td>
+                                <td>{{$item->name}}</td>
+                                <td>{{$item->diagnostic}}</td>
+                                <td>{{$item->day}}</td>
                                 <td class="text-center">       
-                                <button class="btn btn-warning btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $item->id_hospital }}">Sửa</button> 
-                                    <button class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$item->id_hospital}}">Xóa</button>
+                                <button class="btn btn-warning btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $item->id_pre }}">Sửa</button> 
+                                    <button class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$item->id_pre}}">Xóa</button>
                                 </td>
                             </tr>
                          
@@ -184,10 +191,10 @@
          
 
     </table>
-    @isset($hospital)
+    @isset($prescription)
     <div class="container-footer-kt">
             <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $hospital->links('pagination::bootstrap-4') }}
+                {{ $prescription->links('pagination::bootstrap-4') }}
             </nav>
         </div>
     @endisset
@@ -195,7 +202,7 @@
         <!-- Content End -->
         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form method="POST" action="{{ route('xoahos') }}" id="deleteForm"> 
+        <form method="POST" action="{{ route('xoapre') }}" id="deleteForm"> 
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
@@ -203,8 +210,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa bệnh viện này?
-                    <input type="hidden" name="id_hospital" id="hospitalIdInput">
+                    Bạn có chắc chắn muốn xóa đơn này?
+                    <input type="hidden" name="id_pre" id="hospitalIdInput">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
@@ -219,7 +226,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin Bệnh Viện</h5>
+                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin đơn</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -227,12 +234,16 @@
                 @csrf
 
                     <div class="mb-3">
-                        <label for="hospitalname" class="form-label">Tên Bệnh Viện</label>
-                        <input type="text" class="form-control" id="hospitalname" name="hospitalname">
+                        <label for="hospitalname" class="form-label">Tên bệnh nhân</label>
+                        <input type="text" class="form-control" id="hospitalname" name="name">
                     </div>
                     <div class="mb-3">
-                        <label for="address" class="form-label">Địa Chỉ</label>
-                        <input type="text" class="form-control" id="address" name="address">
+                        <label for="address" class="form-label">Chuẩn đoán</label>
+                        <input type="text" class="form-control" id="address" name="diagnostic">
+                    </div> 
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Ngày kê đơn</label>
+                        <input type="text" class="form-control" id="address2" name="day">
                     </div> 
                     <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -284,12 +295,14 @@ $('.btn-edit').click(function() {
     // Lấy dữ liệu từ các ô trong hàng
     var hospitalName = row.find('td:eq(1)').text(); // Ô thứ 2 chứa tên bệnh viện
     var address = row.find('td:eq(2)').text(); // Ô thứ 3 chứa địa chỉ
-
+    var address2 = row.find('td:eq(3)').text();
     // Điền dữ liệu vào form
     $('#editHospitalId').val(hospitalId);
     $('#hospitalname').val(hospitalName);
     $('#address').val(address);
-    $('#editForm').attr('action', '{{ url("capnhathos") }}/id=' + hospitalId); 
+    $('#address2').val(address2);
+
+    $('#editForm').attr('action', '{{ url("capnhatpre") }}/id=' + hospitalId); 
 
 });
 </script>

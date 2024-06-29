@@ -38,7 +38,7 @@
         <div class="sidebar pe-4 pb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
             <nav class="navbar bg-light navbar-light" >
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"></i>ADMIN</h3>
+                    <h3 class="text-primary"></i>DOCTOR</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4" >
                     <div class="position-relative">
@@ -46,35 +46,19 @@
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">Jhon Doe</h6>
-                        <span>Admin</span>
+                        <h6 class="mb-0"> {{ Auth::user()->name }}</h6>
+                        <span>Doctor</span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                  
-                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Bệnh viện</a>
-                    <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Chuyên khoa</a>
-                    <a href="{{ route('service-index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Dịch vụ</a>
-                    <a href="{{ route('clinic-index') }}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Phòng khám</a>
-                    <a href="{{ route('medicine-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Thuốc</a>
-                    <a href="{{ route('pre-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Đơn</a>
-                    <a href="{{ route('app-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Lịch khám</a>
-                    <a href="{{ route('pr-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Hồ sơ bệnh nhân</a>
-                    <a href="{{ route('mr-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Kết quả khám</a>
-                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Trò chuyện</a>
-                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tin nhắn</a>
+                    <a href="" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('lichlamviec') }}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Lịch làm việc</a>
+                    <a href="" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Cập nhật kết quả khám</a>
+                    <a href="" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Kê đơn thuốc</a>
+                    <a href="" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Trò chuyên</a>
+                
 
-                    <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="signin.html" class="dropdown-item">Sign In</a>
-                            <a href="signup.html" class="dropdown-item">Sign Up</a>
-                            <a href="404.html" class="dropdown-item">404 Error</a>
-                            <a href="blank.html" class="dropdown-item">Blank Page</a>
-                        </div>
-                    </div>
+                  
                 </div>
             </nav>
         </div>
@@ -109,12 +93,72 @@
             </nav>
             <!-- Navbar End -->
 
+            <!-- Blank Start -->
 
-            <!-- Sale & Revenue Start -->
-            <div class="container-fluid pt-4 px-4">
-                d
-               </div>
-          
+            <div class="container-fluid pt-4 px-4 ">
+            <h4>Bác sĩ</h4>
+
+           
+                    
+            </div>
+            <!-- Blank End -->
+
+
+   
+        </div>
+        <!-- Content End -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="POST" action="{{ route('xoahos') }}" id="deleteForm"> 
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Xác nhận xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa bệnh viện này?
+                    <input type="hidden" name="id_hospital" id="hospitalIdInput">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                    <button type="submit" class="btn btn-danger">Có, xóa!</button> </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin Bệnh Viện</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm" action=""  method="POST">
+                @csrf
+
+                    <div class="mb-3">
+                        <label for="hospitalname" class="form-label">Tên Bệnh Viện</label>
+                        <input type="text" class="form-control" id="hospitalname" name="hospitalname">
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Địa Chỉ</label>
+                        <input type="text" class="form-control" id="address" name="address">
+                    </div> 
+                    <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="submit" class="btn btn-primary" id="btnUpdate">Lưu Thay Đổi</button>
+            </div>
+                </form>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -129,6 +173,39 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('ad/main.js') }}"></script>
+<script>
+  $(document).ready(function() {
+    $('#deleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Nút "Xóa" được click
+        var hospitalId = button.data('id'); // Lấy ID từ data-id của nút
+
+        var modal = $(this);
+        modal.find('#hospitalIdInput').val(hospitalId); // Điền ID vào input
+
+        // Cập nhật action của form
+        var form = modal.find('#deleteForm');
+        form.attr('action', form.attr('action').replace(':hospitalId', hospitalId)); 
+    });
+});
+
+
+$('.btn-edit').click(function() {
+    var hospitalId = $(this).data('id');
+    var row = $(this).closest('tr'); // Lấy hàng chứa nút "Sửa"
+
+    // Lấy dữ liệu từ các ô trong hàng
+    var hospitalName = row.find('td:eq(1)').text(); // Ô thứ 2 chứa tên bệnh viện
+    var address = row.find('td:eq(2)').text(); // Ô thứ 3 chứa địa chỉ
+
+    // Điền dữ liệu vào form
+    $('#editHospitalId').val(hospitalId);
+    $('#hospitalname').val(hospitalName);
+    $('#address').val(address);
+    $('#editForm').attr('action', '{{ url("capnhathos") }}/id=' + hospitalId); 
+
+});
+</script>
+
 </body>
 
 </html>

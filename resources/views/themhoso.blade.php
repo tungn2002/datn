@@ -9,6 +9,8 @@
   <meta name="copyright" content="MACode ID, https://macodeid.com/">
 
   <title>One Health - Medical Center HTML5 Template</title>
+
+  
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
@@ -17,15 +19,64 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
 	<link href="{{ asset('main/theme.css') }}" rel="stylesheet">
+  <style>
+        /* Custom CSS để ghi đè Bootstrap */
+        .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+            color:#07be94;
+            background-color: #fff; /* Màu sắc bạn muốn thay đổi */
+            border: 2px solid #4CF5BC;
+        }
+
+        .custom-div {
+            border: 1px solid silver;
+            border-radius: 10px;
+            box-shadow: 3px 3px 5px lightgray;
+            padding: 20px;
+        }
+        
+
+
+    
+    </style>
+<style>
+    .alert-popup {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1050; /* Ensure it's above other elements */
+        background-color:#fff;
+        border-left: 4px solid #00FF00;
+
+        display: grid; /* Kích hoạt grid */
+    grid-template-columns: auto 1fr; /* Chia thành 2 cột: icon tự động, chữ chiếm phần còn lại */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    gap: 10px; /* Khoảng cách giữa icon và chữ */
+    }
+</style>
+
+
 </head>
 <body>
+    @if(Session::has('message'))
+        <div class="alert alert-success alert-dismissible fade show alert-popup" role="alert" id="success-alert">
+        <i class="fas fa-check-circle mr-1" style="color: #00FF00; font-size: 150%"></i>{{ Session::get('message') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
 
+
+
+
+
+    
   <!-- Back to top button -->
   <div class="back-to-top"></div>
 
-
+  
   <header>
-    <div class="topbar">
+  <div class="topbar">
       <div class="container">
         <div class="row">
           <div class="col-sm-8 text-sm">
@@ -52,7 +103,6 @@
       <div class="container">
         <a class="navbar-brand" href="#"><span class="text-primary">One</span>-Health</a>
 
-
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupport" aria-controls="navbarSupport" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -68,10 +118,10 @@
             <li class="nav-item">
               <a class="nav-link" href="doctors.html">Doctors</a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="blog.html">News</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
               <a class="nav-link" href="contact.html">Contact</a>
             </li>
             @guest
@@ -84,7 +134,7 @@
                 {{ Auth::user()->name }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ route('profile') }}">Thông tin cá nhân</a>
+                <a class="dropdown-item" href="{{ route('profile') }}">Thông tin tài khoản</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('logout') }}">
                     Đăng xuất<i class="fas fa-sign-out-alt ml-1"></i>
@@ -93,110 +143,73 @@
             </div>
         </li>
             @endguest
+
+
           </ul>
         </div> <!-- .navbar-collapse -->
       </div> <!-- .container -->
     </nav>
   </header>
 
-  <div class="page-hero bg-image overlay-dark" style="background-image: url({{ asset('main/image/bg_image_1.jpg') }});">
-    <div class="banner-section">
-      <div class="container text-center wow fadeInUp">
-        <nav aria-label="Breadcrumb">
-          <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Chọn dịch vụ</li>
-          </ol>
-        </nav>
-        <h1 class="font-weight-normal">Dịch vụ</h1>
-      </div> <!-- .container -->
-    </div> <!-- .banner-section -->
-  </div> <!-- .page-banner -->
 
-  <div class="page-section">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8">
-          <div class="row">
-
-          @isset($clinic)
-          @foreach ($clinic as $item)
-            <div class="col-sm-6 py-3">
-              <div class="card-blog">
-                <div class="header">
-                  <div class="post-category">
-                    <a href="#">{{$item->price}} đ</a>
-                  </div>
-                    <img src=" {{ asset('image/' . $item->image) }}" style=" width: 100%;height: 100%;object-fit: cover;" alt="">
-                </div>
-                <div class="body">
-                  <h5 class="post-title"><a href="{{ route('serviceff', ['id' => $item->id_clinic]) }}">{{$item->servicename}}</a></h5>
-                  <div class="site-info">
-                    <div class="avatar mr-2">
-                      <div class="avatar-img">
-                        <img src="{{ asset('image/' . $item->avatar) }}" alt="">
-                      </div>
-                      <span>{{$item->name}}</span>
+  <form action="{{ url('addhoso') }}" method="post" style="  max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);"> 
+                @csrf
+                <h1>Thêm hồ sơ bệnh nhân</h1>
+                <div class="row mb-3">
+                    <label for="prname" class="col-sm-2 col-form-label">Tên bệnh nhân:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="prname" id="prname" value="{{ old('prname') }}"> 
                     </div>
-                    <div class="site-info"> Phòng: 
-                    {{$item->clinicname}}
-                  </div>
-                   
-                  </div>
                 </div>
-              </div>
-            </div>
+                <div class="row mb-3">
+                    <label for="birthday" class="col-sm-2 col-form-label">Ngày sinh:</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" name="birthday" id="birthday" value="{{ old('birthday') }}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="phonenumber" class="col-sm-2 col-form-label">Số điện thoại:</label>
+                    <div class="col-sm-10">
+                        <input type="tel" class="form-control" name="phonenumber" id="phonenumber" value="{{ old('phonenumber') }}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="gender" class="col-sm-2 col-form-label">Giới tính:</label>
+                    <div class="col-sm-10">
+                        <select class="form-select" name="gender" id="gender">
+                            <option value="male" >Nam</option>
+                            <option value="female">Nữ</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="address" class="col-sm-2 col-form-label">Địa chỉ:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="address" id="address" value="{{ old('address') }}">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Thêm</button>
+            </form>
+                            @if (\Session::has('message'))
+                        <div class="alert alert-success">
+                        <strong>{!! \Session::get('message') !!}</strong>
+                        </div>
+                    @endif
+                    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
             @endforeach
-                        @endisset
-                        @isset($clinic)
-    <div class="container-footer-kt">
-            <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $clinic->links('pagination::bootstrap-4') }}
-            </nav>
-        </div>
-    @endisset
-        <div class="col-lg-4">
-          <div class="sidebar">
-            <div class="sidebar-block">
-              <h3 class="sidebar-title">Tìm kiếm</h3>
-              <form action="#" class="search-form">
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Type a keyword and hit enter">
-                  <button type="submit" class="btn"><i class="fas fa-search"></i></span></button>
-                </div>
-              </form>
-            </div>
-           
-            <div class="sidebar-block">
-              <h3 class="sidebar-title">Paragraph</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>
-            </div>
-          </div>
-        </div> 
-      </div> <!-- .row -->
-
-    </div> <!-- .container -->
-    
-  </div> <!-- .page-section -->
-
-  <div class="page-section banner-home bg-image" style="background-image: url({{ asset('main/image/banner-pattern.svg') }});">
-    <div class="container py-5 py-lg-0">
-      <div class="row align-items-center">
-        <div class="col-lg-4 wow animate__animated animate__zoomIn">
-          <div class="img-banner d-none d-lg-block">
-            <img src="{{ asset('main/image/mobile_app.png') }}" alt="">
-          </div>
-        </div>
-        <div class="col-lg-8 wow animate__animated animate__fadeInRight">
-          <h1 class="font-weight-normal mb-3">Get easy access of all features using One Health Application</h1>
-          <a href="#"><img src="{{ asset('main/image/google_play.svg') }}" alt=""></a>
-          <a href="#" class="ml-2"><img src="{{ asset('main/image/app_store.svg') }}" alt=""></a>
-        </div>
-      </div>
+        </ul>
     </div>
-  </div> <!-- .banner-home -->
+@endif
 
-  
   <footer class="page-footer">
     <div class="container">
       <div class="row px-md-3">
@@ -245,9 +258,9 @@
 
       <hr>
 
-
-    </div> <!-- .container -->
-  </footer> <!-- .page-footer -->
+      <p id="copyright">Copyright &copy; 2020 <a href="https://macodeid.com/" target="_blank">MACode ID</a>. All right reserved</p>
+    </div>
+  </footer>
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
@@ -256,8 +269,42 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
 
+<script src="{{ asset('main/google-maps.js') }}"></script>
 
 <script src="{{ asset('main/theme.js') }}"></script>
-  
+
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIA_zqjFMsJM_sxP9-6Pde5vVCTyJmUHM&callback=initMap"></script>
+  <script>
+   $(document).ready(function() {
+  $('.dropdown-menu a').click(function(e) {
+    e.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết (chuyển hướng trang)
+
+    // Xóa class 'active' khỏi tất cả các mục trong dropdown
+    $('.dropdown-menu a').removeClass('active');
+
+    // Thêm class 'active' vào mục được click
+    $(this).addClass('active');
+
+    // Cập nhật nội dung của nút dropdown
+    $('#dropdownMenuButton').text($(this).text());
+
+    // Ẩn dropdown sau khi chọn (để tiết kiệm không gian trên mobile)
+    $('.dropdown').removeClass('show');
+    $('.dropdown-menu').removeClass('show');
+
+    // Lấy id của tab tương ứng từ thuộc tính href của liên kết
+    var targetTab = $(this).attr('href');
+
+    // Ẩn tất cả các tab
+    $('.tab-content .tab-pane').removeClass('active show');
+
+    // Hiển thị tab được chọn
+    $(targetTab).addClass('active show');
+  });
+});
+
+
+
 </body>
 </html>

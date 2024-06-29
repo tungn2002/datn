@@ -10,7 +10,6 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="{{ asset('ad/img/user.jpg') }}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,58 +29,56 @@
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('ad/style.css') }}" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <style>
+  .ui-datepicker-calendar td {
+    border: 1px solid #ddd; /* Add borders to cells */
+    padding: 5px; /* Add padding for spacing */
+  }
+
+    .marked-day {
+      background-color: #ff9900;
+    }
+
+    .ui-datepicker-calendar .ui-datepicker-other-month .ui-state-disabled {
+      display: none; /* Hide days from other months */
+    }
+  </style>
+
 </head>
 
 <body>
+    
+
     <div class="container-xxl position-relative bg-white d-flex p-0">
-        <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-        <!-- Spinner End -->
-
-
         <!-- Sidebar Start -->
-        <div class="sidebar pe-4 pb-3">
-            <nav class="navbar bg-light navbar-light">
+        <div class="sidebar pe-4 pb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
+            <nav class="navbar bg-light navbar-light" >
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
+                    <h3 class="text-primary"></i>DOCTOR</h3>
                 </a>
-                <div class="d-flex align-items-center ms-4 mb-4">
+                <div class="d-flex align-items-center ms-4 mb-4" >
                     <div class="position-relative">
                         <img class="rounded-circle" src="{{ asset('ad/img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">Jhon Doe</h6>
-                        <span>Admin</span>
+                        <h6 class="mb-0"> {{ Auth::user()->name }}</h6>
+                        <span>Doctor</span>
                     </div>
                 </div>
-                <div class="navbar-nav w-100">
-                    <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="button.html" class="dropdown-item">Buttons</a>
-                            <a href="typography.html" class="dropdown-item">Typography</a>
-                            <a href="element.html" class="dropdown-item">Other Elements</a>
-                        </div>
-                    </div>
-                    <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
-                    <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
-                    <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
-                    <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="signin.html" class="dropdown-item">Sign In</a>
-                            <a href="signup.html" class="dropdown-item">Sign Up</a>
-                            <a href="404.html" class="dropdown-item">404 Error</a>
-                            <a href="blank.html" class="dropdown-item">Blank Page</a>
-                        </div>
-                    </div>
+                <div class="navbar-nav w-100" >
+                    <a href="" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('lichlamviec') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Lịch làm việc</a>
+                    <a href="" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Cập nhật kết quả khám</a>
+                    <a href="" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Kê đơn thuốc</a>
+                    <a href="" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Trò chuyên</a>
+                
+
+                  
                 </div>
             </nav>
         </div>
@@ -91,112 +88,81 @@
         <!-- Content Start -->
         <div class="content">
             <!-- Navbar Start -->
-            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
                 <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
                 </a>
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
+              
                 <div class="navbar-nav align-items-center ms-auto">
                    
                    
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img class="rounded-circle me-lg-2" src="{{ asset('ad/img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            <span class="d-none d-lg-inline-flex">  {{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a href="#" class="dropdown-item">Thông tin</a>
+                            <a href="{{ route('logout') }}" class="dropdown-item">Đăng xuất</a>
                         </div>
                     </div>
                 </div>
             </nav>
             <!-- Navbar End -->
 
-
             <!-- Blank Start -->
 
             <div class="container-fluid pt-4 px-4 ">
-            <h4>Role</h4>
+            <h4>Lịch làm việc</h4>
 
-                <h1></h1>
-            <div class="col-sm-12 col-xl-6"  style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Horizontal Form</h6>
-                            <form  action="{{ url('addrole') }}" method="post" >
-                            @csrf
-
-                                <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Tên role</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="rolename" id="inputEmail3">
-                                    </div>
-                                </div>
-                              
-                                
-                               
-                                <button type="submit" class="btn btn-primary">Thêm</button>
-                            </form>
-                            @if (\Session::has('message'))
-                        <div class="alert alert-success">
-                        <strong>{!! \Session::get('message') !!}</strong>
-                        </div>
-                    @endif
-                    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-                        </div>
-                    </div>
+            <div id="calendar"></div>
+ 
+                    
             </div>
             <!-- Blank End -->
 
 
-            <table class="table table-striped custab mt-4">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Tên</th>
-            <th class="text-center">Tùy chọn</th>
-        </tr>
-    </thead>
-    @isset($role)
-                            @foreach ($role as $item)
-                            <tr>
-                                <td>{{$item->id_role}}</td>
-                                <td>{{$item->rolename}}</td>
-                                <td class="text-center">       
-                                <button class="btn btn-warning btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $item->id_role }}">Sửa</button> 
-                                    <button class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$item->id_role}}">Xóa</button>
-                                </td>
-                            </tr>
-                         
-                            @endforeach
-                        @endisset
+            <table class="table table-striped custab mt-4" id="appointmentTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ngày khám</th>
+                    <th>Thời gian khám</th>
+                    <th class="text-center">Tùy chọn</th>
+                </tr>
+            </thead>
+            <tbody> 
+            @isset($results)
+                @foreach ($results as $appointment)
+                    <tr>
+                        <td>{{ $appointment->id_appointment }}</td>
+                        <td>{{ $appointment->day }}</td>
+                        <td>{{ $appointment->time }}</td>
+                        <td class="text-center">
+                            <a class="btn btn-warning btn-edit" href="{{ route('lichlamviecdetail', ['id' => $appointment->id_appointment]) }}">Thông tin bệnh nhân</a>
+                        </td>
+                    </tr>
+                @endforeach
+                @endisset
+            </tbody>
+        </table>
 
-         
-
-    </table>
-    @isset($role)
-    <div class="container-footer-kt">
-            <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $role->links('pagination::bootstrap-4') }}
-            </nav>
-        </div>
-    @endisset
+        @isset($results)
+            <div class="container-footer-kt">
+                <nav aria-label="Page navigation example" class="ml-5 footer-kt">
+                    {{ $results->links('pagination::bootstrap-4') }}
+                </nav>
+            </div>
+        @endisset
+   
         </div>
         <!-- Content End -->
         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form method="POST" action="{{ route('xoarole') }}" id="deleteForm"> 
+        <form method="POST" action="{{ route('xoahos') }}" id="deleteForm"> 
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
@@ -204,8 +170,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa chuyên khoa này này?
-                    <input type="hidden" name="id_role" id="hospitalIdInput">
+                    Bạn có chắc chắn muốn xóa bệnh viện này?
+                    <input type="hidden" name="id_hospital" id="hospitalIdInput">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
@@ -220,7 +186,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin chuyên khoa</h5>
+                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin Bệnh Viện</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -228,9 +194,13 @@
                 @csrf
 
                     <div class="mb-3">
-                        <label for="hospitalname" class="form-label">Tên chuyên khoa</label>
-                        <input type="text" class="form-control" id="hospitalname" name="rolename">
+                        <label for="hospitalname" class="form-label">Tên Bệnh Viện</label>
+                        <input type="text" class="form-control" id="hospitalname" name="hospitalname">
                     </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Địa Chỉ</label>
+                        <input type="text" class="form-control" id="address" name="address">
+                    </div> 
                     <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                 <button type="submit" class="btn btn-primary" id="btnUpdate">Lưu Thay Đổi</button>
@@ -241,9 +211,12 @@
         </div>
     </div>
 </div>
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-    </div>
+
+
+
+
+
+
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -255,7 +228,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.45/moment-timezone.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
-
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <!-- Template Javascript -->
     <script src="{{ asset('ad/main.js') }}"></script>
 <script>
@@ -286,11 +259,34 @@ $('.btn-edit').click(function() {
     $('#editHospitalId').val(hospitalId);
     $('#hospitalname').val(hospitalName);
     $('#address').val(address);
-    $('#editForm').attr('action', '{{ url("capnhatrole") }}/id=' + hospitalId); 
+    $('#editForm').attr('action', '{{ url("capnhathos") }}/id=' + hospitalId); 
 
 });
 </script>
 
+<script>
+    $(document).ready(function() {
+        var markedDates = @json($markedDates);
+      $("#calendar").datepicker({
+        beforeShowDay: function(date) {
+        //  var markedDates = ["2024-06-15", "2024-06-20", "2024-06-25"];
+          var formattedDate = $.datepicker.formatDate('yy-mm-dd', date);
+
+          if (markedDates.indexOf(formattedDate) != -1) {
+            return [true, "marked-day", "Marked Day"];
+          } else {
+            return [false, "", ""]; // Disable unmarked days
+          }
+        },
+        onSelect: function(dateText, inst) {
+            var formattedDate = dateText.replace(/\//g, '-'); // Thay thế tất cả các '/' thành '-'
+            var url = '/lichlamviecf/' + formattedDate;
+            window.location.href = url;
+            }
+        // Restrict to single selection (optional)
+      });
+    });
+  </script>
 </body>
 
 </html>

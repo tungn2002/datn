@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('status');
             $table->string('reason');
             $table->text('detail');
+            $table->string('image')->nullable(); 
             $table->date('booking_date');
             $table->unsignedInteger('id_mr'); // Khóa ngoại đến patientrecords
             $table->unsignedInteger('id_sch'); // Khóa ngoại đến appointment

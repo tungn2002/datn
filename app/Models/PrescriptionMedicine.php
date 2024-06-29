@@ -12,7 +12,7 @@ class PrescriptionMedicine extends Model
 
     protected $fillable = [
         'information',
-        'id_prescription',
-        'id_medicine',
+'id_prescription', 'id_medicine',
     ];
+    public $timestamps = false;
 }

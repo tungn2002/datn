@@ -5,20 +5,99 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\Specialist;
+use App\Models\Clinic;
+use App\Models\User;
+use App\Models\Appointment;
+use App\Models\PatientRecord;
+use App\Models\MedicalResult;
+use Carbon\Carbon;
+use Auth;
+
+
+
 use DB;
 
 class ServiceController extends Controller
 {
+    //Tìm dịch vụ
     public function servicef(){
-        $service = Service::paginate(5); 
-        if (!$service) {
-            return view('service', ['message' => 'không có dịch vụ nào']);
+        //trả về các id của phòng có lịch: sirvice phòng bác sĩ giá
+
+        $clinics = DB::table('clinics')
+        ->join('services', 'clinics.id_service', '=', 'services.id_service')
+        ->join('users', 'clinics.id_user', '=', 'users.id_user')
+        ->select('clinics.id_clinic', 'clinics.clinicname', 'services.servicename', 'services.price', 'services.image', 'users.name', 'users.avatar')
+        ->paginate(5);
+
+        if (!$clinics) {
+            return view('find_service', ['message' => 'không có dịch vụ nào']);
         
         }
-        return view('find_service', ['service' => $service]);
+        return view('find_service', ['clinic' => $clinics]);
+    }
+
+    //sau khi chọn phòng=>chọn day
+    public function serviceff($id){
+        $clinic1 = Clinic::find($id);
+        $service =  Service::find($clinic1->id_service);
+        $clinics = Appointment::where('id_clinic',$id)->get();
+
+        if (!$clinics) {
+            return view('find_service', ['message' => 'không có dịch vụ nào']);
+        
+        }
+
+            // Extract unique dates from appointments
+        $uniqueDates = $clinics->unique('day')->pluck('day');
+
+        // Sort dates in ascending order (optional)
+        $uniqueDates = $uniqueDates->sort();
+
+        return view('find_service2', ['clinic1'=>$clinic1,'app' => $clinics,'service'=>$service,'uniqueDates'=>$uniqueDates]);
+    }
+
+    public function servicefff($id,$day){
+
+        $clinic1 = Clinic::find($id);
+        $service =  Service::find($clinic1->id_service);
+        $app = Appointment::where('id_clinic',$id)->where('day',$day)->orderBy('time')->get();
+
+        if (!$app) {
+            return view('find_service', ['message' => 'không có dịch vụ nào']);
+        
+        }
+        return view('find_service3', ['clinic1'=>$clinic1,'app' => $app,'service'=>$service]);
+    }
+
+
+    
+    public function serviceffff($id){
+        $pr = PatientRecord::where('id_user',Auth::user()->id_user)->get();
+
+        //$pr = PatientRecord::find();
+       
+        if (!$pr) {
+            return view('find_service', ['message' => 'không có dịch vụ nào']);
+        
+        }
+        return view('find_service4', ['idapp'=>$id,'pr'=>$pr]);
     }
 
     
+    public function addmrsv(Request $request) {
+      
+        $medicalResult=new MedicalResult;
+        $medicalResult->reason=$request->reason;
+        $medicalResult->status="chờ duyệt";
+        $medicalResult->booking_date= Carbon::now();
+        $medicalResult->id_mr=$request->id_mr;
+        $medicalResult->id_sch=$request->id_sch;
+        $medicalResult->detail=".";
+
+        $medicalResult->save();
+
+        return redirect()->route('trangchu');
+       }
     public function index(){
         $specialist= DB::select('SELECT * from specialists');
         $service = Service::paginate(5); 

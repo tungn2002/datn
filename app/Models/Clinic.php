@@ -15,6 +15,7 @@ class Clinic extends Model
     protected $fillable = [
         'clinicname',
         'id_hospital',
+        'id_user',
         'id_service', // Foreign key for service
     ];
 

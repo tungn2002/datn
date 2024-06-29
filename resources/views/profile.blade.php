@@ -135,9 +135,6 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{{ route('profile') }}">Thông tin tài khoản</a>
-                <a class="dropdown-item" href="">Hồ sơ bệnh nhân</a>
-                <a class="dropdown-item" href="">Phiếu khám bệnh</a>
-                <a class="dropdown-item" href="">Tư vấn</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('logout') }}">
                     Đăng xuất<i class="fas fa-sign-out-alt ml-1"></i>
@@ -160,17 +157,17 @@
         <nav aria-label="Breadcrumb">
           <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Contact</li>
+            <li class="breadcrumb-item active" aria-current="page">Thông tin tài khoản</li>
           </ol>
         </nav>
-        <h1 class="font-weight-normal">Contact</h1>
+        
       </div> <!-- .container -->
     </div> <!-- .banner-section -->
   </div> <!-- .page-banner -->
 
   <div class="page-section">
     <div class="container">
-      <h1 class="text-center wow fadeInUp">Get in Touch</h1>
+      <h1 class="text-center wow fadeInUp">Thông tin cá nhân</h1>
 
 
       @if ($errors->any())
@@ -183,21 +180,6 @@
     </div>
 @endif
 
-
-      </div> <!--dropdow mobile -->
-
-
-      <div class="container mt-4">
-  <div class="dropdown d-md-none">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Dropdown button
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="home" aria-selected="false">Hồ sơ bệnh nhân</a>
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Thông tin cá nhân</a>
-    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#home" role="tab" aria-controls="contact" aria-selected="false" style="">Đơn khám bệnh</a>
-    </div>
-  </div>
 
 
 
@@ -212,22 +194,24 @@
         
         <div class="container">
   <div class="row">
-    <div class="col-md-2 mb-3 d-none d-md-block" style="border-right: 2px solid black;">
-        <ul class="nav nav-pills flex-column" id="myTab" role="tablist">
+    <div class="col-md-2 mb-3 " style="border-right: 2px solid black;">
+        <ul class="nav nav-pills flex-column" id="myTab" role="tablist" >
     <li class="nav-item">
-    <a class="nav-link active" id="home-tab" data-toggle="tab" href="" role="tab" aria-controls="home" aria-selected="true" style="background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%); color: #fff">Thêm hồ sơ</a>
+    <a class="nav-link active" href="{{ route('themhoso') }}"   style="background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%); color: #fff">Thêm hồ sơ</a>
   </li>
   <li class="nav-item" >
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="home" aria-selected="false">Hồ sơ bệnh nhân</a>
+    <a class="nav-link"href="{{ route('profile2') }}" role="tab" aria-controls="home" aria-selected="false">Hồ sơ bệnh nhân</a>
   </li>
   <li class="nav-item" >
-    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Thông tin cá nhân</a>
+    <a class="nav-link" href="{{ route('profile') }}" role="tab" aria-controls="profile" aria-selected="false" style="    color: #07be94;
+    background-color: #fff;
+    border: 2px solid #4CF5BC;">Thông tin cá nhân</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#home" role="tab" aria-controls="contact" aria-selected="false" style="">Đơn khám bệnh</a>
+    <a class="nav-link" href="{{ route('profile3') }}" role="tab" aria-controls="contact" aria-selected="false" style="">Đơn khám bệnh</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" id="home-tab" data-toggle="tab" href="" role="tab" aria-controls="home" aria-selected="true" style="background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Trò chuyện</a>
+    <a class="nav-link active" href="" role="tab" aria-controls="home" aria-selected="true" style="background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Trò chuyện</a>
   </li>
 </ul>
 
@@ -249,29 +233,13 @@
     <!-- /.col-md-4 -->
         <div class="col-md-10">
       <div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+  <div class="tab-pane fade show " id="home" role="tabpanel" aria-labelledby="home-tab">
 
-  <h2>Danh sách đơn đặt khám</h2>
-  <button type="button" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Chờ duyệt</button>
-  <button type="button" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Thanh toán</button>
-  <button type="button" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Đã khám</button>
-  <button type="button" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Đã hủy</button>
-
-
-    <div class="container mt-5">
-      <div class="card">
-          <div class="card-body">
-              <p class="card-text">Name: John Doe</p>
-              <p class="card-text">Age: 30</p>
-              <p class="card-text">Email: johndoe@example.com</p>
-              <p class="card-text">Status: đang duyệt</p>
-
-          </div>
-      </div>
+  
     </div>
     
   </div>
-  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+  <div class="tab-pane fades show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
   <div class="container mt-5">
     <div class="custom-div">
         <p>Tên: {{$user->name}}</p>
@@ -320,24 +288,9 @@
     </div>
 </div>
   </div>
-  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-  <h2>Danh sách hồ sơ bệnh nhân</h2>
-    <div class="container mt-5">
-      <div class="card">
-          <div class="card-body">
-              <p class="card-text">Name: John Doe</p>
-              <p class="card-text">Age: 30</p>
-              <p class="card-text">Email: johndoe@example.com</p>
-              <hr>
-              <div class="d-flex justify-content-end">
-                  <button type="button" class="btn btn-primary mr-2">Sửa hồ sơ</button>
-                  <button type="button" class="btn btn-danger ms-2">Xóa hồ sơ</button>
-              </div>
-          </div>
-      </div>
-    </div>
-    
-</div>
+  <div class="tab-pane fade active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+  
+</div>   
     </div>
     <!-- /.col-md-8 -->
   </div>
@@ -357,9 +310,6 @@
     </div>
   </div>
 
-  <div class="maps-container wow fadeInUp mt-4">
-    <div id="google-maps"></div>
-  </div>
 
   <div class="page-section banner-home bg-image" style="background-image: url({{ asset('main/image/banner-pattern.svg') }});">
     <div class="container py-5 py-lg-0">
@@ -427,6 +377,10 @@
 
       <hr>
 
+
+
+
+
       <p id="copyright">Copyright &copy; 2020 <a href="https://macodeid.com/" target="_blank">MACode ID</a>. All right reserved</p>
     </div>
   </footer>
@@ -444,35 +398,7 @@
 
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIA_zqjFMsJM_sxP9-6Pde5vVCTyJmUHM&callback=initMap"></script>
-  <script>
-   $(document).ready(function() {
-  $('.dropdown-menu a').click(function(e) {
-    e.preventDefault(); // Ngăn chặn hành vi mặc định của liên kết (chuyển hướng trang)
-
-    // Xóa class 'active' khỏi tất cả các mục trong dropdown
-    $('.dropdown-menu a').removeClass('active');
-
-    // Thêm class 'active' vào mục được click
-    $(this).addClass('active');
-
-    // Cập nhật nội dung của nút dropdown
-    $('#dropdownMenuButton').text($(this).text());
-
-    // Ẩn dropdown sau khi chọn (để tiết kiệm không gian trên mobile)
-    $('.dropdown').removeClass('show');
-    $('.dropdown-menu').removeClass('show');
-
-    // Lấy id của tab tương ứng từ thuộc tính href của liên kết
-    var targetTab = $(this).attr('href');
-
-    // Ẩn tất cả các tab
-    $('.tab-content .tab-pane').removeClass('active show');
-
-    // Hiển thị tab được chọn
-    $(targetTab).addClass('active show');
-  });
-});
-
+ 
 
 
 </body>

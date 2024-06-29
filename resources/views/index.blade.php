@@ -20,6 +20,10 @@
 	<link href="{{ asset('main/theme.css') }}" rel="stylesheet">
 
   <style>
+
+
+
+
     #floatingButton {
       position: fixed;
       bottom: 20px;
@@ -436,8 +440,6 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="{{ route('profile') }}">Thông tin cá nhân</a>
-                <a class="dropdown-item" href="">Đơn đặt khám</a>
-                <a class="dropdown-item" href="">Trò chuyện</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('logout') }}">
                     Đăng xuất<i class="fas fa-sign-out-alt ml-1"></i>
@@ -783,7 +785,7 @@
       </div>
 
       <hr>
-
+   
       <p id="copyright">Copyright &copy; 2020 <a href="https://macodeid.com/" target="_blank">MACode ID</a>. All right reserved</p>
     </div>
   </footer>
@@ -832,6 +834,19 @@
       chatContent.scrollTop = chatContent.scrollHeight;
     }
   });
+
+
+
+
+
+
+  $(document).ready(function() {
+    $('#success-popup').show();  // Show the popup initially
+
+    $('#close-popup').click(function() {
+        $('#success-popup').hide();  // Hide the popup on button click
+    });
+});
 </script>
 
 </body>

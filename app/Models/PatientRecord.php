@@ -9,7 +9,8 @@ class PatientRecord extends Model
 {
     use HasFactory;
     protected $table = 'patientrecords';
-
+    public $timestamps = false;
+    protected $primaryKey = 'id_pr';
     protected $fillable = [
         'prname',
         'birthday',

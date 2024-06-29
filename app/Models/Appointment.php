@@ -9,11 +9,11 @@ class Appointment extends Model
 {
     use HasFactory;
     protected $table = 'appointments';
-
+    protected $primaryKey = 'id_appointment';
+    public $timestamps = false;
     protected $fillable = [
         'day',
         'time',
-        'id_user', // Doctor's ID
         'id_clinic',
     ];
 }

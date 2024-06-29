@@ -51,15 +51,15 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="{{ route('admin1') }}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="index.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                   
-                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Bệnh viện</a>
+                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Bệnh viện</a>
                     <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Chuyên khoa</a>
                     <a href="{{ route('service-index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Dịch vụ</a>
                     <a href="{{ route('clinic-index') }}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Phòng khám</a>
                     <a href="{{ route('medicine-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Thuốc</a>
                     <a href="{{ route('pre-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Đơn</a>
-                    <a href="{{ route('app-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Lịch khám</a>
+                    <a href="{{ route('app-index') }}" class="nav-item nav-link active"><i class="fa fa-table me-2"></i>Lịch khám</a>
                     <a href="{{ route('pr-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Hồ sơ bệnh nhân</a>
                     <a href="{{ route('mr-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Kết quả khám</a>
                     <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Trò chuyện</a>
@@ -109,93 +109,92 @@
             </nav>
             <!-- Navbar End -->
 
+
             <!-- Blank Start -->
 
             <div class="container-fluid pt-4 px-4 ">
-            <h4>Bệnh viện</h4>
+        <h4>Lịch hẹn</h4>
 
-                <h1></h1>
-            <div class="col-sm-12 col-xl-6"  style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
-                        <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Horizontal Form</h6>
-                            <form  action="{{ url('addhospital') }}" method="post" >
-                            @csrf
-
-                                <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Tên bệnh viện</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="hospitalname" id="inputEmail3">
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Địa chỉ</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="address" id="inputPassword3">
-                                    </div>
-                                </div>
-                                
-                               
-                                <button type="submit" class="btn btn-primary">Thêm</button>
-                            </form>
-                            @if (\Session::has('message'))
-                        <div class="alert alert-success">
-                        <strong>{!! \Session::get('message') !!}</strong>
-                        </div>
-                    @endif
-                    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-                        </div>
+        <div class="col-sm-12 col-xl-6" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Thêm lịch hẹn</h6>
+                <form action="{{ url('addapp') }}" method="post">
+                    @csrf
+                    <div class="mb-3">
+                        <label for="day" class="form-label">Ngày khám:</label>
+                        <input type="date" class="form-control" name="day" id="day">
                     </div>
-            </div>
-            <!-- Blank End -->
-
-
-            <table class="table table-striped custab mt-4">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Tên</th>
-            <th>Địa chỉ</th>
-            <th class="text-center">Tùy chọn</th>
-        </tr>
-    </thead>
-    @isset($hospital)
-                            @foreach ($hospital as $item)
-                            <tr>
-                                <td>{{$item->id_hospital}}</td>
-                                <td>{{$item->hospitalname}}</td>
-                                <td>{{$item->address}}</td>
-                                <td class="text-center">       
-                                <button class="btn btn-warning btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $item->id_hospital }}">Sửa</button> 
-                                    <button class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$item->id_hospital}}">Xóa</button>
-                                </td>
-                            </tr>
-                         
+                    <div class="mb-3">
+                        <label for="time" class="form-label">Thời gian khám:</label>
+                        <input type="time" class="form-control" name="time" id="time">
+                    </div>
+                  
+                    <div class="mb-3">
+                        <label for="id_clinic" class="form-label">Phòng khám:</label>
+                        <select class="form-select" name="id_clinic" id="id_clinic">
+                            @foreach ($clinics as $clinic)
+                                <option value="{{ $clinic->id_clinic }}">{{ $clinic->clinicname }}</option>
                             @endforeach
-                        @endisset
-
-         
-
-    </table>
-    @isset($hospital)
-    <div class="container-footer-kt">
-            <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $hospital->links('pagination::bootstrap-4') }}
-            </nav>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Thêm</button>
+                </form>
+                @if (\Session::has('message'))
+                    <div class="alert alert-success">
+                        <strong>{!! \Session::get('message') !!}</strong>
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
         </div>
-    @endisset
-        </div>
+
+ 
+
+        <table class="table table-striped custab mt-4" id="appointmentTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ngày khám</th>
+                    <th>Thời gian khám</th>
+                    <th>Phòng khám</th>
+                    <th class="text-center">Tùy chọn</th>
+                </tr>
+            </thead>
+            <tbody> 
+                @foreach ($appointments as $appointment)
+                    <tr>
+                        <td>{{ $appointment->id_appointment }}</td>
+                        <td>{{ $appointment->day }}</td>
+                        <td>{{ $appointment->time }}</td>
+                        <td>{{ $appointment->id_clinic }}</td>
+                        <td class="text-center">
+                            <button class="btn btn-warning btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $appointment->id_appointment }}">Sửa</button>
+                            <button class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $appointment->id_appointment }}">Xóa</button>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        @isset($appointments)
+            <div class="container-footer-kt">
+                <nav aria-label="Page navigation example" class="ml-5 footer-kt">
+                    {{ $appointments->links('pagination::bootstrap-4') }}
+                </nav>
+            </div>
+        @endisset
         <!-- Content End -->
         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form method="POST" action="{{ route('xoahos') }}" id="deleteForm"> 
+        <form method="POST" action="{{ route('xoaapp') }}" id="deleteForm">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">
@@ -203,44 +202,57 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa bệnh viện này?
-                    <input type="hidden" name="id_hospital" id="hospitalIdInput">
+                    Bạn có chắc chắn muốn xóa lịch hẹn này?
+                    <input type="hidden" name="id_appointment" id="appointmentIdInput">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
-                    <button type="submit" class="btn btn-danger">Có, xóa!</button> </div>
+                    <button type="submit" class="btn btn-danger">Có, xóa!</button>
+                </div>
             </div>
         </form>
     </div>
 </div>
 
-
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin Bệnh Viện</h5>
+                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin Lịch Hẹn</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editForm" action=""  method="POST">
-                @csrf
+                <form id="editForm" action="" method="POST">
+                    @csrf
+                    <input type="hidden" name="id_appointment" id="editAppointmentId">
 
                     <div class="mb-3">
-                        <label for="hospitalname" class="form-label">Tên Bệnh Viện</label>
-                        <input type="text" class="form-control" id="hospitalname" name="hospitalname">
+                        <label for="editDay" class="form-label">Ngày khám:</label>
+                        <input type="date" class="form-control" name="day" id="editDay">
                     </div>
+
                     <div class="mb-3">
-                        <label for="address" class="form-label">Địa Chỉ</label>
-                        <input type="text" class="form-control" id="address" name="address">
-                    </div> 
+                        <label for="editTime" class="form-label">Thời gian khám:</label>
+                        <input type="time" class="form-control" name="time" id="editTime">
+                    </div>
+
+                 
+
+                    <div class="mb-3">
+                        <label for="editIdClinic" class="form-label">Phòng khám:</label>
+                        <select class="form-select" name="id_clinic" id="editIdClinic">
+                            @foreach ($clinics as $clinic)
+                                <option value="{{ $clinic->id_clinic }}">{{ $clinic->clinicname }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="submit" class="btn btn-primary" id="btnUpdate">Lưu Thay Đổi</button>
-            </div>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary" id="btnUpdate">Lưu Thay Đổi</button>
+                    </div>
                 </form>
             </div>
-           
         </div>
     </div>
 </div>
@@ -261,37 +273,43 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('ad/main.js') }}"></script>
-<script>
-  $(document).ready(function() {
-    $('#deleteModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Nút "Xóa" được click
-        var hospitalId = button.data('id'); // Lấy ID từ data-id của nút
+    <script>
+    $(document).ready(function() {
+        // Xử lý modal xóa
+        $('#deleteModal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget);
+            var appointmentId = button.data('id');
+            var modal = $(this);
+            modal.find('#appointmentIdInput').val(appointmentId); // Đặt ID vào input ẩn
+        });
 
-        var modal = $(this);
-        modal.find('#hospitalIdInput').val(hospitalId); // Điền ID vào input
+        // Xử lý modal sửa
+        $('.btn-edit').click(function() {
+            var appointmentId = $(this).data('id');
+            var row = $(this).closest('tr');
 
-        // Cập nhật action của form
-        var form = modal.find('#deleteForm');
-        form.attr('action', form.attr('action').replace(':hospitalId', hospitalId)); 
+            // Lấy dữ liệu từ các ô trong hàng
+            var day = row.find('td:eq(1)').text();
+            var time = row.find('td:eq(2)').text();
+            var userId = row.find('td:eq(3)').text(); 
+            var clinicId = row.find('td:eq(4)').text(); 
+
+            // Điền dữ liệu vào form sửa
+            $('#editAppointmentId').val(appointmentId);
+            $('#editDay').val(day);
+            $('#editTime').val(time);
+
+            // Chọn đúng option trong select dựa trên giá trị text của ô
+    
+
+            $('#editIdClinic option').filter(function() {
+                return $(this).text() == clinicId;
+            }).prop('selected', true);
+
+            // Cập nhật action của form
+            $('#editForm').attr('action', '{{ url("capnhatapp") }}/id=' + appointmentId);
+        });
     });
-});
-
-
-$('.btn-edit').click(function() {
-    var hospitalId = $(this).data('id');
-    var row = $(this).closest('tr'); // Lấy hàng chứa nút "Sửa"
-
-    // Lấy dữ liệu từ các ô trong hàng
-    var hospitalName = row.find('td:eq(1)').text(); // Ô thứ 2 chứa tên bệnh viện
-    var address = row.find('td:eq(2)').text(); // Ô thứ 3 chứa địa chỉ
-
-    // Điền dữ liệu vào form
-    $('#editHospitalId').val(hospitalId);
-    $('#hospitalname').val(hospitalName);
-    $('#address').val(address);
-    $('#editForm').attr('action', '{{ url("capnhathos") }}/id=' + hospitalId); 
-
-});
 </script>
 
 </body>

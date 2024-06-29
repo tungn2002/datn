@@ -10,7 +10,6 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="{{ asset('ad/img/user.jpg') }}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,23 +32,15 @@
 </head>
 
 <body>
+    
     <div class="container-xxl position-relative bg-white d-flex p-0">
-        <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-        <!-- Spinner End -->
-
-
         <!-- Sidebar Start -->
-        <div class="sidebar pe-4 pb-3">
-            <nav class="navbar bg-light navbar-light">
+        <div class="sidebar pe-4 pb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
+            <nav class="navbar bg-light navbar-light" >
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHMIN</h3>
+                    <h3 class="text-primary"></i>ADMIN</h3>
                 </a>
-                <div class="d-flex align-items-center ms-4 mb-4">
+                <div class="d-flex align-items-center ms-4 mb-4" >
                     <div class="position-relative">
                         <img class="rounded-circle" src="{{ asset('ad/img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
@@ -59,19 +50,22 @@
                         <span>Admin</span>
                     </div>
                 </div>
-                <div class="navbar-nav w-100">
-                    <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Elements</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="button.html" class="dropdown-item">Buttons</a>
-                            <a href="typography.html" class="dropdown-item">Typography</a>
-                            <a href="element.html" class="dropdown-item">Other Elements</a>
-                        </div>
-                    </div>
-                    <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
-                    <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
-                    <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
+                <div class="navbar-nav w-100" >
+                    <a href="index.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                  
+                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Bệnh viện</a>
+                    <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Chuyên khoa</a>
+                    <a href="{{ route('service-index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Dịch vụ</a>
+                    <a href="{{ route('clinic-index') }}" class="nav-item nav-link active"><i class="fa fa-keyboard me-2"></i>Phòng khám</a>
+                    <a href="{{ route('medicine-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Thuốc</a>
+                    <a href="{{ route('pre-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Đơn</a>
+                    <a href="{{ route('user-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Người dùng</a>
+                    <a href="{{ route('app-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Lịch khám</a>
+                    <a href="{{ route('pr-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Hồ sơ bệnh nhân</a>
+                    <a href="{{ route('mr-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Kết quả khám</a>
+                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Trò chuyện</a>
+                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tin nhắn</a>
+
                     <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
@@ -91,31 +85,30 @@
         <!-- Content Start -->
         <div class="content">
             <!-- Navbar Start -->
-            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
                 <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
                 </a>
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
+              
                 <div class="navbar-nav align-items-center ms-auto">
                    
                    
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img class="rounded-circle me-lg-2" src="{{ asset('ad/img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            <span class="d-none d-lg-inline-flex">  {{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a href="#" class="dropdown-item">Thông tin</a>
+                            <a href="{{ route('logout') }}" class="dropdown-item">Đăng xuất</a>
                         </div>
                     </div>
                 </div>
             </nav>
             <!-- Navbar End -->
-
 
             <!-- Blank Start -->
 
@@ -135,7 +128,14 @@
                                         <input type="text" class="form-control" name="clinicname" id="inputEmail3">
                                     </div>
                                 </div>
-                            
+                                <div class="mb-3">
+                                    <label for="id_user" class="form-label">Bác sĩ:</label>
+                                    <select class="form-select" name="id_user" id="id_user">
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id_user }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div class="row mb-3">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Bệnh viện:</label>
                                 <div class="col-sm-10">
@@ -167,6 +167,7 @@
                                             @endforeach
                                         @endisset
                                     </select>
+                                
                                    </div> 
                                     </div>
                                 <button type="submit" class="btn btn-primary">Thêm</button>
@@ -196,7 +197,7 @@
         <tr>
             <th>ID</th>
             <th>Tên</th>
-          
+            <th>Bác sĩ</th>
             <th>Bệnh viện</th>
             <th>Dịch vụ</th>
 
@@ -213,6 +214,7 @@
                                 <td>{{$item->id_hospital}}</td>
 
                                 <td>{{$item->id_service}}</td>
+                                <td>{{$item->id_user}}</td>
 
                                 <td class="text-center">       
                                 <button class="btn btn-warning btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $item->id_clinic }}">Sửa</button> 
@@ -303,6 +305,14 @@
                                     </select>
                                    </div> 
                                     </div>
+                                    <div class="mb-3">
+                        <label for="editIdUser" class="form-label">Bác sĩ:</label>
+                        <select class="form-select" name="id_user" id="phongban3">
+                            @foreach ($users as $user)
+                                <option value="{{ $user->id_user }}">{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                                 </div>
                     <div class="modal-footer">
 
@@ -356,6 +366,7 @@ $('.btn-edit').click(function() {
     var clinicname = row.find('td:eq(1)').text(); // Ô thứ 2 chứa tên bệnh viện
     var hos = row.find('td:eq(2)').text(); // Ô thứ 3 chứa địa chỉ
     var ser= row.find('td:eq(3)').text(); 
+    var u= row.find('td:eq(4)').text(); 
 
     // Điền dữ liệu vào form
     $('#editHospitalId').val(hospitalId);
@@ -363,8 +374,9 @@ $('.btn-edit').click(function() {
 
     $('#phongban option[value="' + hos + '"]').prop('selected', true);
     $('#phongban2 option[value="' + ser + '"]').prop('selected', true);
+    $('#phongban3 option[value="' + u + '"]').prop('selected', true);
 
-    $('#editForm').attr('action', '{{ url("capnhatservice") }}/id=' + hospitalId); 
+    $('#editForm').attr('action', '{{ url("capnhatclinic") }}/id=' + hospitalId); 
 
 });
 </script>

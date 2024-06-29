@@ -15,13 +15,12 @@ return new class extends Migration
             $table->increments('id_appointment');
             $table->date('day');
             $table->time('time');
-            $table->unsignedInteger('id_user'); // Khóa ngoại đến users (bác sĩ)
             $table->unsignedInteger('id_clinic'); // Khóa ngoại đến clinic
 
-            $table->foreign('id_user')->references('id_user')->on('users');
             $table->foreign('id_clinic')->references('id_clinic')->on('clinics');
         });
     }
+  
 
     /**
      * Reverse the migrations.

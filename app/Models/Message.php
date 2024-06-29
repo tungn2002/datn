@@ -14,6 +14,7 @@ class Message extends Model
         'content',
         'time',
         'status',
-        'id_cons', // Consult ID
+        'id_cons',
+        'sender_id', // Consult ID
     ];
 }

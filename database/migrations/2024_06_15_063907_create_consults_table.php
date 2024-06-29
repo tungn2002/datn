@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('consults', function (Blueprint $table) {
             $table->increments('id_cons');
+            
             $table->unsignedInteger('user1_id'); // Khóa ngoại đến users
             $table->unsignedInteger('user2_id'); // Khóa ngoại đến users
             $table->string('name');

@@ -29,16 +29,36 @@
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('ad/style.css') }}" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <style>
+  .ui-datepicker-calendar td {
+    border: 1px solid #ddd; /* Add borders to cells */
+    padding: 5px; /* Add padding for spacing */
+  }
+
+    .marked-day {
+      background-color: #ff9900;
+    }
+
+    .ui-datepicker-calendar .ui-datepicker-other-month .ui-state-disabled {
+      display: none; /* Hide days from other months */
+    }
+  </style>
+
 </head>
 
 <body>
     
+
     <div class="container-xxl position-relative bg-white d-flex p-0">
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
             <nav class="navbar bg-light navbar-light" >
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"></i>ADMIN</h3>
+                    <h3 class="text-primary"></i>DOCTOR</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4" >
                     <div class="position-relative">
@@ -46,35 +66,19 @@
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">Jhon Doe</h6>
-                        <span>Admin</span>
+                        <h6 class="mb-0"> {{ Auth::user()->name }}</h6>
+                        <span>Doctor</span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                  
-                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Bệnh viện</a>
-                    <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Chuyên khoa</a>
-                    <a href="{{ route('service-index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Dịch vụ</a>
-                    <a href="{{ route('clinic-index') }}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Phòng khám</a>
-                    <a href="{{ route('medicine-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Thuốc</a>
-                    <a href="{{ route('pre-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Đơn</a>
-                    <a href="{{ route('app-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Lịch khám</a>
-                    <a href="{{ route('pr-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Hồ sơ bệnh nhân</a>
-                    <a href="{{ route('mr-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Kết quả khám</a>
-                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Trò chuyện</a>
-                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tin nhắn</a>
+                    <a href="" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('lichlamviec') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Lịch làm việc</a>
+                    <a href="" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Cập nhật kết quả khám</a>
+                    <a href="" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Kê đơn thuốc</a>
+                    <a href="" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Trò chuyên</a>
+                
 
-                    <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="signin.html" class="dropdown-item">Sign In</a>
-                            <a href="signup.html" class="dropdown-item">Sign Up</a>
-                            <a href="404.html" class="dropdown-item">404 Error</a>
-                            <a href="blank.html" class="dropdown-item">Blank Page</a>
-                        </div>
-                    </div>
+                  
                 </div>
             </nav>
         </div>
@@ -109,12 +113,79 @@
             </nav>
             <!-- Navbar End -->
 
+            <!-- Blank Start -->
 
-            <!-- Sale & Revenue Start -->
-            <div class="container-fluid pt-4 px-4">
-                d
-               </div>
-          
+            <div class="container-fluid pt-4 px-4 ">
+            <h4>Thông tin bệnh nhân</h4>
+
+            <div class="container mt-5">
+            <div class="custom-div" style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; margin-bottom: 10px;">
+    <p>Tên bệnh nhân: {{$patientRecords->prname}}</p>
+    <p>Ngày sinh: {{$patientRecords->birthday}}</p>
+    <p>Số điện thoại: {{$patientRecords->phonenumber}}</p>
+    <p>Giới tính: {{$patientRecords->gender}}</p>
+    <p>Địa chỉ: {{$patientRecords->address}}</p>
+    <p>Lý do khám: {{$patientRecords->reason}}</p>capnhatkqkhanhienra dayluin va nut them don thuc va xem don thuoc
+</div>
+
+
+@isset($updatekq)
+<div class="custom-div" style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; margin-bottom: 10px;">
+<p>Kết quả: {{$updatekq->detail}}</p>
+<img style="width: 40px; height: 40px"class="" src="{{ asset('image/' . $updatekq->image) }}" ></div>
+
+<div class="custom-div" style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; margin-bottom: 10px;">
+<h4>Viết kết quả:</h4>
+<form  action="{{ url('capnhatkq/'.$updatekq->id_result) }}" method="post" enctype="multipart/form-data">
+        @csrf
+    <div class="row mb-3">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Kết quả: </label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="detail" id="inputEmail3">
+            </div>
+        </div>
+        <div class="row mb-3 mt-4">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Ảnh xét nghiệm: </label>
+            <div class="col-sm-10">
+            <input type="file" name="image" id="image">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+
+</div>
+@endisset
+@if (\Session::has('message'))
+                        <div class="alert alert-success">
+                        <strong>{!! \Session::get('message') !!}</strong>
+                        </div>
+                    @endif
+                    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+@isset($dk)
+<a href="{{ route('themdonthuoc', ['id' => $dk]) }}" class="btn btn-primary"> Đơn thuốc </a>
+
+@endisset
+</div>
+                    
+            </div>
+            <!-- Blank End -->
+
+
+   
+        </div>
+        <!-- Content End -->
+  
+
+
+
+
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -126,9 +197,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.45/moment-timezone.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
-
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <!-- Template Javascript -->
     <script src="{{ asset('ad/main.js') }}"></script>
+
 </body>
 
 </html>
