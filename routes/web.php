@@ -185,3 +185,9 @@ Route::get('/lichlamviecdetail/{id}', [UserController::class, 'lichlamviecdetail
 Route::post('/capnhatkq/{id}', [UserController::class, 'capnhatkq'])->name('capnhatkq');
 
 Route::get('/themdonthuoc/{id}', [UserController::class, 'themdonthuoc'])->name('themdonthuoc');
+
+
+Route::post('capnhatttdt/{id}', [UserController::class, 'capnhatttdt'])->name('capnhatttdt');
+Route::post('capnhatdt/{id}', [UserController::class, 'capnhatdt'])->name('capnhatdt');
+
+Route::post('/xoadtd', [UserController::class, 'xoadtd'])->name('xoadtd');

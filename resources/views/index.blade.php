@@ -8,7 +8,7 @@
 
   <meta name="copyright" content="MACode ID, https://macodeid.com/">
 
-  <title>One Health - Medical Center HTML5 Template</title>
+  <title>Trang chủ</title>
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
@@ -405,7 +405,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
-        <a class="navbar-brand" href="#"><span class="text-primary">One</span>-Health</a>
+        <a class="navbar-brand" href="{{ route('trangchu') }}"><span class="text-primary">Trang</span>chủ</a>
 
       
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupport" aria-controls="navbarSupport" aria-expanded="false" aria-label="Toggle navigation">
@@ -415,19 +415,16 @@
         <div class="collapse navbar-collapse" id="navbarSupport">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="index.html">Home</a>
+              <a class="nav-link" href="{{ route('trangchu') }}">Trang chủ</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="about.html">About Us</a>
+              <a class="nav-link" href="about.html">Thông tin</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="doctors.html">Doctors</a>
+              <a class="nav-link" href="{{ route('servicef') }}">Dịch vụ</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="blog.html">News</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact</a>
+              <a class="nav-link" href="contact.html">Liên hệ</a>
             </li>
             @guest
             <li class="nav-item">
@@ -460,7 +457,7 @@
       <div class="container text-center wow animate__animated animate__zoomIn">
         <span class="subhead">Let's make your life happier</span>
         <h1 class="display-4">Healthy Living</h1>
-        <a href="#" class="btn btn-primary">Let's Consult</a>
+        <a href="{{ route('servicef') }}" class="btn btn-primary">Đặt lịch khám</a>
       </div>
     </div>
   </div>
@@ -474,7 +471,7 @@
             <div class="card-service wow animate__animated animate__fadeInUp">
               <div class="circle-shape bg-secondary text-white">
                 <i class="fas fa-comments"></i>              </div>
-              <p><span>Chat</span> with a doctors</p>
+              <p><span>Trò chuyện</span> với bác sĩ</p>
             </div>
           </div>
           <div class="col-md-4 py-3 py-md-0">
@@ -482,7 +479,7 @@
               <div class="circle-shape bg-primary text-white">
                 <i class="fas fa-check-square"></i>
               </div>
-              <p><span>One</span>-Health Protection</p>
+              <p><span>Chữa</span> trị </p>
             </div>
           </div>
           <div class="col-md-4 py-3 py-md-0">
@@ -490,7 +487,7 @@
               <div class="circle-shape bg-accent text-white">
                 <i class="fas fa-shopping-bag"></i>
               </div>
-              <p><span>One</span>-Health Pharmacy</p>
+              <p><span>Khám</span> bệnh</p>
             </div>
           </div>
         </div>
@@ -501,9 +498,9 @@
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-6 py-3 wow animate__animated animate__fadeInUp">
-            <h1>Welcome to Your Health <br> Center</h1>
-            <p class="text-grey mb-4">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Accusantium aperiam earum ipsa eius, inventore nemo labore eaque porro consequatur ex aspernatur. Explicabo, excepturi accusantium! Placeat voluptates esse ut optio facilis!</p>
-            <a href="about.html" class="btn btn-primary">Learn More</a>
+            <h1>Trung tâm bệnh viện<br> </h1>
+            <p class="text-grey mb-4"> Cung cấp dịch vụ đặt lịch khám bệnh và tư vấn sức khỏe trực tuyến tại bệnh viện hàng đầu Việt Nam giúp người dùng tự lựa chọn dịch vụ và bác sĩ theo nhu cầu của mình.</p>
+            <a href="about.html" class="btn btn-primary">Đọc thêm</a>
           </div>
           <div class="col-lg-6 wow animate__animated animate__fadeInRight" data-wow-delay="400ms">
             <div class="img-place custom-img-1">
@@ -517,7 +514,7 @@
 
   <div class="page-section">
     <div class="container">
-      <h1 class="text-center mb-5 wow animate__animated animate__fadeInUp">Our Doctors</h1>
+      <h1 class="text-center mb-5 wow animate__animated animate__fadeInUp">Đội ngũ bác sĩ</h1>
 
       <div class="owl-carousel wow animate__animated animate__fadeInUp" id="doctorSlideshow">
         <div class="item">
@@ -684,42 +681,7 @@
     </div>
   </div> <!-- .page-section -->
 
-  <div class="page-section">
-    <div class="container">
-      <h1 class="text-center wow animate__animated animate__fadeInUp">Make an Appointment</h1>
-
-      <form class="main-form">
-        <div class="row mt-5 ">
-          <div class="col-12 col-sm-6 py-2 wow animate__animated animate__fadeInLeft">
-            <input type="text" class="form-control" placeholder="Full name">
-          </div>
-          <div class="col-12 col-sm-6 py-2 wow animate__animated animate__fadeInRight">
-            <input type="text" class="form-control" placeholder="Email address..">
-          </div>
-          <div class="col-12 col-sm-6 py-2 wow animate__animated animate__fadeInLeft" data-wow-delay="300ms">
-            <input type="date" class="form-control">
-          </div>
-          <div class="col-12 col-sm-6 py-2 wow animate__animated animate__fadeInRight" data-wow-delay="300ms">
-            <select name="departement" id="departement" class="custom-select">
-              <option value="general">General Health</option>
-              <option value="cardiology">Cardiology</option>
-              <option value="dental">Dental</option>
-              <option value="neurology">Neurology</option>
-              <option value="orthopaedics">Orthopaedics</option>
-            </select>
-          </div>
-          <div class="col-12 py-2 wow animate__animated animate__fadeInUp" data-wow-delay="300ms">
-            <input type="text" class="form-control" placeholder="Number..">
-          </div>
-          <div class="col-12 py-2 wow animate__animated animate__fadeInUp" data-wow-delay="300ms">
-            <textarea name="message" id="message" class="form-control" rows="6" placeholder="Enter message.."></textarea>
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary mt-3 wow animate__animated animate__zoomIn">Submit Request</button>
-      </form>
-    </div>
-  </div> <!-- .page-section -->
+  
 
   <div class="page-section banner-home bg-image" style="background-image: url({{ asset('main/image/banner-pattern.svg') }});">
     <div class="container py-5 py-lg-0">

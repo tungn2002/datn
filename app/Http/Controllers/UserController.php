@@ -11,6 +11,7 @@ use App\Models\Clinic;
 use Carbon\Carbon;
 use App\Models\MedicalResult;
 use App\Models\Prescription;
+use App\Models\PrescriptionMedicine;
 
 use Illuminate\Support\Str; 
 use Illuminate\Support\Facades\Mail;
@@ -430,9 +431,13 @@ public function lichlamviecdetail($id)
     ->whereIn('medicalresults.status', ['đã thanh toán', 'đã khám'])
     ->first();
 $dk=null;
-    if( $updatekq->status=='đã khám'){
-        $dk=$updatekq->id_result;
+
+    if($updatekq){
+        if($updatekq->status=='đã khám'){
+                    $dk=$updatekq->id_result;
+        }
     }
+
     return view('doctor_2detail', [
         'patientRecords' => $patientRecords,'updatekq'=>$updatekq, 'dk'=>$dk
     ]);
@@ -488,8 +493,94 @@ public function themdonthuoc($id)
     ->where('medicalresults.id_result', $id)
     ->first();
 
+    $medi= DB::table('medicines')
+    ->whereNotIn('id_medicine', function($query) use ($mr) {
+        $query->select('id_medicine')
+              ->from('prescription_medicines')
+              ->where('id_prescription', $mr->id_prescription);
+    })
+    ->get();
+
+    $pm=DB::table('prescription_medicines')
+    ->where('prescription_medicines.id_prescription', $mr->id_prescription)
+    ->get();
     return view('doctor_2donthuoc', [
-        'mr' => $mr
+        'mr' => $mr,'medi'=>$medi,'pm'=>$pm
     ]);
+}
+
+public function capnhatdt(Request $request,$id)
+{
+    $validatedData = $request->validate([
+        'id_medicine' => 'required',
+        'information' => 'required',
+
+        
+    ], [
+        'id_medicine.required' => 'Chưa chọn thuốc.',
+        'information.required' => 'Chưa nhập liều lượng.',
+    ]);
+
+    $pm=new PrescriptionMedicine;
+    $pm->id_prescription=$id;
+    $pm->id_medicine=$request->id_medicine;
+    $pm->information=$request->information;
+    $pm->save();
+
+    $pr = Prescription::find($id);
+
+    $pr->day= Carbon::now()->format('Y-m-d');
+    $pr->update();
+    return redirect()->back()->with('message', 'Cập nhật thuốc thành công');
+}
+
+
+public function capnhatttdt(Request $request,$id)
+{
+    $validatedData = $request->validate([
+        'name' => 'required',
+        'diagnostic' => 'required',
+
+        
+    ], [
+        'detail.required' => 'Tên là bắt buộc.',
+        'diagnostic.required' => 'Chuẩn đoán là bắt buộc.',
+    ]);
+
+   
+
+//
+
+    $pr = Prescription::find($id);
+
+    $pr->name=$request->name;
+    $pr->diagnostic=$request->diagnostic;
+    $pr->day= Carbon::now()->format('Y-m-d');
+
+
+    $pr->update();
+
+   
+    return redirect()->back()->with('message', 'Cập nhật kết quả khám bệnh thành công');
+}
+
+public function xoadtd(Request $request)
+{
+    $request->validate([
+        'id_prescription'=>'required',
+        'id_medicine'=>'required',
+
+    ],[
+    'id_prescription.required'=>'Hãy chọn thuốc cần xóa',
+    'id_medicine.required'=>'Hãy chọn thuốc cần xóa',
+
+    ]);
+
+    PrescriptionMedicine::where('id_prescription', $request->id_prescription)
+    ->where('id_medicine', $request->id_medicine)
+    ->delete();
+
+    return redirect()->back()->with('message', 'Xóa thành công');
+
 }
     }   

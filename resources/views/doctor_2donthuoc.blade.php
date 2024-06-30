@@ -121,47 +121,51 @@
             <div class="custom-div" style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; margin-bottom: 10px;">
     @isset($mr)
     <p>Mã đơn: {{$mr->id_pre}}</p>
-    <p>Tên: {{$mr->name}}</p>
+    <p>Tên bệnh nhân: {{$mr->name}}</p>
     <p>Chuẩn đoán: {{$mr->diagnostic}}</p>
     @endisset
 </div>
 <div class="custom-div" style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; margin-bottom: 10px;">
 <h4>Cập nhật thông tin đơn thuốc</h4>
+@isset($mr)
 
-<form id="editForm" action=""  method="POST">
+<form id="editForm" action="{{ url('capnhatttdt/'.$mr->id_pre) }}"  method="POST">
                 @csrf
 
                 <div class="mb-3">
-                        <label for="hospitalname" class="form-label"> Tên đơn: </label>
-                        <input type="text" class="form-control" id="id_medicine" name="name">
+                        <label for="hospitalname" class="form-label"> Tên bệnh nhân: </label>
+                        <input type="text" class="form-control" id="name" name="name">
                     </div>
                     <div class="mb-3">
                         <label for="address" class="form-label">Chuẩn đoán: </label>
                         <input type="text" class="form-control" id="address" name="diagnostic">
                     </div> 
                
-                <button type="submit" class="btn btn-primary" id="btnUpdate">Cập nhật thông tin đơn</button>
+                <button type="submit" class="btn btn-primary">Cập nhật thông tin đơn</button>
             </div>
                 </form>
+                @endisset
+
 </div>
 
 <h4>Kê thuốc</h4>
 <div class="custom-div" style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; margin-bottom: 10px;">
+@isset($mr)
 
-<form id="editForm" action=""  method="POST">
+<form id="editForm" action="{{ url('capnhatdt/'.$mr->id_pre) }}"  method="POST">
                 @csrf
 
                 <div class="row mb-3">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Thuốc:</label>
                                 <div class="col-sm-10">
 
-                                    @empty($service)
+                                    @empty($medi)
                                     @endempty
-                                    <select class="inp-tmnv form-select" name="id_service" id="phongban" >
+                                    <select class="inp-tmnv form-select" name="id_medicine" id="phongban" >
                                         <option value=""></option> 
-                                        @isset($service)
-                                            @foreach ($service as $item)
-                                            <option value="{{$item->id_service}}">{{$item->servicename}}</option>
+                                        @isset($medi)
+                                            @foreach ($medi as $item)
+                                            <option value="{{$item->id_medicine}}">{{$item->medicinename}}</option>
                                             @endforeach
                                         @endisset
                                     </select>
@@ -170,17 +174,35 @@
                                     </div>
                     <div class="mb-3">
                         <label for="address" class="form-label">Liều lượng: </label>
-                        <input type="text" class="form-control" id="address" name="diagnostic">
+                        <input type="text" class="form-control" id="address" name="information">
                     </div> 
                     <div class="row mb-3">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Thuốc:</label>
                                 <div class="col-sm-10">
                     
                     <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="btnUpdate">Cập nhật thông tin đơn</button>
+                <button type="submit" class="btn btn-primary" id="btnUpdate">Cập nhật đơn thuốc</button>
             </div>
                 </form>
+                @endisset
+
 </div>
+
+
+@if (\Session::has('message'))
+                        <div class="alert alert-success">
+                        <strong>{!! \Session::get('message') !!}</strong>
+                        </div>
+                    @endif
+                    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 </div>
 <table class="table table-striped custab mt-4">
     <thead>
@@ -191,15 +213,15 @@
         </tr>
     </thead>
     
-    @isset($clinic)
-                            @foreach ($clinic as $item)
+    @isset($pm)
+                            @foreach ($pm as $item)
                             <tr>
                         
-                                <td>{{$item->id_service}}</td>
-                                <td>{{$item->id_user}}</td>
+                                <td>{{$item->id_prescription}}</td>
+                                <td>{{$item->id_medicine}}</td>
 
                                 <td class="text-center">       
-                                    <button class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$item->id_clinic}}">Xóa</button>
+                                    <button class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$item->id_prescription}}-{{$item->id_medicine}}">Xóa lay ca 2 id</button>
                                 </td>
                             </tr>
                          
@@ -245,21 +267,6 @@
 
 @endisset
 
-
-@if (\Session::has('message'))
-                        <div class="alert alert-success">
-                        <strong>{!! \Session::get('message') !!}</strong>
-                        </div>
-                    @endif
-                    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
 @isset($dk)
 <a href="" class="btn btn-primary"> Đơn thuốc </a>
 
@@ -270,7 +277,28 @@
             <!-- Blank End -->
 
 
-   
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="POST" action="{{ route('xoadtd') }}" id="deleteForm"> 
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Xác nhận xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có chắc chắn muốn xóa dịch vụ này này?
+                    <input type="hidden" name="id_prescription" id="hospitalIdInput">
+                    <input type="hidden" name="id_medicine" id="hospitalIdInput2">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                    <button type="submit" class="btn btn-danger">Có, xóa!</button> </div>
+            </div>
+        </form>
+    </div>
+</div>
         </div>
         <!-- Content End -->
   
@@ -294,5 +322,25 @@
     <script src="{{ asset('ad/main.js') }}"></script>
 
 </body>
+<script>
+  $(document).ready(function() {
+    $('#deleteModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Nút "Xóa" được click
+        var hospitalId = button.data('id').split('-'); // Lấy ID từ data-id của nút
+
+
+        const prescriptionId = hospitalId[0];
+        const medicineId = hospitalId[1];
+
+
+        var modal = $(this);
+        modal.find('#hospitalIdInput').val(prescriptionId); // Điền ID vào input
+         modal.find('#hospitalIdInput2').val(medicineId);
+        // Cập nhật action của form
+        var form = modal.find('#deleteForm');
+        form.attr('action', form.attr('action').replace(':hospitalId', hospitalId)); 
+    });
+});
+</script>
 
 </html>
