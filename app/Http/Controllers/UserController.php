@@ -200,20 +200,69 @@ class UserController extends Controller
             if (Auth::check() && Auth::User()->id_role==2) {
                      $user=Auth::User();
 //
-               $patientRecords = PatientRecord::where('id_user', Auth::User()->id_user)->paginate(2);
                $results = DB::table('medicalresults')
                ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
                ->join('users', 'patientrecords.id_user', '=', 'users.id_user')
                ->where('users.id_user', Auth::User()->id_user)
+               ->where('medicalresults.status', 'chờ duyệt')
                ->select('medicalresults.*')
                ->paginate(2);
-                    return view('profile3',['user'=>$user,'patientRecords'=>$patientRecords,'results'=>$results]);
+                    return view('profile3',['results'=>$results]);
             } else {
                 return redirect()->route('login')->with('message', 'Bạn chưa đăng nhập');
 
             }
         }
 
+        public function profile32(){
+            if (Auth::check() && Auth::User()->id_role==2) {
+                     $user=Auth::User();
+//
+               $results = DB::table('medicalresults')
+               ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
+               ->join('users', 'patientrecords.id_user', '=', 'users.id_user')
+               ->where('users.id_user', Auth::User()->id_user)
+               ->where('medicalresults.status', 'chưa thanh toán')
+               ->select('medicalresults.*')
+               ->paginate(2);
+                    return view('profile32',['results'=>$results]);
+            } else {
+                return redirect()->route('login')->with('message', 'Bạn chưa đăng nhập');
+
+            }
+        }
+
+        public function profile33(){
+            if (Auth::check() && Auth::User()->id_role==2) {
+                     $user=Auth::User();
+//
+                $statuses = ['đã khám', 'đã thanh toán'];
+                $results = DB::table('medicalresults')
+               ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
+               ->join('users', 'patientrecords.id_user', '=', 'users.id_user')
+               ->where('users.id_user', Auth::User()->id_user)
+               ->whereIn('medicalresults.status', $statuses)
+               ->select('medicalresults.*')
+               ->paginate(2);
+                    return view('profile33',['results'=>$results]);
+            } else {
+                return redirect()->route('login')->with('message', 'Bạn chưa đăng nhập');
+
+            }
+        }
+       
+        //
+        public function xoaddk(Request $request)
+        {
+            $request->validate([
+                'id_result' => 'required|exists:medicalresults,id_result',
+            ]);
+    
+            $medicalResult = MedicalResult::find($request->id_result);
+            $medicalResult->delete();
+            return redirect()->back()->with('message', 'Xóa đơn bệnh thành công');
+        }
+    
 
         public function editprofile(Request $request)
         {
@@ -358,7 +407,7 @@ public function lichlamviec()
 
     $userId = Auth::user()->id_user;
 
-    $statuses = ['chưa thanh toán', 'đã thanh toán'];
+    $statuses = ['chưa thanh toán', 'đã thanh toán','đã khám'];
 
     $mrRecords = DB::table('appointments')
     ->join('clinics', 'appointments.id_clinic', '=', 'clinics.id_clinic')
@@ -385,7 +434,7 @@ public function lichlamviecf($date)
     $userId = Auth::user()->id_user;
   
   
-    $statuses = ['chưa thanh toán', 'đã thanh toán'];
+    $statuses = ['chưa thanh toán', 'đã thanh toán', 'đã khám'];
 
     $mrRecords = DB::table('appointments')
     ->join('clinics', 'appointments.id_clinic', '=', 'clinics.id_clinic')
@@ -404,7 +453,9 @@ public function lichlamviecf($date)
     ->join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
     ->where(function($query) {
         $query->where('medicalresults.status', 'chưa thanh toán')
-              ->orWhere('medicalresults.status', 'đã thanh toán');
+              ->orWhere('medicalresults.status', 'đã thanh toán')
+              ->orWhere('medicalresults.status', 'đã khám');
+
     })
     ->where('appointments.id_clinic', $clinic->id_clinic)
     ->where('appointments.day', Carbon::createFromFormat('m-d-Y', $date)->format('Y-m-d'))

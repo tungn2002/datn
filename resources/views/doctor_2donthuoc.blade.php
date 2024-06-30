@@ -299,6 +299,10 @@
         </form>
     </div>
 </div>
+@isset($mr)
+
+<a class="btn btn-primary"  href="{{ route('pdf', ['id' => $mr->id_pre]) }}">In đơn thuốc</a>
+@endisset
         </div>
         <!-- Content End -->
   

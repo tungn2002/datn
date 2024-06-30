@@ -236,8 +236,8 @@
 
   <h2>Danh sách đơn đặt khám</h2>
  
-  <a href=" {{ route('profile3') }}" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Chờ duyệt</a>
-  <a href=" {{ route('profile32') }}" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #00FFFF 0%, #00FFFF 100%);">Chưa thanh toán</a>
+  <a href=" {{ route('profile3') }}" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left,#00FFFF 0%, #00FFFF  100%);">Chờ duyệt</a>
+  <a href=" {{ route('profile32') }}" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left,#4cf5bc 0%, #07d590 100%);">Chưa thanh toán</a>
   <a href=" {{ route('profile33') }}" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #00FFFF 0%, #00FFFF 100%);">Đã thanh toán và đã khám</a>
 
 
@@ -265,8 +265,7 @@
             </nav>
         </div>
     @endisset
-
-  
+    
 
 <!-- Modal xác nhận xóa -->
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -292,7 +291,6 @@
     </div>
   </div>
 </div>
-
 
     </div>
     
@@ -414,6 +412,7 @@
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIA_zqjFMsJM_sxP9-6Pde5vVCTyJmUHM&callback=initMap"></script>
  
+
 <script>
   $(document).ready(function() {
     $('.btn-delete').on('click', function() {

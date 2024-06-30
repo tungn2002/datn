@@ -44,6 +44,7 @@
 					
 						<div>Chưa có tài khoản?
 							<a href="{{ route('register') }}" class="register-link">Đăng ký</a>
+
 						</div>
 					</form>
 					@if (\Session::has('message'))

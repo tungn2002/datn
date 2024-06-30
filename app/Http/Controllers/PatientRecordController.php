@@ -179,4 +179,44 @@ class PatientRecordController extends Controller
             $pr->update();
             return redirect()->back()->with('message', 'Sửa thành công');
     }
+
+
+    public function xoahs(Request $request)
+    {
+        $request->validate(['id_pr' => 'required']);
+        PatientRecord::destroy($request->id_pr);
+        return redirect()->back()->with('message', 'Xóa thành công');
+    }
+
+    public function capnhaths(Request $request)
+    {
+        $request->validate([
+            'prname' => 'required',
+            'birthday' => 'required|date',
+            'phonenumber' => 'required',
+            'gender' => 'required|in:male,famale', 
+            'address' => 'required',
+        ], [
+            'prname.required' => 'Tên bệnh nhân là bắt buộc.',
+            'birthday.required' => 'Ngày sinh là bắt buộc.',
+            'birthday.date' => 'Ngày sinh phải là một ngày hợp lệ.',
+            'phonenumber.required' => 'Số điện thoại là bắt buộc.',
+            'gender.required' => 'Giới tính là bắt buộc.',
+            'gender.in' => 'Giới tính phải là nam, nữ.',
+            'address.required' => 'Địa chỉ là bắt buộc.',
+        ]);
+
+    
+            $pr = PatientRecord::findOrFail($request->id_pr);
+            $pr->prname=$request->prname;
+            $pr->birthday=$request->birthday;
+            $pr->phonenumber=$request->phonenumber;
+            $pr->gender=$request->gender;
+            $pr->address=$request->address;
+            $user = Auth::user();
+            $id = $user->id_user;
+            $pr->id_user=$id;        
+            $pr->update();
+            return redirect()->back()->with('message', 'Sửa thành công');
+    }
 }

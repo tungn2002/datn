@@ -236,9 +236,9 @@
 
   <h2>Danh sách đơn đặt khám</h2>
  
-  <a href=" {{ route('profile3') }}" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Chờ duyệt</a>
+  <a href=" {{ route('profile3') }}" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #00FFFF 0%, #00FFFF 100%);">Chờ duyệt</a>
   <a href=" {{ route('profile32') }}" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #00FFFF 0%, #00FFFF 100%);">Chưa thanh toán</a>
-  <a href=" {{ route('profile33') }}" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #00FFFF 0%, #00FFFF 100%);">Đã thanh toán và đã khám</a>
+  <a href=" {{ route('profile33') }}" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Đã thanh toán và đã khám</a>
 
 
     <div class="container mt-5">
@@ -251,7 +251,10 @@
               <p class="card-text">Ngày đặt: {{ $record->booking_date }}</p>
               <p class="card-text">Thông tin lịch khám:</p>
               <p class="card-text">Trạng thái: {{ $record->status }}</p>
-              <button type="button" class="btn btn-danger ms-2 btn-delete" data-id="{{ $record-> id_result }}">Xóa hồ sơ</button>
+              @if ($record->status === 'đã khám')
+                <a href="{{ route('pdff', ['id' => $record->id_result]) }}" class="btn btn-primary">Đơn thuốc</a>
+            @else
+            @endif
           </div>
       </div>
 
@@ -265,35 +268,6 @@
             </nav>
         </div>
     @endisset
-
-  
-
-<!-- Modal xác nhận xóa -->
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <form id="delete-form" action="{{ route('xoaddk') }}" method="POST">
-        @csrf
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa hồ sơ bệnh nhân</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Bạn có chắc chắn muốn xóa hồ sơ này?</p>
-          <input type="hidden" name="id_result" id="delete-id">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-          <button type="submit" class="btn btn-danger">Xóa</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-
     </div>
     
   </div>
@@ -414,20 +388,7 @@
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIA_zqjFMsJM_sxP9-6Pde5vVCTyJmUHM&callback=initMap"></script>
  
-<script>
-  $(document).ready(function() {
-    $('.btn-delete').on('click', function() {
-      var id = $(this).data('id');
-      $('#delete-id').val(id); // Thiết lập giá trị của input hidden
-      $('#confirm-delete').modal('show'); // Hiển thị modal xác nhận
-    });
 
-    // Xử lý sau khi form được submit
-    $('#delete-form').on('submit', function() {
-      // Không cần thêm xử lý JavaScript ở đây nếu không sử dụng Ajax
-    });
-  });
-</script>
 
 </body>
 </html>

@@ -262,9 +262,9 @@
               <p class="card-text">Địa chỉ: {{ $record->address }}</p>
               <hr>
               <div class="d-flex justify-content-end">
-                  <button type="button" class="btn btn-primary mr-2">Sửa hồ sơ</button>
-                  <button type="button" class="btn btn-danger ms-2"  >Xóa hồ sơ</button>
-              </div>
+              <button type="button" class="btn btn-primary mr-2 btn-edit" data-id="{{ $record->id_pr }}" data-name="{{ $record->prname }}" data-birthday="{{ $record->birthday }}" data-phone="{{ $record->phonenumber }}" data-gender="{{ $record->gender }}" data-address="{{ $record->address }}">Sửa hồ sơ</button>
+              <button type="button" class="btn btn-danger ms-2 btn-delete" data-id="{{ $record->id_pr }}">Xóa hồ sơ</button>
+                  </div>
           </div>
       </div>
     </div>
@@ -278,6 +278,82 @@
             </nav>
         </div>
     @endisset
+
+
+<!-- Modal xác nhận xóa -->
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form id="delete-form" action="{{ route('xoahs') }}" method="POST">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa hồ sơ bệnh nhân</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Bạn có chắc chắn muốn xóa hồ sơ này?</p>
+          <input type="hidden" name="id_pr" id="delete-id">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+          <button type="submit" class="btn btn-danger">Xóa</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal sửa hồ sơ -->
+<div class="modal fade" id="edit-profile-modal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form id="edit-form" action="{{ route('capnhaths') }}" method="POST">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProfileModalLabel">Sửa thông tin hồ sơ bệnh nhân</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="id_pr" id="edit-id">
+          <div class="form-group">
+            <label for="edit-name">Tên</label>
+            <input type="text" class="form-control" id="edit-name" name="prname" required>
+          </div>
+          <div class="form-group">
+            <label for="edit-birthday">Ngày sinh</label>
+            <input type="date" class="form-control" id="edit-birthday" name="birthday" required>
+          </div>
+          <div class="form-group">
+            <label for="edit-phone">Số điện thoại</label>
+            <input type="text" class="form-control" id="edit-phone" name="phonenumber" required>
+          </div>
+          <div class="form-group">
+            <label for="edit-gender">Giới tính</label>
+            <select class="form-control" id="edit-gender" name="gender" required>
+              <option value="male">Nam</option>
+              <option value="female">Nữ</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="edit-address">Địa chỉ</label>
+            <input type="text" class="form-control" id="edit-address" name="address" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+          <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
 </div>   
     </div>
     <!-- /.col-md-8 -->
@@ -386,8 +462,46 @@
 
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIA_zqjFMsJM_sxP9-6Pde5vVCTyJmUHM&callback=initMap"></script>
- 
+<script>
+  $(document).ready(function() {
+    $('.btn-delete').on('click', function() {
+      var id = $(this).data('id');
+      $('#delete-id').val(id); // Thiết lập giá trị của input hidden
+      $('#confirm-delete').modal('show'); // Hiển thị modal xác nhận
+    });
 
+    // Xử lý sau khi form được submit
+    $('#delete-form').on('submit', function() {
+      // Không cần thêm xử lý JavaScript ở đây nếu không sử dụng Ajax
+    });
+  });
+</script>
+<script>
+  $(document).ready(function() {
+    // Xử lý khi nhấn nút Sửa hồ sơ
+    $('.btn-edit').on('click', function() {
+      var id = $(this).data('id');
+      var name = $(this).data('name');
+      var birthday = $(this).data('birthday');
+      var phone = $(this).data('phone');
+      var gender = $(this).data('gender');
+      var address = $(this).data('address');
 
+      $('#edit-id').val(id);
+      $('#edit-name').val(name);
+      $('#edit-birthday').val(birthday);
+      $('#edit-phone').val(phone);
+      $('#edit-gender').val(gender);
+      $('#edit-address').val(address);
+
+      $('#edit-profile-modal').modal('show');
+    });
+
+    // Xử lý sau khi form sửa được submit
+    $('#edit-form').on('submit', function() {
+      // Không cần thêm xử lý JavaScript ở đây nếu không sử dụng Ajax
+    });
+  });
+</script>
 </body>
 </html>

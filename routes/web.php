@@ -10,6 +10,7 @@ use App\Http\Controllers\ClinicController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PMController;
 use App\Http\Controllers\PrescriptionController;
+use App\Http\Controllers\PdfController;
 
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PatientRecordController;
@@ -46,6 +47,10 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::get('/profile2', [UserController::class, 'profile2'])->name('profile2');
 Route::get('/profile3', [UserController::class, 'profile3'])->name('profile3');
+Route::get('/profile32', [UserController::class, 'profile32'])->name('profile32');
+Route::get('/profile33', [UserController::class, 'profile33'])->name('profile33');
+
+Route::post('/xoaddk', [UserController::class, 'xoaddk'])->name('xoaddk');
 
 
 ///
@@ -159,12 +164,16 @@ Route::post('capnhatmr/id={id}', [MedicalResultController::class, 'update'])->na
 
 
 
-//pr ho so user
+//pr
 Route::get('/themhoso', [PatientRecordController::class, 'themhoso'])->name('themhoso');
 
 Route::post('/addhoso', [PatientRecordController::class, 'addhoso']);
 Route::post('/xoahoso', [PatientRecordController::class, 'destroy'])->name('xoahoso');
 Route::post('capnhathoso/id={id}', [PatientRecordController::class, 'update'])->name('capnhathoso');
+
+//user
+Route::post('capnhaths/', [PatientRecordController::class, 'capnhaths'])->name('capnhaths');
+Route::post('/xoahs', [PatientRecordController::class, 'destroy'])->name('xoahs');
 
 //employ
 Route::get('/empl', [UserController::class, 'empl'])->name('empl');
@@ -191,3 +200,9 @@ Route::post('capnhatttdt/{id}', [UserController::class, 'capnhatttdt'])->name('c
 Route::post('capnhatdt/{id}', [UserController::class, 'capnhatdt'])->name('capnhatdt');
 
 Route::post('/xoadtd', [UserController::class, 'xoadtd'])->name('xoadtd');
+
+
+
+//pdf:
+Route::get('/pdf/{id}', [PdfController::class, 'pdf'])->name('pdf');
+Route::get('/pdff/{id}', [PdfController::class, 'pdff'])->name('pdff');
