@@ -440,35 +440,33 @@
         <div class="container">
 
         <div class="container">      
-        <div class="row d-flex align-items-stretch" >
-        <div class="col-md-8 col-xl-6 chat" >
-					<div class="card" style="	
+        		<div class="row d-flex align-items-stretch" >
+        			<div class="col-md-8 col-xl-6 chat" ><div class="card" style="	
 	       background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
 	        background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);">
-						<div class="card-header msg_head">
-							<div class="d-flex bd-highlight">
-								<div class="img_cont">
-									<img src="{{ asset('anhnv.png') }}" class="rounded-circle user_img">
-									<span class="online_icon"></span>
-								</div>
-								<div class="user_info">
-									<span>    @isset($u)
-                          
-										Chat với {{$u->name}}
-											@endisset
-									</span>
-								</div>
+									<div class="card-header msg_head">
+											<div class="d-flex bd-highlight">
+												<div class="img_cont">
+													<img src="{{ asset('anhnv.png') }}" class="rounded-circle user_img">
+													<span class="online_icon"></span>
+												</div>
+												<div class="user_info">
+													<span>    @isset($u)
+										
+														Chat với {{$u->name}}
+															@endisset
+													</span>
+												</div>
+											</div>
+										<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
+									</div>
+
+							<div class="card-body msg_card_body" id="sc">
+							<div id="message-container">
+								<!-- Messages will be dynamically loaded here -->
 							</div>
-							<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
-						
-						</div>
-						<div class="card-body msg_card_body" id="sc">
-						<div id="message-container">
-							<!-- Messages will be dynamically loaded here -->
-						</div>
+							</div>
 
-
-						</div>
 						<form action="{{ url('addmessage') }}" method="post" id="addpost">
 							@csrf
 						<div class="card-footer">
@@ -483,9 +481,10 @@
 								</div>
 							</div>
 						</div></form>
+
 					</div>
 				</div>
-    </div>
+    	</div>
 
 
      

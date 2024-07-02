@@ -227,3 +227,13 @@ Route::get('/messages/{conversation_id}', [ConsultController::class, 'getMessage
 //
 //cho all
 Route::post('/addmessage', [ConsultController::class, 'addmessage']);
+
+
+Route::get('/trochuyenempl', [ConsultController::class, 'trochuyenempl'])->name('trochuyenempl');
+Route::get('/chatempl/{id}', [ConsultController::class, 'chatempl'])->name('chatempl');
+
+Route::get('/trochuyenemplAjax', [ConsultController::class, 'trochuyenemplAjax'])->name('trochuyenemplAjax');
+
+//nhanvine 
+Route::get('/messages2/{conversation_id}', [ConsultController::class, 'getMessages2'])->name('messages2.get');
+Route::post('/addmessage2', [ConsultController::class, 'addmessage2']);
