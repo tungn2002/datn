@@ -9,12 +9,12 @@ class Message extends Model
 {
     use HasFactory;
     protected $table = 'messages';
-
+    protected $primaryKey = 'id_message';
+    public $timestamps = false;
     protected $fillable = [
         'content',
-        'time',
-        'status',
         'id_cons',
+        'status',
         'sender_id', // Consult ID
     ];
 }

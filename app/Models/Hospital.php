@@ -10,12 +10,12 @@ class Hospital extends Model
     use HasFactory;
     protected $table = 'hospitals';
     protected $primaryKey = 'id_hospital';
+    public $timestamps = false;
 
     protected $fillable = [
         'hospitalname',
         'address',
     ];
 
-    public $timestamps = false;
 
 }

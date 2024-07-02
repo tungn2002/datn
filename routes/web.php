@@ -11,6 +11,9 @@ use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PMController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\ConsultController;
+
+use App\Http\Controllers\OnlineCheckoutController;
 
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PatientRecordController;
@@ -206,3 +209,21 @@ Route::post('/xoadtd', [UserController::class, 'xoadtd'])->name('xoadtd');
 //pdf:
 Route::get('/pdf/{id}', [PdfController::class, 'pdf'])->name('pdf');
 Route::get('/pdff/{id}', [PdfController::class, 'pdff'])->name('pdff');
+
+//tro chuyen
+Route::get('/trochuyenuser', [ConsultController::class, 'trochuyenuser'])->name('trochuyenuser');
+
+
+//thnahtoan
+Route::post('/online-checkout', [OnlineCheckoutController::class, 'online_checkout'])->name('online-checkout');
+
+
+Route::get('/xacnhanchat', [ConsultController::class, 'xacnhanchat'])->name('xacnhanchat');
+Route::get('/chatuser', [ConsultController::class, 'chatuser'])->name('chatuser');
+Route::get('/chatuser/{id}', [ConsultController::class, 'chatuser'])->name('chatuser');
+
+//
+Route::get('/messages/{conversation_id}', [ConsultController::class, 'getMessages'])->name('messages.get');
+//
+//cho all
+Route::post('/addmessage', [ConsultController::class, 'addmessage']);

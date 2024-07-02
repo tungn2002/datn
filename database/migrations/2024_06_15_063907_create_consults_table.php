@@ -16,10 +16,6 @@ return new class extends Migration
             
             $table->unsignedInteger('user1_id'); // Khóa ngoại đến users
             $table->unsignedInteger('user2_id'); // Khóa ngoại đến users
-            $table->string('name');
-            $table->dateTime('date_payment');
-            $table->dateTime('end');
-            $table->double('price');
             $table->unsignedInteger('id_prescription')->nullable(); // Khóa ngoại đến prescription (cho phép null)
 
             $table->foreign('user1_id')->references('id_user')->on('users');

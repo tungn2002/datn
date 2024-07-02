@@ -9,12 +9,11 @@ class Consult extends Model
 {
     use HasFactory;
     protected $table = 'consults';
-
+    protected $primaryKey = 'id_cons';
+    public $timestamps = false;
     protected $fillable = [
-        'name',
-        'date_payment',
-        'end',
-        'price',
+      'user1_id',
+      'user2_id',
         'id_prescription', // Prescription ID (optional)
     ];
 }

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('avatar')->nullable(); // Cho phép giá trị null
             $table->unsignedInteger('id_role'); // Khóa ngoại (integer unsigned)
             $table->string('signature')->nullable();
+            $table->double('price')->nullable();
+
             $table->unsignedInteger('id_specialist')->nullable();
             $table->string('token')->nullable();
 
