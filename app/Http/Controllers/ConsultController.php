@@ -210,4 +210,66 @@ $otherIdConsults = DB::table('messages')
         $m->save();
         return response()->json([]);
     }
+
+    //bacsi
+    public function chatuser2($id){
+      
+                $con=Consult::where('user1_id', Auth::User()->id_user)->where('user2_id', $id)->first();
+                
+                $message = Message::where('id_cons', $con->id_cons)->get();
+        //thong tin người muốn chat
+
+                $u = User::where('id_user',$id)->first();
+        
+                return view('chatuser2', ['u' => $u,'message' => $message,'idcon'=>$con->id_cons]);
+            }
+
+            public function trochuyendoctor(){
+     
+
+                // Lấy danh sách các id_consult chưa xem
+                $idConsults = DB::table('messages')
+                ->select('id_cons')
+                ->distinct()
+                ->where('status', 'chưa xem')
+                ->pluck('id_cons')
+                ->toArray();
+         
+         // Lấy danh sách các id_consult đã xem
+         $otherIdConsults = DB::table('messages')
+                    ->select('id_cons')
+                    ->distinct()
+                    ->whereNotIn('id_cons', $idConsults)
+                    ->pluck('id_cons')
+                    ->toArray();
+         
+                    //người chưa đọc
+                    $results1 = Consult::select('consults.*', 'users.name as name')
+                    ->join('users', 'consults.user1_id', '=', 'users.id_user')
+                    ->where('consults.user2_id',Auth::User()->id_user )
+                    ->whereIn('consults.id_cons',$idConsults )
+                     ->get();
+                         //người đã đọc
+                    $results2 = Consult::select('consults.*', 'users.name as name')
+                    ->join('users', 'consults.user1_id', '=', 'users.id_user')
+                    ->where('consults.user2_id',Auth::User()->id_user )
+                    ->whereIn('consults.id_cons',$otherIdConsults )
+                     ->get();
+         /*  
+                     
+         */
+                 return view('trochuyendoctor',['results1' => $results1,'results2' => $results2]);
+                 
+             }
+             public function chatdoctor($id){
+                //
+                $con=Consult::where('id_cons',$id)->first();
+        
+        
+                $message = Message::where('id_cons', $con->$id)->get();
+                //thong tin người muốn chat
+                        $u = User::where('id_user', $con->user1_id)->first();
+                
+                        return view('chatdoctor', ['u' => $u,'message' => $message,'idcon'=>$id]);
+            }
 }

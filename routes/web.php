@@ -237,3 +237,15 @@ Route::get('/trochuyenemplAjax', [ConsultController::class, 'trochuyenemplAjax']
 //nhanvine 
 Route::get('/messages2/{conversation_id}', [ConsultController::class, 'getMessages2'])->name('messages2.get');
 Route::post('/addmessage2', [ConsultController::class, 'addmessage2']);
+
+
+
+//bacsi
+Route::get('/chatuser2/{id}', [ConsultController::class, 'chatuser2'])->name('chatuser2');
+
+Route::get('/pdff2/{id}', [PdfController::class, 'pdff2'])->name('pdff2');
+
+Route::get('/trochuyendoctor', [ConsultController::class, 'trochuyendoctor'])->name('trochuyendoctor');
+
+Route::get('/chatdoctor/{id}', [ConsultController::class, 'chatdoctor'])->name('chatdoctor');
+Route::get('/themdonthuoc2/{id}', [UserController::class, 'themdonthuoc2'])->name('themdonthuoc2');

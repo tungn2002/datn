@@ -634,4 +634,33 @@ public function xoadtd(Request $request)
     return redirect()->back()->with('message', 'Xóa thành công');
 
 }
+
+//khi chat
+
+public function themdonthuoc2($id)
+{
+//chi co 1 don
+$mrz=DB::table('consults') ->where('consults.id_cons', $id)->first();
+
+
+    $mr=DB::table('prescriptions')
+    ->where('id_pre', $mrz->id_prescription)
+    ->first();
+
+    //thuoc list
+    $medi= DB::table('medicines')
+    ->whereNotIn('id_medicine', function($query) use ($mrz) {
+        $query->select('id_medicine')
+              ->from('prescription_medicines')
+              ->where('id_prescription', $mrz->id_prescription);
+    })
+    ->get();
+    //donthuoc
+    $pm=DB::table('prescription_medicines')
+    ->where('prescription_medicines.id_prescription', $mrz->id_prescription)
+    ->get();
+    return view('doctor_2donthuoc', [
+        'mr' => $mr,'medi'=>$medi,'pm'=>$pm
+    ]);
+}
     }   
