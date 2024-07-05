@@ -51,10 +51,10 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100" >
-                <a href="" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="{{ route('empl_choduyet') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Xác nhận đơn</a>
+                <a href="{{ route('empl') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('empl_choduyet') }}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Xác nhận đơn</a>
 
-                    <a href="" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Trò chuyên</a>
+                    <a href="{{ route('trochuyenempl') }}" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Trò chuyên</a>
                 
 
                 </div>
@@ -96,7 +96,7 @@
             <h1>Các đơn đang chờ thanh toán</h1>
             <a href="{{ route('empl_choduyet') }}" class="btn btn-primary" style="border-radius: 2rem ;">Chờ duyệt</a>
   <a href="{{ route('empl_chothanhtoan') }}" type="button" class="btn btn-primary"  style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Thanh toán</a>
-  <a href="{{ route('empl_dathanhtoan') }}" type="button" class="btn btn-primary"  style="border-radius: 2rem ;">Đã thanh toán</a>  <table class="table table-striped custab mt-4">
+  <a href="{{ route('empl_dathanhtoan') }}" type="button" class="btn btn-primary"  style="border-radius: 2rem ;">Đã thanh toán</a>  <table class="table table-striped custab mt-4 table-bordered">
         <thead>
             <tr>
                 <th>ID</th>

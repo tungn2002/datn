@@ -18,13 +18,13 @@
 						<img src="{{ asset('image/logo.png') }}" width="150px">
 					</div>
 					<div class="heading mb-3">
-						<h4>Create an account</h4>
+						<h4>Tạo tài khoản</h4>
 					</div>
 					<form action="{{ url('dangky') }}" method="post" >
 					@csrf
 						<div class="form-input">
 							<span><i class="fa fa-user"></i></span>
-							<input name="name" type="text" placeholder="Tên" required>
+							<input name="name" type="text" placeholder="Tên" required maxlength="20" title="Tên không được vượt quá 20 ký tự">
 						</div>
 						<div class="form-input">
 							<span><i class="fa fa-user"></i></span>
@@ -36,7 +36,7 @@
 						</div>
 						<div class="form-input">
 							<span><i class="fa fa-lock"></i></span>
-							<input name="password" type="password" placeholder="Mật khẩu" required>
+							<input name="password" type="password" placeholder="Mật khẩu" required  minlength="6" title="Mật khẩu dài hơn 6 ký tự">
 						</div>
 						<div class="row mb-3">
 							<div class="col-12 d-flex">

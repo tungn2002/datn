@@ -30,18 +30,49 @@ class ConsultController extends Controller
         ->toArray();
 
         $chuachat = User::where('id_role', 3)
+        ->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
         ->whereNotIn('id_user', $u1)
         ->paginate(5);
 
         //nguoi da tro chuyen
         
         $dachat = User::where('id_role', 3)
+        ->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
         ->whereIn('id_user', $u1)
         ->paginate(5);
 
         return view('trochuyenuser', ['nv' => $nv,'chuachat' => $chuachat,'dachat' => $dachat]);
     }
+    public function finddoctorchat(Request $request){
+     
+        $nv = User::where('id_role', 4)->paginate(5);
 
+        //nguoi chua tro chuyen
+
+        $u1 = DB::table('consults')
+        ->select('consults.user2_id')
+        ->join('users', 'consults.user2_id', '=', 'users.id_user')
+        ->where('consults.user1_id', Auth::User()->id_user)
+        ->where('users.id_role', 3)
+        ->distinct()
+        ->pluck('consult.user2_id')
+        ->toArray();
+
+        $chuachat = User::where('id_role', 3)
+        ->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
+        ->whereNotIn('id_user', $u1)
+        ->where('name','like','%'.$request->dl.'%')
+        ->paginate(5);
+
+        //nguoi da tro chuyen
+        
+        $dachat = User::where('id_role', 3)
+        ->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
+        ->whereIn('id_user', $u1)
+        ->paginate(5);
+
+        return view('trochuyenuser', ['nv' => $nv,'chuachat' => $chuachat,'dachat' => $dachat]);
+    }
 
     public function xacnhanchat(Request $request){
         $user=Auth::User();
@@ -272,4 +303,44 @@ $otherIdConsults = DB::table('messages')
                 
                         return view('chatdoctor', ['u' => $u,'message' => $message,'idcon'=>$id]);
             }
+
+            public function index(){
+
+        
+                $consult = Consult::paginate(5); 
+                if (!$consult) {
+                    return view('consult', ['message' => 'không có phòng tư vấn nào']);
+                }
+                return view('consult', ['consult' => $consult]);
+            }
+        
+           
+            public function destroy(Request $request)
+            {
+                $request->validate([
+                    'id_cons'=>'required',
+                ],[
+                'id_cons.required'=>'Hãy chọn phòng tư vấn cần xóa',
+                ]);
+                
+                $consult = Consult::find($request->id_cons);
+
+                $u = Prescription::where('id_pre', $consult->id_prescription)->delete();
+
+                $consult->delete();
+                return redirect()->back()->with('message', 'Xóa thành công');
+            
+            }
+            
+            public function findconsult(Request $request){
+
+        
+                $consult = Consult::where('user1_id', $request->dl)
+                ->paginate(5); 
+                if (!$consult) {
+                    return view('consult', ['message' => 'không tìm thấy phòng có người dùng tư vấn nào']);
+                }
+                return view('consult', ['consult' => $consult]);
+            }
+          
 }

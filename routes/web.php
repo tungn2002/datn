@@ -19,53 +19,73 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PatientRecordController;
 use App\Http\Controllers\MedicalResultController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/login', [UserController::class, 'login'])->name('login');
 
-Route::get('/register', [UserController::class, 'register'])->name('register');
+//Đăng ký, đăng nhập, quên mật khẩu
+Route::get('/login', [UserController::class, 'login'])->name('login'); //trang đăng nhập
 
-Route::post('/dangky', [UserController::class, 'store']);
+Route::get('/register', [UserController::class, 'register'])->name('register'); //trang đăng ký
+
+Route::post('/dangky', [UserController::class, 'store']);//gửi tt dk
 
 
 
 
 //
-Route::get('/forget', [UserController::class, 'forget'])->name('forget');;
+Route::get('/forget', [UserController::class, 'forget'])->name('forget');;// trang quên mk
 
-Route::post('/quenmk', [UserController::class, 'quenmk']);
-Route::get('/get-password/{user}/{token}', [UserController::class, 'getPass'])->name('user.getPass');
+Route::post('/quenmk', [UserController::class, 'quenmk']);// gửi email
+Route::get('/get-password/{user}/{token}', [UserController::class, 'getPass'])->name('user.getPass');//mở trang nhập pass
 
-Route::post('/get-password/{user}/{token}', [UserController::class, 'postGetPass']);
+Route::post('/get-password/{user}/{token}', [UserController::class, 'postGetPass']);//update mk mới
 //
+Route::post('/dangnhap', [UserController::class, 'dangnhap']);//nút đăng nhập
 
-Route::post('/dangnhap', [UserController::class, 'dangnhap']);
 
 
-///
+//Trang chủ
 Route::get('/trangchu', [UserController::class, 'trangchu'])->name('trangchu');
+
+//thông tin tài khoản
 Route::get('/profile', [UserController::class, 'profile'])->name('profile');
-Route::get('/logout', [UserController::class, 'logout'])->name('logout');
-
-Route::get('/profile2', [UserController::class, 'profile2'])->name('profile2');
-Route::get('/profile3', [UserController::class, 'profile3'])->name('profile3');
-Route::get('/profile32', [UserController::class, 'profile32'])->name('profile32');
-Route::get('/profile33', [UserController::class, 'profile33'])->name('profile33');
-
-Route::post('/xoaddk', [UserController::class, 'xoaddk'])->name('xoaddk');
-
-
-///
+//sửa thông tin tài khoản
 Route::post('/editprofile', [UserController::class, 'editprofile']);
 
-//
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
+    //Hồ sơ của khách hàng
+
+    //pr
+    Route::get('/themhoso', [PatientRecordController::class, 'themhoso'])->name('themhoso');
+
+    Route::post('/addhoso', [PatientRecordController::class, 'addhoso']);
+    Route::post('/xoahoso', [PatientRecordController::class, 'destroy'])->name('xoahoso');
+    Route::post('capnhathoso/id={id}', [PatientRecordController::class, 'update'])->name('capnhathoso');
+
+
+
+    //thông tin kết quả khám và hồ sơ bn
+    Route::get('/profile2', [UserController::class, 'profile2'])->name('profile2');
+    Route::get('/profile3', [UserController::class, 'profile3'])->name('profile3');
+    Route::get('/profile32', [UserController::class, 'profile32'])->name('profile32');
+    Route::get('/profile33', [UserController::class, 'profile33'])->name('profile33');
+//xóa đon đặt khám
+    Route::post('/xoaddk', [UserController::class, 'xoaddk'])->name('xoaddk');
+
+
+
+//Đặt lịch khám hiendl k hienda dat
 
 Route::get('/servicef', [ServiceController::class, 'servicef'])->name('servicef');
+Route::get('/serviceb', [ServiceController::class, 'serviceb'])->name('serviceb');
+
 Route::get('/serviceff/{id}', [ServiceController::class, 'serviceff'])->name('serviceff');
 Route::get('/servicefff/{id}/{day}', [ServiceController::class, 'servicefff'])->name('servicefff');
-
 Route::get('/serviceffff/{id}', [ServiceController::class, 'serviceffff'])->name('serviceffff');
+
+Route::get('/servicebf/{id}', [ServiceController::class, 'servicebf'])->name('servicebf');
+
+
+Route::get('/your-path/{id}', [YourController::class, 'yourMethod'])->name('your.route.name');
 
 Route::post('/addmrsv', [ServiceController::class, 'addmrsv'])->name('addmrsv');
 
@@ -128,9 +148,9 @@ Route::post('capnhatpm/id={id}', [PMController::class, 'update'])->name('capnhat
 //pre 
 Route::get('/pre', [PrescriptionController::class, 'index'])->name('pre-index');
 
-Route::post('/addpre', [PrescriptionController::class, 'store']);
+//Route::post('/addpre', [PrescriptionController::class, 'store']);
 Route::post('/xoapre', [PrescriptionController::class, 'destroy'])->name('xoapre');
-Route::post('capnhatpre/id={id}', [PrescriptionController::class, 'update'])->name('capnhatpre');
+//Route::post('capnhatpre/id={id}', [PrescriptionController::class, 'update'])->name('capnhatpre');
 
 //user
 Route::get('/user', [UserController::class, 'index2'])->name('user-index');
@@ -141,11 +161,12 @@ Route::post('capnhatuser/id={id}', [UserController::class, 'update'])->name('cap
 
 
 //appoi
-Route::get('/app', [AppointmentController::class, 'index'])->name('app-index');
 
 Route::post('/addapp', [AppointmentController::class, 'store']);
 Route::post('/xoaapp', [AppointmentController::class, 'destroy'])->name('xoaapp');
 Route::post('capnhatapp/id={id}', [AppointmentController::class, 'update'])->name('capnhatapp');
+
+Route::get('/app/{id}', [AppointmentController::class, 'index2'])->name('app-index2');
 
 
 //pr ho so
@@ -167,12 +188,6 @@ Route::post('capnhatmr/id={id}', [MedicalResultController::class, 'update'])->na
 
 
 
-//pr
-Route::get('/themhoso', [PatientRecordController::class, 'themhoso'])->name('themhoso');
-
-Route::post('/addhoso', [PatientRecordController::class, 'addhoso']);
-Route::post('/xoahoso', [PatientRecordController::class, 'destroy'])->name('xoahoso');
-Route::post('capnhathoso/id={id}', [PatientRecordController::class, 'update'])->name('capnhathoso');
 
 //user
 Route::post('capnhaths/', [PatientRecordController::class, 'capnhaths'])->name('capnhaths');
@@ -210,9 +225,10 @@ Route::post('/xoadtd', [UserController::class, 'xoadtd'])->name('xoadtd');
 Route::get('/pdf/{id}', [PdfController::class, 'pdf'])->name('pdf');
 Route::get('/pdff/{id}', [PdfController::class, 'pdff'])->name('pdff');
 
-//tro chuyen
+//Trò chuyện của khách hàng
 Route::get('/trochuyenuser', [ConsultController::class, 'trochuyenuser'])->name('trochuyenuser');
 
+Route::post('/finddoctorchat', [ConsultController::class, 'finddoctorchat'])->name('finddoctorchat');
 
 //thnahtoan
 Route::post('/online-checkout', [OnlineCheckoutController::class, 'online_checkout'])->name('online-checkout');
@@ -249,3 +265,54 @@ Route::get('/trochuyendoctor', [ConsultController::class, 'trochuyendoctor'])->n
 
 Route::get('/chatdoctor/{id}', [ConsultController::class, 'chatdoctor'])->name('chatdoctor');
 Route::get('/themdonthuoc2/{id}', [UserController::class, 'themdonthuoc2'])->name('themdonthuoc2');
+
+
+//qldoctor
+
+Route::get('/qldoctor', [UserController::class, 'qldoctor'])->name('qldoctor');
+
+Route::post('/addqldoctor', [UserController::class, 'addqldoctor']);
+Route::post('/xoaqldoctor', [UserController::class, 'xoaqldoctor'])->name('xoaqldoctor');
+Route::post('capnhatqldoctor/id={id}', [UserController::class, 'capnhatqldoctor'])->name('capnhatqldoctor');
+
+Route::post('/updatewh', [UserController::class, 'updatewh'])->name('updatewh');
+
+//qlkh
+
+Route::get('/qlkhachhang', [UserController::class, 'qlkhachhang'])->name('qlkhachhang');
+
+Route::post('/addqlkhachhang', [UserController::class, 'addqlkhachhang']);
+Route::post('/xoaqlkhachhang', [UserController::class, 'xoaqlkhachhang'])->name('xoaqlkhachhang');
+Route::post('capnhatqlkhachhang/id={id}', [UserController::class, 'capnhatqlkhachhang'])->name('capnhatqlkhachhang');
+
+//qlnv
+Route::get('/qlnhanvien', [UserController::class, 'qlnhanvien'])->name('qlnhanvien');
+Route::post('/addqlnhanvien', [UserController::class, 'addqlnhanvien']);
+
+Route::post('/xoaqlkhachhang', [UserController::class, 'xoaqlkhachhang'])->name('xoaqlkhachhang');
+Route::post('capnhatqlkhachhang/id={id}', [UserController::class, 'capnhatqlkhachhang'])->name('capnhatqlkhachhang');
+
+
+//tim kiem
+Route::post('/timkiemsv', [ServiceController::class, 'timkiemsv'])->name('timkiemsv');
+Route::post('/timkiemb', [ServiceController::class, 'timkiemb'])->name('timkiemb');
+
+Route::post('/findsp', [SpecialistController::class, 'findsp'])->name('findsp');
+Route::post('/findsv', [ServiceController::class, 'findsv'])->name('findsv');
+Route::post('/findcli', [ClinicController::class, 'findcli'])->name('findcli');
+
+Route::post('/findmedi', [MedicineController::class, 'findmedi'])->name('findmedi');
+Route::post('/findpre', [PrescriptionController::class, 'findpre'])->name('findpre');
+Route::post('/findapp/{id}', [AppointmentController::class, 'findapp'])->name('findapp');
+
+Route::post('/findpati', [PatientRecordController::class, 'findpati'])->name('findpati');
+Route::post('/findmr', [MedicalResultController::class, 'findmr'])->name('findmr');
+Route::post('/finddoctor', [UserController::class, 'finddoctor'])->name('finddoctor');
+Route::post('/findkhachhang', [UserController::class, 'findkhachhang'])->name('findkhachhang');
+Route::post('/findnhanvien', [UserController::class, 'findnhanvien'])->name('findnhanvien');
+Route::post('/findconsult', [UserController::class, 'findconsult'])->name('findconsult');
+
+//
+Route::get('/consult', [ConsultController::class, 'index'])->name('consult-index');
+
+Route::post('/xoaconsult', [ConsultController::class, 'destroy'])->name('xoaconsult');

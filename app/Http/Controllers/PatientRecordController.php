@@ -98,7 +98,7 @@ class PatientRecordController extends Controller
     }
 
 
-    //nguoi dung them ho so
+    //Người dùng hồ sơ
 
     
     public function themhoso()
@@ -108,19 +108,27 @@ class PatientRecordController extends Controller
     public function addhoso(Request $request)
     {
         $request->validate([
-            'prname' => 'required',
+            'prname' => 'required|max:20',
             'birthday' => 'required|date',
-            'phonenumber' => 'required',
+
+            'phonenumber'=>'required|regex:/^0[0-9]{9}$/|unique:patientrecords,phonenumber',
             'gender' => 'required|in:male,female', 
-            'address' => 'required',
+            'address' => 'required|max:30',
         ], [
             'prname.required' => 'Tên bệnh nhân là bắt buộc.',
+            'prname.max'=>'Tên quá dài, chỉ được phép <20',
             'birthday.required' => 'Ngày sinh là bắt buộc.',
             'birthday.date' => 'Ngày sinh phải là một ngày hợp lệ.',
-            'phonenumber.required' => 'Số điện thoại là bắt buộc.',
+            
+            'phonenumber.required'=>'Không được bỏ trống phonenumber',
+            'phonenumber.regex'=>'Số điện thoại không hợp lệ',
+            'phonenumber.unique'=>'Số điện thoại đã tồn tại',
+
             'gender.required' => 'Giới tính là bắt buộc.',
             'gender.in' => 'Giới tính phải là nam, nữ hoặc khác.',
             'address.required' => 'Địa chỉ là bắt buộc.',
+            'address.max' => 'Địa chỉ quá dài, chỉ được phép <30.',
+
         ]);
 
         $pr=new PatientRecord;
@@ -135,7 +143,7 @@ class PatientRecordController extends Controller
 
         $pr->save();
         
-        return redirect()->back()->with('message', 'Thêm thành công');
+        return redirect()->route('profile2')->with('message', 'Thêm thành công');
     }
 
     public function xoahoso(Request $request)
@@ -148,20 +156,28 @@ class PatientRecordController extends Controller
     public function suahoso(Request $request, $id)
     {
         $request->validate([
-            'prname' => 'required',
+            'prname' => 'required|max:20',
             'birthday' => 'required|date',
-            'phonenumber' => 'required',
+            'phonenumber' => 'required|regex:/^0[0-9]{9}$/|unique:users,phonenumber,' . $request->id_user. ',id_user',                 
             'gender' => 'required|in:male,famale', 
-            'address' => 'required',
+            'address' => 'required|max:30',
             'id_user' => 'required|exists:users,id_user', 
         ], [
             'prname.required' => 'Tên bệnh nhân là bắt buộc.',
+            'prname.max'=>'Tên quá dài, chỉ được phép <20',
+
             'birthday.required' => 'Ngày sinh là bắt buộc.',
             'birthday.date' => 'Ngày sinh phải là một ngày hợp lệ.',
-            'phonenumber.required' => 'Số điện thoại là bắt buộc.',
+
+
+            'phonenumber.required'=>'Không được bỏ trống phonenumber',
+            'phonenumber.regex'=>'Số điện thoại không hợp lệ',
+            'phonenumber.unique'=>'Số điện thoại đã tồn tại',
+
             'gender.required' => 'Giới tính là bắt buộc.',
             'gender.in' => 'Giới tính phải là nam, nữ.',
             'address.required' => 'Địa chỉ là bắt buộc.',
+            'address.max' => 'Địa chỉ quá dài, chỉ được phép <30.',
             'id_user.required' => 'Người dùng liên kết là bắt buộc.',
             'id_user.exists' => 'Người dùng liên kết không tồn tại.',
         ]);
@@ -218,5 +234,17 @@ class PatientRecordController extends Controller
             $pr->id_user=$id;        
             $pr->update();
             return redirect()->back()->with('message', 'Sửa thành công');
+    }
+    public function findpati(Request $request)
+    {
+        $users = User::where('id_role', 2) // Chỉ lấy người dùng có id_role = 2 // Chỉ lấy người dùng có hồ sơ bệnh nhân
+        ->get();
+
+        $patientRecords = PatientRecord::where('prname', 'like', '%'.$request->dl.'%')
+        ->paginate(5); 
+        return view('pr', [
+            'patientRecords' => $patientRecords,
+            'users' => $users, 
+        ]);
     }
 }

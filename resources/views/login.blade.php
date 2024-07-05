@@ -23,11 +23,11 @@
 					<form action="{{ url('dangnhap') }}" method="post">@csrf
 						<div class="form-input">
 							<span><i class="fa fa-envelope"></i></span>
-							<input type="email" name="email" placeholder="Email Address" required>
+							<input type="email" name="email" placeholder="Email" required>
 						</div>
 						<div class="form-input">
 							<span><i class="fa fa-lock"></i></span>
-							<input type="password" name="password" placeholder="Password" required>
+							<input type="password" name="password" placeholder="Mật khẩu" required>
 						</div>
 						<div class="row mb-3">
 							<div class="col-6 d-flex">

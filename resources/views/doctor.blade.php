@@ -51,11 +51,9 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="{{ route('lichlamviec') }}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Lịch làm việc</a>
-                    <a href="" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Cập nhật kết quả khám</a>
-                    <a href="" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Kê đơn thuốc</a>
-                    <a href="" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Trò chuyên</a>
+                    <a href="{{ route('doctor') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('lichlamviec') }}" class="nav-item nav-link"><i class="fas fa-calendar-alt"></i>Lịch làm việc</a>
+                    <a href="{{ route('trochuyendoctor') }}" class="nav-item nav-link "><i class="fas fa-comment-dots"></i>Trò chuyên</a>
                 
 
                   
@@ -96,10 +94,50 @@
             <!-- Blank Start -->
 
             <div class="container-fluid pt-4 px-4 ">
-            <h4>Bác sĩ</h4>
+            <h4>Thông tin bác sĩ:</h4>
+            <div class="col-sm-12 col-xl-6" style=" padding: 20px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
+                    <p>Tên: {{ Auth::user()->name }}</p>
+                    <p>Email: {{ Auth::user()->email }}</p>
+                    <p>Số điện thoại: {{ Auth::user()->phonenumber }}</p>
+                    <p>Mã chuyên khoa: {{ Auth::user()->id_specialist }}</p>
+                    <p>Avatar và chữ ký:</p>
+                    <div class="image-container">
+                    <img src="{{ asset('image/' . Auth::user()->avatar) }}" alt="Left Image" class="left-image">
+                    <img src="{{ asset('image/' . Auth::user()->signature) }}" alt="Right Image" class="right-image">
+                    </div>
+                    <p>Thời gian khung giờ làm việc:</p>
+                    {{ Auth::user()->working_hours }}
+            </div>
 
-           
-                    
+            <div class="col-sm-12 col-xl-6" style=" padding: 20px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
+                <p>Cập nhật khung giờ làm việc </p>  
+                <form id="editForm" action="{{ route('updatewh') }}"  method="POST" >
+                @csrf
+                
+                <div class="mb-3">
+                        <label for="hospitalname" class="form-label">Khung giờ làm việc:</label>
+                        <textarea class="form-control"  id="detailz" name="wh" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                </form> 
+                
+                
+                @if (\Session::has('message'))
+                <div class="alert alert-success">
+                    <strong>{!! \Session::get('message') !!}</strong>
+                </div>
+            @endif
+            
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        </div>
             </div>
             <!-- Blank End -->
 

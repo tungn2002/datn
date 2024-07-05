@@ -15,6 +15,8 @@ return new class extends Migration
             $table->increments('id_appointment');
             $table->date('day');
             $table->time('time');
+            $table->time('finishtime');
+
             $table->unsignedInteger('id_clinic'); // Khóa ngoại đến clinic
 
             $table->foreign('id_clinic')->references('id_clinic')->on('clinics');

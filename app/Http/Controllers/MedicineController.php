@@ -91,4 +91,12 @@ class MedicineController extends Controller
         return redirect()->back()->with('message', 'Sửa thành công');
     }
        
+    public function findmedi(Request $request){
+        $medicine = Medicine::where('medicinename', 'like', '%'.$request->dl.'%')
+        ->paginate(5); 
+        if (!$medicine) {
+            return view('medicine', ['message' => 'No medicine record found.']);
+        }
+        return view('medicine', ['medicine' => $medicine]);
+    }
 }

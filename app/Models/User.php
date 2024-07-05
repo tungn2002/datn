@@ -28,6 +28,7 @@ class User extends Authenticatable
         'signature',
         'id_role',
         'id_specialist',
+        'working_hours',
         'token',
     ];
     public $timestamps = false;

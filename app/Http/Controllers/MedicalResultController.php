@@ -162,5 +162,22 @@ return redirect()->back()->with('error', 'Mã thuốc đã tồn tại trong k�
     }
 
        
+    public function findmr(Request $request) {
+        $patientRecords =PatientRecord::all();
+       
+        $appointments = DB::select('SELECT * FROM appointments WHERE id_appointment NOT IN (SELECT id_sch FROM medicalresults)');
+
+        $prescriptions = DB::select('SELECT * FROM prescriptions WHERE id_pre NOT IN (SELECT id_prescription FROM medicalresults)');
+
+        $medicalResults = MedicalResult::where('booking_date', $request->dl)
+        ->paginate(5); 
+
+        return view('mr', [
+            'medicalResults' => $medicalResults,
+            'patientRecords' => $patientRecords,
+            'appointments' => $appointments,
+            'prescriptions' => $prescriptions 
+        ]);
+    }
 
 }

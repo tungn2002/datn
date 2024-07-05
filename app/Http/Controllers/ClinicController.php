@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Clinic;
 use App\Models\User;
+use App\Models\Hospital;
 
 use App\Models\Service;
 
@@ -17,20 +18,19 @@ class ClinicController extends Controller
         $users = User::where('id_role', 3)->get(); // Lấy danh sách bác sĩ (id_role = 3)
 
         $services= DB::select('SELECT * from services');
-        $hospitals= DB::select('SELECT * from hospitals');
 
         $clinic = Clinic::paginate(5); 
         if (!$clinic) {
             return view('clinic', ['message' => 'không có phòng nào']);
         }
-        return view('clinic', ['clinic' => $clinic,'service' => $services,'hospital' => $hospitals,'users' => $users]);
+        return view('clinic', ['clinic' => $clinic,'service' => $services,'users' => $users]);
     }
 
     public function store(Request $request)
     {
+        Hospital::all()->first();
         $request->validate([
             'clinicname' => 'required',
-            'id_hospital' => 'required|exists:hospitals,id_hospital',
             'id_service' => 'required|exists:services,id_service',
             'id_user' => 'required|exists:users,id_user',
             
@@ -39,8 +39,7 @@ class ClinicController extends Controller
         ],[
             'clinicname.required' => 'Tên phòng là bắt buộc.',
           
-            'id_hospital.required' => 'Bệnh viện là bắt buộc.',
-            'id_hospital.exists' => 'Bệnh viện không tồn tại.',
+
             'id_service.required' => 'Dịch vụ là bắt buộc.',
             'id_service.exists' => 'Dịch vụ không tồn tại.',
             'id_user.required' => 'Bác sĩ là bắt buộc.',
@@ -51,16 +50,13 @@ class ClinicController extends Controller
 $user = User::find($request->id_user);
 $sv = Service::find($request->id_service);
 
-if ($user->id_specialist != $sv->id_specialist) { 
-   return redirect()->back()->with('message', 'Bác sĩ không thuộc chuyên khoa của phòng khám này.');
-}
+$hos=Hospital::all()->first();
 
              $clinic=new Clinic;
              $clinic->clinicname=$request->clinicname;
 
-             $clinic->id_hospital=$request->id_hospital;
              $clinic->id_service=$request->id_service;
-            
+             $clinic->id_hospital=$hos->id_hospital;
              $clinic->id_user=$request->id_user;
 
             $clinic->save();
@@ -86,7 +82,6 @@ if ($user->id_specialist != $sv->id_specialist) {
     {
         $request->validate([
             'clinicname' => 'required',
-            'id_hospital' => 'required|exists:hospitals,id_hospital',
             'id_service' => 'required|exists:services,id_service',
             'id_user' => 'required|exists:users,id_user',
             
@@ -95,8 +90,7 @@ if ($user->id_specialist != $sv->id_specialist) {
         ],[
             'clinicname.required' => 'Tên phòng là bắt buộc.',
           
-            'id_hospital.required' => 'Bệnh viện là bắt buộc.',
-            'id_hospital.exists' => 'Bệnh viện không tồn tại.',
+           
             'id_service.required' => 'Dịch vụ là bắt buộc.',
             'id_service.exists' => 'Dịch vụ không tồn tại.',
             'id_user.required' => 'Bác sĩ là bắt buộc.',
@@ -114,15 +108,12 @@ if ($user->id_specialist != $sv->id_specialist) {
         }
         $user = User::find($request->id_user);
 $sv = Service::find($request->id_service);
-
-if ($user->id_specialist != $sv->id_specialist) { 
-   return redirect()->back()->with('message', 'Bác sĩ không thuộc chuyên khoa của phòng khám này.');
-}
+$hos=Hospital::all()->first();
 
         $clinic = Clinic::find($id);
         $clinic->clinicname=$request->clinicname;
+        $clinic->id_hospital=$hos->id_hospital;
 
-        $clinic->id_hospital=$request->id_hospital;
         $clinic->id_service=$request->id_service;
         $clinic->id_user=$request->id_user;
 
@@ -130,5 +121,16 @@ if ($user->id_specialist != $sv->id_specialist) {
         return redirect()->back()->with('message', 'Sửa thành công');
     }
        
+    public function findcli(Request $request){
+        $users = User::where('id_role', 3)->get(); // Lấy danh sách bác sĩ (id_role = 3)
 
+        $services= DB::select('SELECT * from services');
+
+        $clinic = Clinic::where('clinicname', 'like', '%'.$request->dl.'%')
+        ->paginate(5); 
+        if (!$clinic) {
+            return view('clinic', ['message' => 'không có phòng nào']);
+        }
+        return view('clinic', ['clinic' => $clinic,'service' => $services,'users' => $users]);
+    }
 }

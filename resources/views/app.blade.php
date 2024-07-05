@@ -51,30 +51,26 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="index.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                   
-                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Bệnh viện</a>
-                    <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Chuyên khoa</a>
-                    <a href="{{ route('service-index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Dịch vụ</a>
-                    <a href="{{ route('clinic-index') }}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Phòng khám</a>
-                    <a href="{{ route('medicine-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Thuốc</a>
-                    <a href="{{ route('pre-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Đơn</a>
-                    <a href="{{ route('app-index') }}" class="nav-item nav-link active"><i class="fa fa-table me-2"></i>Lịch khám</a>
-                    <a href="{{ route('pr-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Hồ sơ bệnh nhân</a>
-                    <a href="{{ route('mr-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Kết quả khám</a>
-                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Trò chuyện</a>
-                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tin nhắn</a>
+                  <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fas fa-hospital"></i>Bệnh viện</a>
+                  <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fas fa-brain"></i>Chuyên khoa</a>
+                  <a href="{{ route('service-index') }}" class="nav-item nav-link"><i class="fas fa-laptop-medical"></i>Dịch vụ</a>
+                  <a href="{{ route('clinic-index') }}" class="nav-item nav-link"><i class="fas fa-clinic-medical"></i>Phòng khám</a>
+                  <a href="{{ route('medicine-index') }}" class="nav-item nav-link"><i class="fas fa-capsules"></i>Thuốc</a>
+                  <a href="{{ route('pre-index') }}" class="nav-item nav-link"><i class="fas fa-prescription-bottle"></i>Đơn thuốc</a>
+                  <a href="{{ route('pr-index') }}" class="nav-item nav-link"><i class="fas fa-user-injured"></i>Hồ sơ</a>
+                  <a href="{{ route('mr-index') }}" class="nav-item nav-link"><i class="fas fa-poll"></i>Kết quả khám</a>
+                  <a href="" class="nav-item nav-link"><i class="fas fa-comment-dots"></i>Đơn tư vấn</a>
 
-                    <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="signin.html" class="dropdown-item">Sign In</a>
-                            <a href="signup.html" class="dropdown-item">Sign Up</a>
-                            <a href="404.html" class="dropdown-item">404 Error</a>
-                            <a href="blank.html" class="dropdown-item">Blank Page</a>
-                        </div>
-                    </div>
+                  <div class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Người dùng</a>
+                      <div class="dropdown-menu bg-transparent border-0">
+                          <a href="{{ route('qldoctor') }}" class="dropdown-item"><i class="fas fa-user-md"></i> Bác sĩ</a>
+                          <a href="{{ route('qlnhanvien') }}" class="dropdown-item"><i class="fas fa-users-cog"></i> Nhân viên</a>
+                          <a href="{{ route('qlnhanvien') }}" class="dropdown-item"><i class="fas fa-user"></i> Khách hàng</a>
+                      </div>
+                  </div>
                 </div>
             </nav>
         </div>
@@ -113,11 +109,11 @@
             <!-- Blank Start -->
 
             <div class="container-fluid pt-4 px-4 ">
-        <h4>Lịch hẹn</h4>
+        <h4>Lịch khám phòng: {{$clinics->clinicname}} </h4>
 
         <div class="col-sm-12 col-xl-6" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
             <div class="bg-light rounded h-100 p-4">
-                <h6 class="mb-4">Thêm lịch hẹn</h6>
+                <h6 class="mb-4">Thêm lịch khám</h6>
                 <form action="{{ url('addapp') }}" method="post">
                     @csrf
                     <div class="mb-3">
@@ -128,15 +124,8 @@
                         <label for="time" class="form-label">Thời gian khám:</label>
                         <input type="time" class="form-control" name="time" id="time">
                     </div>
-                  
-                    <div class="mb-3">
-                        <label for="id_clinic" class="form-label">Phòng khám:</label>
-                        <select class="form-select" name="id_clinic" id="id_clinic">
-                            @foreach ($clinics as $clinic)
-                                <option value="{{ $clinic->id_clinic }}">{{ $clinic->clinicname }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                    <input hidden type="text" value="{{$clinics->id_clinic}}" name="id_clinic">
+                
                     <button type="submit" class="btn btn-primary">Thêm</button>
                 </form>
                 @if (\Session::has('message'))
@@ -156,15 +145,27 @@
             </div>
         </div>
 
- 
+        <div class="row mt-5" style="width: 40%">
+                    <form action="{{ route('findapp', ['id' => $clinics->id_clinic ]) }}" class="w-100 d-flex" method="post">@csrf
+    <div class="col-md-8">
+        <input type="date" class="form-control" name="dl" placeholder="Nhập từ khóa...">
+    </div>
+    <div class="col-md-4">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Tìm kiếm</button>
+    </div>   
+    <div class="col-md-4">
+        <a class="btn btn-primary" href="{{ route('app-index2', ['id' => $clinics->id_clinic ]) }}">Tất cả</a>
+    </div>   
+</form>
+</div>
 
-        <table class="table table-striped custab mt-4" id="appointmentTable">
+        <table class="table table-striped custab mt-4 table-bordered" id="appointmentTable">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Ngày khám</th>
                     <th>Thời gian khám</th>
-                    <th>Phòng khám</th>
+                    <th>Thời gian hoàn thành</th>
                     <th class="text-center">Tùy chọn</th>
                 </tr>
             </thead>
@@ -173,8 +174,8 @@
                     <tr>
                         <td>{{ $appointment->id_appointment }}</td>
                         <td>{{ $appointment->day }}</td>
-                        <td>{{ $appointment->time }}</td>
-                        <td>{{ $appointment->id_clinic }}</td>
+                        <td>{{ substr($appointment->time, 0, 5) }}</td>
+                        <td>{{ substr($appointment->finishtime, 0, 5) }}</td>
                         <td class="text-center">
                             <button class="btn btn-warning btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $appointment->id_appointment }}">Sửa</button>
                             <button class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $appointment->id_appointment }}">Xóa</button>
@@ -237,15 +238,8 @@
                     </div>
 
                  
+                    <input hidden type="text" value="{{$clinics->id_clinic}}" name="id_clinic">
 
-                    <div class="mb-3">
-                        <label for="editIdClinic" class="form-label">Phòng khám:</label>
-                        <select class="form-select" name="id_clinic" id="editIdClinic">
-                            @foreach ($clinics as $clinic)
-                                <option value="{{ $clinic->id_clinic }}">{{ $clinic->clinicname }}</option>
-                            @endforeach
-                        </select>
-                    </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -291,8 +285,7 @@
             // Lấy dữ liệu từ các ô trong hàng
             var day = row.find('td:eq(1)').text();
             var time = row.find('td:eq(2)').text();
-            var userId = row.find('td:eq(3)').text(); 
-            var clinicId = row.find('td:eq(4)').text(); 
+            //var userId = row.find('td:eq(4)').text(); 
 
             // Điền dữ liệu vào form sửa
             $('#editAppointmentId').val(appointmentId);
@@ -301,10 +294,6 @@
 
             // Chọn đúng option trong select dựa trên giá trị text của ô
     
-
-            $('#editIdClinic option').filter(function() {
-                return $(this).text() == clinicId;
-            }).prop('selected', true);
 
             // Cập nhật action của form
             $('#editForm').attr('action', '{{ url("capnhatapp") }}/id=' + appointmentId);

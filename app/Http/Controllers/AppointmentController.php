@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\User;
 use App\Models\Clinic;
+use App\Models\Service;
+use Carbon\Carbon;
 
 
 use DB;
@@ -13,17 +15,16 @@ use DB;
 class AppointmentController extends Controller
 {
   
-    public function index()
+   
+    public function index2($id)
     {
-        $clinics = Clinic::all();
-        $appointments = Appointment::paginate(5); 
-
+        $clinics = Clinic::where('id_clinic', $id)->first();
+        $appointments = Appointment::where('id_clinic', $id)->paginate(5); 
         return view('app', [
             'appointments' => $appointments,
             'clinics' => $clinics
         ]);
     }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -49,7 +50,22 @@ if ($existingAppointment) {
 }
 
 
-        Appointment::create($request->all());
+        $app=new Appointment;
+        $app->day=$request->day;
+
+        $app->time=$request->time;
+        $app->id_clinic=$request->id_clinic;
+        $clinic = Clinic::where('id_clinic', $request->id_clinic)->first();
+        $sv =Service::where('id_service', $clinic->id_service)->first();
+
+        $seconds1 = strtotime($request->time) - strtotime('TODAY');
+        $seconds2 = strtotime($sv->time) - strtotime('TODAY');
+        $totalSeconds = $seconds1 + $seconds2;
+        $totalTime = gmdate('H:i', $totalSeconds);
+
+        $app->finishtime=$totalTime;
+
+       $app->save();
         return redirect()->back()->with('message', 'Thêm lịch hẹn thành công');
     }
 
@@ -68,6 +84,7 @@ if ($existingAppointment) {
 
     public function update(Request $request, $id)
     {
+
         $appointment = Appointment::findOrFail($id);
 
         $request->validate([
@@ -101,9 +118,30 @@ if ($existingAppointment) {
       if ($existingAppointment) {
           return redirect()->back()->with('message', 'Đã có lịch hẹn khác tại phòng khám này vào ngày và giờ đã chọn.');
       }
-        $appointment->update($request->all());
+
+
+      $appointment->day=$request->day;
+
+      $appointment->time=$request->time;
+      $appointment->id_clinic=$request->id_clinic;
+      $clinic = Clinic::where('id_clinic', $request->id_clinic)->first();
+      $sv =Service::where('id_service', $clinic->id_service)->first();
+
+      $startTimeFormatted = Carbon::parse($request->time)->addHours($sv->time);
+
+      $appointment->finishtime=$startTimeFormatted;
+        $appointment->update();
         return redirect()->back()->with('message', 'Cập nhật lịch hẹn thành công');
     }
        
+    public function findapp(Request $request,$id)
+    {
+        $clinics = Clinic::where('id_clinic', $id)->first();
+        $appointments = Appointment::where('day', $request->dl)->where('id_clinic', $id)->paginate(5); 
+        return view('app', [
+            'appointments' => $appointments,
+            'clinics' => $clinics
+        ]);
+    }
 
 }

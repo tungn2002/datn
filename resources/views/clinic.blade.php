@@ -51,31 +51,26 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="index.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                   
-                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Bệnh viện</a>
-                    <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Chuyên khoa</a>
-                    <a href="{{ route('service-index') }}" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Dịch vụ</a>
-                    <a href="{{ route('clinic-index') }}" class="nav-item nav-link active"><i class="fa fa-keyboard me-2"></i>Phòng khám</a>
-                    <a href="{{ route('medicine-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Thuốc</a>
-                    <a href="{{ route('pre-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Đơn</a>
-                    <a href="{{ route('user-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Người dùng</a>
-                    <a href="{{ route('app-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Lịch khám</a>
-                    <a href="{{ route('pr-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Hồ sơ bệnh nhân</a>
-                    <a href="{{ route('mr-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Kết quả khám</a>
-                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Trò chuyện</a>
-                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tin nhắn</a>
+                  <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fas fa-hospital"></i>Bệnh viện</a>
+                  <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fas fa-brain"></i>Chuyên khoa</a>
+                  <a href="{{ route('service-index') }}" class="nav-item nav-link"><i class="fas fa-laptop-medical"></i>Dịch vụ</a>
+                  <a href="{{ route('clinic-index') }}" class="nav-item nav-link"><i class="fas fa-clinic-medical"></i>Phòng khám</a>
+                  <a href="{{ route('medicine-index') }}" class="nav-item nav-link"><i class="fas fa-capsules"></i>Thuốc</a>
+                  <a href="{{ route('pre-index') }}" class="nav-item nav-link"><i class="fas fa-prescription-bottle"></i>Đơn thuốc</a>
+                  <a href="{{ route('pr-index') }}" class="nav-item nav-link"><i class="fas fa-user-injured"></i>Hồ sơ</a>
+                  <a href="{{ route('mr-index') }}" class="nav-item nav-link"><i class="fas fa-poll"></i>Kết quả khám</a>
+                  <a href="" class="nav-item nav-link"><i class="fas fa-comment-dots"></i>Đơn tư vấn</a>
 
-                    <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="signin.html" class="dropdown-item">Sign In</a>
-                            <a href="signup.html" class="dropdown-item">Sign Up</a>
-                            <a href="404.html" class="dropdown-item">404 Error</a>
-                            <a href="blank.html" class="dropdown-item">Blank Page</a>
-                        </div>
-                    </div>
+                  <div class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Người dùng</a>
+                      <div class="dropdown-menu bg-transparent border-0">
+                          <a href="{{ route('qldoctor') }}" class="dropdown-item"><i class="fas fa-user-md"></i> Bác sĩ</a>
+                          <a href="{{ route('qlnhanvien') }}" class="dropdown-item"><i class="fas fa-users-cog"></i> Nhân viên</a>
+                          <a href="{{ route('qlnhanvien') }}" class="dropdown-item"><i class="fas fa-user"></i> Khách hàng</a>
+                      </div>
+                  </div>
                 </div>
             </nav>
         </div>
@@ -136,22 +131,9 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="row mb-3">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Bệnh viện:</label>
-                                <div class="col-sm-10">
+                                
 
-                                    @empty($hospital)
-                                    @endempty
-                                    <select class="inp-tmnv form-select" name="id_hospital" id="phongban" >
-                                        <option value=""></option>
-                                        @isset($hospital)
-                                            @foreach ($hospital as $item)
-                                            <option value="{{$item->id_hospital}}">{{$item->hospitalname}}</option>
-                                            @endforeach
-                                        @endisset
-                                    </select>
-                                   </div> 
-                                    </div>
+                               
                                     
                                 <div class="row mb-3">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Dịch vụ:</label>
@@ -190,15 +172,26 @@
                     </div>
             </div>
             <!-- Blank End -->
+            <div class="row mt-5" style="width: 40%">
+                    <form action="{{ route('findcli') }}" class="w-100 d-flex" method="post">@csrf
+    <div class="col-md-8">
+        <input type="text" class="form-control" name="dl" placeholder="Nhập từ khóa...">
+    </div>
+    <div class="col-md-4">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Tìm kiếm</button>
+    </div>   
+    <div class="col-md-4">
+        <a class="btn btn-primary" href="{{ route('clinic-index') }}">Tất cả</a>
+    </div>   
+</form>
+</div>
 
-
-            <table class="table table-striped custab mt-4">
+            <table class="table table-striped custab mt-4 table-bordered">
     <thead>
         <tr>
             <th>ID</th>
             <th>Tên</th>
             <th>Bác sĩ</th>
-            <th>Bệnh viện</th>
             <th>Dịch vụ</th>
 
             <th class="text-center">Tùy chọn</th>
@@ -211,14 +204,14 @@
                                 <td>{{$item->id_clinic}}</td>
                                 <td>{{$item->clinicname}}</td>
 
-                                <td>{{$item->id_hospital}}</td>
-
                                 <td>{{$item->id_service}}</td>
                                 <td>{{$item->id_user}}</td>
 
                                 <td class="text-center">       
                                 <button class="btn btn-warning btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $item->id_clinic }}">Sửa</button> 
                                     <button class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$item->id_clinic}}">Xóa</button>
+                                    <a class="btn btn-primary" href="{{ route('app-index2', ['id' => $item->id_clinic ]) }}">Lịch khám</a>
+
                                 </td>
                             </tr>
                          
@@ -275,21 +268,7 @@
                         <input type="text" class="form-control" id="hospitalname" name="clinicname">
                     </div>
 
-                    <div class="row mb-3">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Bệnh viện: </label>
-                                <div class="col-sm-10">
-                                    @empty($hospital)
-                                    @endempty
-                                    <select class="inp-tmnv form-select" name="id_hospital" id="phongban" >
-                                        <option value=""></option>
-                                        @isset($hospital)
-                                            @foreach ($hospital as $item)
-                                            <option value="{{$item->id_hospital}}">{{$item->hospitalname}}</option>
-                                            @endforeach
-                                        @endisset
-                                    </select>
-                                   </div> 
-                                    </div>
+
                                     <div class="row mb-3">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Dịch vụ: </label>
                                 <div class="col-sm-10">
@@ -364,15 +343,14 @@ $('.btn-edit').click(function() {
 
     // Lấy dữ liệu từ các ô trong hàng
     var clinicname = row.find('td:eq(1)').text(); // Ô thứ 2 chứa tên bệnh viện
-    var hos = row.find('td:eq(2)').text(); // Ô thứ 3 chứa địa chỉ
-    var ser= row.find('td:eq(3)').text(); 
-    var u= row.find('td:eq(4)').text(); 
+// Ô thứ 3 chứa địa chỉ
+    var ser= row.find('td:eq(2)').text(); 
+    var u= row.find('td:eq(3)').text(); 
 
     // Điền dữ liệu vào form
     $('#editHospitalId').val(hospitalId);
     $('#hospitalname').val(clinicname);
 
-    $('#phongban option[value="' + hos + '"]').prop('selected', true);
     $('#phongban2 option[value="' + ser + '"]').prop('selected', true);
     $('#phongban3 option[value="' + u + '"]').prop('selected', true);
 

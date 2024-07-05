@@ -15,8 +15,8 @@ class Service extends Model
         'servicename',
         'detail',
         'price',
-        'id_specialist',
         'image',
+        'time',
     ];
     public $timestamps = false;
 

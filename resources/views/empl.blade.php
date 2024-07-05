@@ -51,10 +51,10 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('empl') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="{{ route('empl_choduyet') }}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Xác nhận đơn</a>
 
-                    <a href="" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Trò chuyên</a>
+                    <a href="{{ route('trochuyenempl') }}" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Trò chuyên</a>
                 
 
                   
@@ -95,9 +95,15 @@
             <!-- Blank Start -->
 
             <div class="container-fluid pt-4 px-4 ">
-            <h4>Bệnh viện</h4>
+            <h4></h4>
 
-          
+            <h4>Thông tin nhân viên:</h4>
+            <div class="col-sm-12 col-xl-6" style=" padding: 20px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
+                    <p>Tên: {{ Auth::user()->name }}</p>
+                    <p>Email: {{ Auth::user()->email }}</p>
+                    <p>Số điện thoại: {{ Auth::user()->phonenumber }}</p>
+              
+            </div>
                             @if (\Session::has('message'))
                         <div class="alert alert-success">
                         <strong>{!! \Session::get('message') !!}</strong>

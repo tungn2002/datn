@@ -8,7 +8,7 @@
 
   <meta name="copyright" content="MACode ID, https://macodeid.com/">
 
-  <title>One Health - Medical Center HTML5 Template</title>
+  <title>Hồ sơ bệnh nhân</title>
 
   
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
@@ -57,33 +57,16 @@
 
 </head>
 <body>
-    @if(Session::has('message'))
-        <div class="alert alert-success alert-dismissible fade show alert-popup" role="alert" id="success-alert">
-        <i class="fas fa-check-circle mr-1" style="color: #00FF00; font-size: 150%"></i>{{ Session::get('message') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
 
-
-
-
-
-    
-  <!-- Back to top button -->
-  <div class="back-to-top"></div>
-
-  
   <header>
   <div class="topbar">
       <div class="container">
         <div class="row">
           <div class="col-sm-8 text-sm">
-            <div class="site-info">
-              <a href="#"><i class="fas fa-phone-alt text-primary mr-1"></i> +00 123 4455 6666</a>
+          <div class="site-info" >
+              <a href="#"style="color: #000000"><i class="fas fa-phone-alt text-primary mr-1"></i> 0969128038</a>
               <span class="divider">|</span>
-              <a href="#"> <i class="fas fa-envelope text-primary mr-1"></i> mail@example.com</a>
+              <a href="#" style="color: #000000"> <i class="fas fa-envelope text-primary mr-1"></i> lmtung2002@gmail.com</a>
              
             </div>
           </div>
@@ -101,7 +84,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
-        <a class="navbar-brand" href="#"><span class="text-primary">One</span>-Health</a>
+      <a class="navbar-brand" href="{{ route('trangchu') }}"><span class="text-primary">Bệnh viện</span></a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupport" aria-controls="navbarSupport" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -109,20 +92,24 @@
 
         <div class="collapse navbar-collapse" id="navbarSupport">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="index.html">Home</a>
+          <li class="nav-item">
+              <a class="nav-link" href="{{ route('trangchu') }}"style="color: #000000">Trang chủ</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="about.html">About Us</a>
+              <a class="nav-link" href="{{ route('servicef') }}"style="color: #000000">Dịch vụ</a>
             </li>
+            @guest
+                <li class="nav-item">
+              <a class="nav-link" href="{{ route('login') }}"style="color: #000000">Tư vấn</a>
+            </li>
+
+            @else
             <li class="nav-item">
-              <a class="nav-link" href="doctors.html">Doctors</a>
+              <a class="nav-link" href="{{ route('trochuyenuser') }}"style="color: #000000">Tư vấn</a>
             </li>
+            @endguest
             <li class="nav-item">
-              <a class="nav-link" href="blog.html">News</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="contact.html">Contact</a>
+              <a class="nav-link" href="#inf" style="color: #000000">Thông tin</a>
             </li>
             @guest
             <li class="nav-item">
@@ -152,14 +139,14 @@
   </header>
 
 
-  <form action="{{ url('addhoso') }}" method="post" style="  max-width: 600px;
+  <form action="{{ url('addhoso') }}" method="post" style="  max-width: 800px;
             margin: 0 auto;
             padding: 20px;
             background-color: #f8f9fa;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);"> 
                 @csrf
-                <h1>Thêm hồ sơ bệnh nhân</h1>
+                <h3>Thêm hồ sơ bệnh nhân</h3>
                 <div class="row mb-3">
                     <label for="prname" class="col-sm-2 col-form-label">Tên bệnh nhân:</label>
                     <div class="col-sm-10">

@@ -71,13 +71,12 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="{{ route('lichlamviec') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Lịch làm việc</a>
-                    <a href="" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Cập nhật kết quả khám</a>
-                    <a href="" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Kê đơn thuốc</a>
-                    <a href="" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Trò chuyên</a>
+                <a href="{{ route('doctor') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('lichlamviec') }}" class="nav-item nav-link"><i class="fas fa-calendar-alt"></i>Lịch làm việc</a>
+                    <a href="{{ route('trochuyendoctor') }}" class="nav-item nav-link "><i class="fas fa-comment-dots"></i>Trò chuyên</a>
                 
 
+                  
                   
                 </div>
             </nav>
@@ -125,7 +124,7 @@
             <!-- Blank End -->
 
 
-            <table class="table table-striped custab mt-4" id="appointmentTable">
+            <table class="table table-striped custab mt-4 table-bordered" id="appointmentTable">
             <thead>
                 <tr>
                     <th>ID</th>

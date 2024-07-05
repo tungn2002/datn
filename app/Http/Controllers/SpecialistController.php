@@ -72,5 +72,13 @@ class SpecialistController extends Controller
         $specialist->update();
         return redirect()->back()->with('message', 'Sửa thành công');
     }
-       
+    public function findsp(Request $request){
+        $specialist = Specialist::where('spname', 'like', '%'.$request->dl.'%')
+        ->paginate(5); 
+               if (!$specialist) {
+            return view('specialist', ['message' => 'không có chuyên khoa nào']);
+        }
+        return view('specialist', ['specialist' => $specialist]);
+    }
+
 }

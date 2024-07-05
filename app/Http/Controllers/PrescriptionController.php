@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Prescription;
+use App\Models\PrescriptionMedicine;
 
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class PrescriptionController extends Controller
         }
         return view('pre', ['prescription' => $prescription]);
     }
-
+/*
     public function store(Request $request)
     {
         $request->validate([
@@ -41,6 +42,7 @@ class PrescriptionController extends Controller
             return redirect()->back()->with('message', 'Thêm thành công');
     
     }
+            */
     public function destroy(Request $request)
     {
         $request->validate([
@@ -52,9 +54,14 @@ class PrescriptionController extends Controller
         
    
              $pre = Prescription::find($request->id_pre);
-        $pre->delete();
-        return redirect()->back()->with('message', 'Xóa thành công');
-    }
+             $pre->name='chưa có';
+                 $pre->diagnostic='chưa có';
+                 $pre->update();
+
+                 PrescriptionMedicine::where('id_prescription', $request->id_pre)->delete();
+
+                return redirect()->back()->with('message', 'Xóa dữ liệu thành công');
+    }/*
     public function update(Request $request,$id)
     {
         $request->validate([
@@ -88,6 +95,14 @@ class PrescriptionController extends Controller
             $pre->day=$request->day;
         $pre->update();
         return redirect()->back()->with('message', 'Sửa thành công');
+    }*/
+    public function findpre(Request $request){
+        
+        $prescription = Prescription::where('name', 'like', '%'.$request->dl.'%')
+        ->paginate(5); 
+        if (!$prescription) {
+            return view('pre', ['message' => 'No record found.']);
+        }
+        return view('pre', ['prescription' => $prescription]);
     }
-       
 }

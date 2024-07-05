@@ -21,6 +21,7 @@ use DB;
 
 class UserController extends Controller
 {
+    //3 trang
     public function login(){
         return view('login');
     }
@@ -31,22 +32,25 @@ class UserController extends Controller
     public function forget(){
         return view('forget');
     }
+    //đang ký
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required',
-            'phonenumber'=>'required|regex:/^0[0-9]{9}$/',
+            'name'=>'required|max:20',
+            'phonenumber'=>'required|regex:/^0[0-9]{9}$/|unique:users,phonenumber',
             'email'=>'required|email|unique:users,email',
-            'password'=>'required'
+            'password'=>'required|min:6'
         ],[
         'name.required'=>'Không được bỏ trống name',
+        'name.max'=>'Tên quá dài, chỉ được phép <20',
         'phonenumber.required'=>'Không được bỏ trống phonenumber',
         'phonenumber.regex'=>'Số điện thoại không hợp lệ',
-
+        'phonenumber.unique'=>'Số điện thoại đã tồn tại',
         'email.required'=>'Không được bỏ trống email',
         'email.email'=>'Không phải email hợp lệ',
         'email.unique'=>'email đã tồn tại',
         'password.required'=>'Không được bỏ trống password',
+        'password.min'=>'Mật khẩu có độ dài trên 6',
 
         ]);
         
@@ -60,14 +64,17 @@ class UserController extends Controller
         //return redirect()->route('danhsachchucvu');
         return redirect()->back()->with('message', 'Đăng ký thành công');
     }
+    //Quên mk
     public function quenmk(Request $request)
     {
         $request->validate([
-            'email'=>'required|exists:users'
+            'email'=>'required|email|exists:users'
         ],[
             'email.required'=>'Vui lòng nhập địa chỉ email hợp lệ.',
+            'email.email'=>'Vui lòng nhập địa chỉ email hợp lệ.',
             'email.exists'=>'Email này không tồn tại'
         ]);
+
         $token=strtoupper(Str::random(10));
         $user=User::where('email',$request->email)->first();
        
@@ -75,11 +82,12 @@ class UserController extends Controller
         $user=User::where('email',$request->email)->first();
 
         Mail::send('check_email_forget',compact('user'), function($email) use($user){
-            $email->subject('MyShopng- lay lai mat khau tai khoan');
+            $email->subject('Đặt lại mật khẩu');
             $email->to($user->email,$user->name); });
             return redirect()->back()->with('message', 'Vui lòng check mail');
        
     }
+    //trang đổi mật khẩu
     public function getPass($id, $token){
         $user=User::where('id_user',$id)->first();
         if($user->token===$token){
@@ -87,16 +95,17 @@ class UserController extends Controller
         }
         return abort(404);
     }
-    
+    //nhập mk mới
     public function postGetPass($id, $token, Request $request)
     {
          $request->validate([
-            'password'=>'required',
+            'password'=>'required|min:6',
             'confirm_password'=>'required|same:password'
         ],[
         'password.required'=>'Không được bỏ trống password',
         'confirm_password.required'=>'Không được bỏ trống confirm_password',
-        'confirm_password.same'=>'password khác confirm_password'
+        'confirm_password.same'=>'password khác confirm_password',
+        'password.min'=>'Mật khẩu có độ dài trên 6',
 
         ]);
         
@@ -108,7 +117,7 @@ class UserController extends Controller
 
     }
 
-    
+    //đăng nhập
     public function dangnhap(Request $request)
     {
         $validatedData = $request->validate([
@@ -128,7 +137,7 @@ class UserController extends Controller
 
         if( $user->id_role==2){
             $request->session()->regenerate();
-            return redirect()->route('trangchu'); // Redirect on successful login
+            return redirect()->route('trangchu')->with('message', 'Đăng nhập thành công'); // Redirect on successful login
         }else if($user->id_role==1){
             return redirect()->route('admin1');;
         }else if($user->id_role==4){
@@ -202,10 +211,13 @@ class UserController extends Controller
 //
                $results = DB::table('medicalresults')
                ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
+               ->join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
                ->join('users', 'patientrecords.id_user', '=', 'users.id_user')
+               ->join('clinics', 'appointments.id_clinic', '=', 'clinics.id_clinic')
+               ->join('services', '.clinics.id_service', '=', 'services.id_service')
                ->where('users.id_user', Auth::User()->id_user)
                ->where('medicalresults.status', 'chờ duyệt')
-               ->select('medicalresults.*')
+               ->select('medicalresults.*', 'patientrecords.prname','appointments.day','appointments.time','appointments.finishtime','clinics.clinicname','services.servicename')
                ->paginate(2);
                     return view('profile3',['results'=>$results]);
             } else {
@@ -218,13 +230,16 @@ class UserController extends Controller
             if (Auth::check() && Auth::User()->id_role==2) {
                      $user=Auth::User();
 //
-               $results = DB::table('medicalresults')
-               ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
-               ->join('users', 'patientrecords.id_user', '=', 'users.id_user')
-               ->where('users.id_user', Auth::User()->id_user)
-               ->where('medicalresults.status', 'chưa thanh toán')
-               ->select('medicalresults.*')
-               ->paginate(2);
+$results = DB::table('medicalresults')
+->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
+->join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
+->join('users', 'patientrecords.id_user', '=', 'users.id_user')
+->join('clinics', 'appointments.id_clinic', '=', 'clinics.id_clinic')
+->join('services', '.clinics.id_service', '=', 'services.id_service')
+->where('users.id_user', Auth::User()->id_user)
+->where('medicalresults.status', 'chưa thanh toán')
+->select('medicalresults.*', 'patientrecords.prname','appointments.day','appointments.time','appointments.finishtime','clinics.clinicname','services.servicename')
+->paginate(2);
                     return view('profile32',['results'=>$results]);
             } else {
                 return redirect()->route('login')->with('message', 'Bạn chưa đăng nhập');
@@ -238,12 +253,15 @@ class UserController extends Controller
 //
                 $statuses = ['đã khám', 'đã thanh toán'];
                 $results = DB::table('medicalresults')
-               ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
-               ->join('users', 'patientrecords.id_user', '=', 'users.id_user')
-               ->where('users.id_user', Auth::User()->id_user)
-               ->whereIn('medicalresults.status', $statuses)
-               ->select('medicalresults.*')
-               ->paginate(2);
+                ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
+                ->join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
+                ->join('users', 'patientrecords.id_user', '=', 'users.id_user')
+                ->join('clinics', 'appointments.id_clinic', '=', 'clinics.id_clinic')
+                ->join('services', '.clinics.id_service', '=', 'services.id_service')
+                ->where('users.id_user', Auth::User()->id_user)
+                ->whereIn('medicalresults.status', $statuses)
+                ->select('medicalresults.*', 'patientrecords.prname','appointments.day','appointments.time','appointments.finishtime','clinics.clinicname','services.servicename')
+                ->paginate(2);
                     return view('profile33',['results'=>$results]);
             } else {
                 return redirect()->route('login')->with('message', 'Bạn chưa đăng nhập');
@@ -267,14 +285,19 @@ class UserController extends Controller
         public function editprofile(Request $request)
         {
             $request->validate([
-                'phonenumber'=>'nullable|regex:/^0[0-9]{9}$/',
-                 'password' => 'nullable',
+                'name'=>'required|max:20',
+                'phonenumber' => 'required|regex:/^0[0-9]{9}$/|unique:users,phonenumber,' .  Auth::user()->id_user. ',id_user',                 
+                'password' => 'nullable|min:6',
                  'confirm_password' => 'required_with:password|same:password',
 
             ],[
+            'name.required'=>'Không được bỏ trống name',
+            'name.max'=>'Tên quá dài, chỉ được phép <20',
+            'phonenumber.required'=>'Không được bỏ trống phonenumber',
             'phonenumber.regex'=>'Số điện thoại không hợp lệ',
-            'confirm_password.required_with' => 'Bạn cần xác nhận mật khẩu khi nhập mật khẩu',
-            'confirm_password.same' => 'Xác nhận mật khẩu không khớp'
+            'phonenumber.unique'=>'Số điện thoại đã tồn tại',
+            'password.min'=>'Mật khẩu có độ dài trên 6',
+
             ]);
             
             $user = Auth::user();
@@ -663,4 +686,346 @@ $mrz=DB::table('consults') ->where('consults.id_cons', $id)->first();
         'mr' => $mr,'medi'=>$medi,'pm'=>$pm
     ]);
 }
+
+//thembacsi
+public function qldoctor(){
+    $specialist= DB::select('SELECT * from specialists');
+    $user = DB::table('users')
+    ->where('users.id_role', 3)
+    ->select('users.*')
+    ->paginate(5);
+
+
+    if (!$user) {
+        return view('qldoctor', ['message' => 'không có dịch vụ nào']);
+    
+    }
+    return view('qldoctor', ['user' => $user,'specialist' => $specialist]);
+}
+
+
+public function addqldoctor(Request $request)
+{
+    $request->validate([
+        'name' => 'required',
+'password' => 'required',
+'phonenumber'=>'required|regex:/^0[0-9]{9}$/',
+'email'=>'required|email|unique:users,email',
+'avatar' => 'required|image',
+'signature' => 'required|image',
+'price' => 'required|numeric|min:10000',
+'id_specialist' => 'required|exists:specialists,id_specialist',
+    ],[
+        'name.required' => 'Vui lòng nhập tên.',
+        'password.required' => 'Vui lòng nhập mật khẩu.',
+        'phonenumber.required' => 'Vui lòng nhập số điện thoại.',
+        'phonenumber.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số.',
+        'email.required' => 'Vui lòng nhập email.',
+        'email.email' => 'Email không hợp lệ.',
+        'email.unique' => 'Email đã tồn tại.',
+        'avatar.required' => 'Vui lòng tải lên ảnh đại diện.',
+        'avatar.image' => 'Ảnh đại diện phải là định dạng hình ảnh.',
+        'signature.required' => 'Vui lòng tải lên chữ ký.',
+        'signature.image' => 'Chữ ký phải là định dạng hình ảnh.',
+        'price.required' => 'Vui lòng nhập giá.',
+        'price.numeric' => 'Giá phải là số.',
+        'price.min' => 'Giá phải lớn hơn hoặc bằng 0.',
+        'id_specialist.required' => 'Vui lòng chọn chuyên khoa.',
+        'id_specialist.exists' => 'Chuyên khoa không tồn tại.'
+    ]);
+    
+
+         $u=new User;
+         $u->name=$request->name;
+         $u->password=$request->password;
+         $u->email=$request->email;
+         $u->phonenumber=$request->phonenumber;
+         $u->id_role=3;
+         $u->price=$request->price;
+         $u->id_specialist=$request->id_specialist;
+        
+         if($request->working_hours!=null){
+            $u->working_hours=$request->working_hours;
+
+         }
+         $imageName = time() . '.' . $request->avatar->extension();
+         $request->avatar->move(public_path('image'), $imageName); 
+         $u->avatar = $imageName; 
+
+         $imageName2 = time() . '.' . $request->signature->extension();
+         $request->signature->move(public_path('image'), $imageName2); 
+         $u->signature = $imageName2; 
+
+        $u->save();
+        return redirect()->back()->with('message', 'Thêm thành công');
+}
+public function xoaqldoctor(Request $request)
+{
+    $request->validate([
+        'id_user'=>'required',
+    ],[
+    'id_user.required'=>'Hãy chọn bác sĩ cần xóa',
+
+    ]);
+    
+    $s = User::find($request->id_user);
+    $s->delete();
+    return redirect()->back()->with('message', 'Xóa thành công');
+
+}
+public function capnhatqldoctor(Request $request,$id)
+    {
+        $request->validate([
+            'name' => 'required',
+    'phonenumber'=>'required|regex:/^0[0-9]{9}$/',
+    'email' => 'required|email|unique:users,email,' . $id . ',id_user',
+    'avatar' => 'nullable|image',
+    'signature' => 'nullable|image',
+    'price' => 'required|numeric|min:10000',
+    'id_specialist' => 'required|exists:specialists,id_specialist',
+        ],[
+            'name.required' => 'Vui lòng nhập tên.',
+            'phonenumber.required' => 'Vui lòng nhập số điện thoại.',
+            'phonenumber.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số.',
+            'email.required' => 'Vui lòng nhập email.',
+            'email.email' => 'Email không hợp lệ.',
+            'email.unique' => 'Email đã tồn tại.',
+            'avatar.image' => 'Ảnh đại diện phải là định dạng hình ảnh.',
+            'signature.image' => 'Chữ ký phải là định dạng hình ảnh.',
+            'price.required' => 'Vui lòng nhập giá.',
+            'price.numeric' => 'Giá phải là số.',
+            'price.min' => 'Giá phải lớn hơn hoặc bằng 0.',
+            'id_specialist.required' => 'Vui lòng chọn chuyên khoa.',
+            'id_specialist.exists' => 'Chuyên khoa không tồn tại.'
+        ]);
+        
+        if (empty($id)) {
+            return redirect()->back()->with('message', 'ID bác sĩ không hợp lệ.');
+        }
+    
+        $u = User::find($id);
+    
+        if (!$u) {
+            return redirect()->back()->with('message', 'Không tìm thấy bác sĩ.');
+        }
+
+        $user = User::find($id);
+
+        $user->name=$request->name;
+        if($request->password!=null){
+            $user->password=$request->password;
+
+        }
+        $user->email=$request->email;
+        $user->phonenumber=$request->phonenumber;
+
+        if($request->working_hours!=null){
+            $user->working_hours=$request->working_hours;
+
+         }
+        $user->price=$request->price;
+        $user->id_specialist=$request->id_specialist;
+        if($request->avatar!=null){
+$imageName = time() . '.' . $request->avatar->extension();
+        $request->avatar->move(public_path('image'), $imageName); 
+        $user->avatar = $imageName; 
+        }
+        
+        if($request->signature!=null){
+            $imageName2 = time() . '.' . $request->signature->extension();
+            $request->signature->move(public_path('image'), $imageName2); 
+            $user->signature = $imageName2; 
+        }
+
+        $user->update();
+        return redirect()->back()->with('message', 'Sửa thành công');
+    }
+       
+    public function updatewh(Request $request)
+    {
+        $request->validate([
+            'wh' => 'required',
+        ],[
+            'wh.required' => 'Vui lòng nhập khung giờ làm việc.',
+        ]);
+        
+        $user = User::find(Auth::User()->id_user);
+        $user->working_hours=$request->wh;
+        $user->update();
+        return redirect()->back()->with('message', 'Sửa thành công');
+    }
+       
+
+    public function qlkhachhang(){
+        $user = DB::table('users')
+        ->where('users.id_role', 2)
+        ->select('users.*')
+        ->paginate(5);
+    
+    
+        if (!$user) {
+            return view('qlkhachhang', ['message' => 'không có khách hàng nào']);
+        
+        }
+        return view('qlkhachhang', ['user' => $user]);
+    }
+    
+    
+    public function addqlkhachhang(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+    'password' => 'required',
+    'phonenumber'=>'required|regex:/^0[0-9]{9}$/',
+    'email'=>'required|email|unique:users,email',
+   
+        ],[
+            'name.required' => 'Vui lòng nhập tên.',
+            'password.required' => 'Vui lòng nhập mật khẩu.',
+            'phonenumber.required' => 'Vui lòng nhập số điện thoại.',
+            'phonenumber.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số.',
+            'email.required' => 'Vui lòng nhập email.',
+            'email.email' => 'Email không hợp lệ.',
+            'email.unique' => 'Email đã tồn tại.',
+           
+        ]);
+        
+    
+             $u=new User;
+             $u->name=$request->name;
+             $u->password=$request->password;
+             $u->email=$request->email;
+             $u->phonenumber=$request->phonenumber;
+             $u->id_role=2;
+        
+            $u->save();
+            return redirect()->back()->with('message', 'Thêm thành công');
+    }
+    public function xoaqlkhachhang(Request $request)
+    {
+        $request->validate([
+            'id_user'=>'required',
+        ],[
+        'id_user.required'=>'Hãy chọn khách hàng cần xóa',
+    
+        ]);
+        
+        $s = User::find($request->id_user);
+        $s->delete();
+        return redirect()->back()->with('message', 'Xóa thành công');
+    
+    }
+    public function capnhatqlkhachhang(Request $request,$id)
+        {
+            $request->validate([
+                'name' => 'required',
+        'phonenumber'=>'required|regex:/^0[0-9]{9}$/',
+        'email' => 'required|email|unique:users,email,' . $id . ',id_user',
+        'password'=>'nullable'
+            ],[
+                'name.required' => 'Vui lòng nhập tên.',
+                'phonenumber.required' => 'Vui lòng nhập số điện thoại.',
+                'phonenumber.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số.',
+                'email.required' => 'Vui lòng nhập email.',
+                'email.email' => 'Email không hợp lệ.',
+                'email.unique' => 'Email đã tồn tại.',
+            ]);
+            
+            if (empty($id)) {
+                return redirect()->back()->with('message', 'ID khách hàng không hợp lệ.');
+            }
+        
+            $u = User::find($id);
+        
+            if (!$u) {
+                return redirect()->back()->with('message', 'Không tìm thấy khách hàng .');
+            }
+    
+            $user = User::find($id);
+    
+            $user->name=$request->name;
+            if($request->password!=null){
+                $user->password=$request->password;
+    
+            }
+            $user->email=$request->email;
+            $user->phonenumber=$request->phonenumber;
+         
+            $user->update();
+            return redirect()->back()->with('message', 'Sửa thành công');
+        }
+        
+         
+    public function qlnhanvien(){
+        $user = DB::table('users')
+        ->where('users.id_role', 4)
+        ->select('users.*')
+        ->paginate(5);
+    
+    
+        if (!$user) {
+            return view('qlnhanvien', ['message' => 'không có nhân viên nào']);
+        
+        }
+        return view('qlnhanvien', ['user' => $user]);
+    }
+    public function addqlnhanvien(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+    'password' => 'required',
+    'phonenumber'=>'required|regex:/^0[0-9]{9}$/',
+    'email'=>'required|email|unique:users,email',
+   
+        ],[
+            'name.required' => 'Vui lòng nhập tên.',
+            'password.required' => 'Vui lòng nhập mật khẩu.',
+            'phonenumber.required' => 'Vui lòng nhập số điện thoại.',
+            'phonenumber.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số.',
+            'email.required' => 'Vui lòng nhập email.',
+            'email.email' => 'Email không hợp lệ.',
+            'email.unique' => 'Email đã tồn tại.',
+           
+        ]);
+        
+    
+             $u=new User;
+             $u->name=$request->name;
+             $u->password=$request->password;
+             $u->email=$request->email;
+             $u->phonenumber=$request->phonenumber;
+             $u->id_role=4;
+        
+            $u->save();
+            return redirect()->back()->with('message', 'Thêm thành công');
+    }
+    public function finddoctor(Request $request){
+        $specialist= DB::select('SELECT * from specialists');
+        $user = DB::table('users')
+        ->where('users.id_role', 3)
+        ->select('users.*')
+        ->paginate(5);
+
+
+        $user = User::where('name', 'like', '%'.$request->dl.'%')->where('id_role',3)
+        ->paginate(5); 
+    
+        if (!$user) {
+            return view('qldoctor', ['message' => 'không có dịch vụ nào']);
+        
+        }
+        return view('qldoctor', ['user' => $user,'specialist' => $specialist]);
+    }
+    
+    public function findnhanvien(Request $request){
+
+    
+        $user = User::where('name', 'like', '%'.$request->dl.'%')->where('id_role',4)
+        ->paginate(5); 
+        if (!$user) {
+            return view('qlnhanvien', ['message' => 'không có nhanvien nào']);
+        
+        }
+        return view('qlnhanvien', ['user' => $user]);
+    }
     }   

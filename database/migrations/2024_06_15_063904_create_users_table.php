@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedInteger('id_role'); // Khóa ngoại (integer unsigned)
             $table->string('signature')->nullable();
             $table->double('price')->nullable();
+            $table->text('working_hours')->nullable();
 
             $table->unsignedInteger('id_specialist')->nullable();
             $table->string('token')->nullable();

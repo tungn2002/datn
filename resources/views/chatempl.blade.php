@@ -269,10 +269,10 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                <a href="{{ route('empl') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="{{ route('empl_choduyet') }}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Xác nhận đơn</a>
 
-                    <a href="" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Trò chuyên</a>
+                    <a href="{{ route('trochuyenempl') }}" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Trò chuyên</a>
                 
 
                   
@@ -399,33 +399,7 @@
             <!-- Blank End -->
 
 
-            <table class="table table-striped custab mt-4">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Tên</th>
-            <th>Địa chỉ</th>
-            <th class="text-center">Tùy chọn</th>
-        </tr>
-    </thead>
-    @isset($hospital)
-                            @foreach ($hospital as $item)
-                            <tr>
-                                <td>{{$item->id_hospital}}</td>
-                                <td>{{$item->hospitalname}}</td>
-                                <td>{{$item->address}}</td>
-                                <td class="text-center">       
-                                <button class="btn btn-warning btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $item->id_hospital }}">Sửa</button> 
-                                    <button class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$item->id_hospital}}">Xóa</button>
-                                </td>
-                            </tr>
-                         
-                            @endforeach
-                        @endisset
-
-         
-
-    </table>
+       
     @isset($hospital)
     <div class="container-footer-kt">
             <nav aria-label="Page navigation example" class="ml-5 footer-kt">

@@ -28,9 +28,9 @@
 						
 							<div class="form-input">
 								<label for="">Password</label>
-    <input type="password" name="password" required>
+    <input type="password" name="password" required  minlength="6" title="Mật khẩu dài hơn 6 ký tự">
     <label for="">Confirm password</label>
-    <input type="password" name="confirm_password" required>
+    <input type="password" name="confirm_password" required  minlength="6" title="Mật khẩu dài hơn 6 ký tự">
 							</div>
 							<div class="mb-3">
                             <button type="submit" class="btn">Đặt lại mật khẩu</button>
