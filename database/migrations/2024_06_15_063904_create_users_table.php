@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('token')->nullable();
 
             // Định nghĩa khóa ngoại
-            $table->foreign('id_specialist')->references('id_specialist')->on('specialists');
+            $table->foreign('id_specialist')->references('id_specialist')->on('specialists')->onDelete('cascade');
 
         });
     }

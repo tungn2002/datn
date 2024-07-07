@@ -219,9 +219,9 @@
 
   <h2>Danh sách đơn đặt khám</h2>
  
-  <a href=" {{ route('profile3') }}" class="btn btn-primary"style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #00FFFF 0%, #00FFFF 100%);">Chờ duyệt</a>
+  <a href=" {{ route('profile3') }}" class="btn btn-primary"style="color: #000000;border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #00FFFF 0%, #00FFFF 100%);">Chờ duyệt</a>
   <a href=" {{ route('profile32') }}" class="btn btn-primary" style="color: #000000; border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #00FFFF 0%, #00FFFF 100%);">Chưa thanh toán</a>
-  <a href=" {{ route('profile33') }}" class="btn btn-primary" style="color: #000000;border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590  100%);">Đã thanh toán và đã khám</a>
+  <a href=" {{ route('profile33') }}" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590  100%);">Đã thanh toán và đã khám</a>
 
 
     <div class="container mt-5">
@@ -235,11 +235,16 @@
               <p class="card-text"><i class="far fa-calendar-check"></i> Ngày đặt: {{ $record->booking_date }}</p>
               <p class="card-text"><i class="fas fa-calendar-alt"></i> Ngày khám: {{ $record->day }}</p>
               <p class="card-text"><i class="fas fa-stethoscope"></i> Dịch vụ: {{ $record->servicename }}</p>
-              <p class="card-text">Trạng thái: {{ $record->status }}</p>
+              <p class="card-text"><i class="far fa-calendar-check"></i> Trạng thái: {{ $record->status }}</p>
+              <hr>
               @if ($record->status === 'đã khám')
-              <p class="card-text"><i class="fas fa-stethoscope"></i><i class="fas fa-poll"></i> Kết quả: {{ $record->detail }}</p>
-
-                <a href="{{ route('pdff', ['id' => $record->id_result]) }}" class="btn btn-primary">Đơn thuốc</a>
+              <p class="card-text"><i class="fas fa-poll"></i> Kết quả: {{ $record->detail }}</p>
+              @if($record->image != null)
+              <p class="card-text">Ảnh: 
+    <img class="img-fluid" style="width: 400px; height: auto;" src="{{ asset('image/' . $record->image) }}" alt="">
+</p>              @else
+              @endif
+                <a href="{{ route('pdff', ['id' => $record->id_result]) }}" class="btn btn-primary float-right">Đơn thuốc</a>
             @else
             @endif
           </div>
@@ -330,8 +335,7 @@
    
     </div>
   </footer>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 
@@ -343,7 +347,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIA_zqjFMsJM_sxP9-6Pde5vVCTyJmUHM&callback=initMap"></script>
 
 @if(Session::has('message'))
 <script>

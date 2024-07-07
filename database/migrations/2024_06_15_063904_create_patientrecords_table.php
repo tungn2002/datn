@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('address');
             $table->unsignedInteger('id_user'); 
 
-            $table->foreign('id_user')->references('id_user')->on('users');
+            $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
         });
     }
 

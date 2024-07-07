@@ -4,10 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DASHMIN - Bootstrap Admin Template</title>
+    <title>Bác sĩ</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+
 
     <!-- Favicon -->
 
@@ -53,30 +52,21 @@
 <body>
     
 
-    <div class="container-xxl position-relative bg-white d-flex p-0">
+<div class="container-xxl position-relative bg-white d-flex p-0">
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
             <nav class="navbar bg-light navbar-light" >
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"></i>DOCTOR</h3>
+                    <h3 class="text-primary"><i class="fas fa-user-nurse"></i> Bác sĩ</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4" >
-                    <div class="position-relative">
-                        <img class="rounded-circle" src="{{ asset('ad/img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
-                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                    </div>
-                    <div class="ms-3">
-                        <h6 class="mb-0"> {{ Auth::user()->name }}</h6>
-                        <span>Doctor</span>
-                    </div>
+                    
                 </div>
                 <div class="navbar-nav w-100" >
-                <a href="{{ route('doctor') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('doctor') }}" class="nav-item nav-link active"><i class="far fa-id-card"></i>Thông tin cá nhân</a>
                     <a href="{{ route('lichlamviec') }}" class="nav-item nav-link"><i class="fas fa-calendar-alt"></i>Lịch làm việc</a>
                     <a href="{{ route('trochuyendoctor') }}" class="nav-item nav-link "><i class="fas fa-comment-dots"></i>Trò chuyên</a>
                 
-
-                  
 
                   
                 </div>
@@ -101,41 +91,44 @@
                    
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="{{ asset('ad/img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle me-lg-2"src="{{ asset('image/' . Auth::user()->avatar) }}" alt="" style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex">  {{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">Thông tin</a>
                             <a href="{{ route('logout') }}" class="dropdown-item">Đăng xuất</a>
                         </div>
                     </div>
                 </div>
             </nav>
             <!-- Navbar End -->
-
             <!-- Blank Start -->
 
             <div class="container-fluid pt-4 px-4 ">
             <h4>Thông tin bệnh nhân</h4>
 
             <div class="container mt-5">
-            <div class="custom-div" style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; margin-bottom: 10px;">
-    <p>Tên bệnh nhân: {{$patientRecords->prname}}</p>
-    <p>Ngày sinh: {{$patientRecords->birthday}}</p>
-    <p>Số điện thoại: {{$patientRecords->phonenumber}}</p>
-    <p>Giới tính: {{$patientRecords->gender}}</p>
-    <p>Địa chỉ: {{$patientRecords->address}}</p>
-    <p>Lý do khám: {{$patientRecords->reason}}</p>capnhatkqkhanhienra dayluin va nut them don thuc va xem don thuoc
+            <div class="custom-div" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;">
+            <p><h3 style="color: #33CCFF	;"><i class="fas fa-user"></i> Tên bệnh nhân: {{$patientRecords->prname}}</h3></p>
+    <p><i class="fas fa-birthday-cake"></i> Ngày sinh: {{$patientRecords->birthday}}</p>
+    <p><i class="fas fa-phone-alt"></i> Số điện thoại: {{$patientRecords->phonenumber}}</p>
+    <p><i class="fas fa-venus-mars"></i> Giới tính: {{ $patientRecords->gender == 'male' ? 'Nam' : ($patientRecords->gender == 'female' ? 'Nữ' : 'Khác') }}</p>
+    <p><i class="fas fa-map-marked-alt"></i> Địa chỉ: {{$patientRecords->address}}</p>
+    <p><i class="fas fa-comment-medical"></i> Lý do khám: {{$patientRecords->reason}}</p>
 </div>
 
 
 @isset($updatekq)
-<div class="custom-div" style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; margin-bottom: 10px;">
-<p>Kết quả: {{$updatekq->detail}}</p>
-<img style="width: 40px; height: 40px"class="" src="{{ asset('image/' . $updatekq->image) }}" ></div>
+<div class="custom-div mt-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;">
+<h3 style="color: #33CCFF	;">Kết quả: </h3>
+<p>{{$updatekq->detail}}</p>
+@if($updatekq->image != null)
 
-<div class="custom-div" style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; margin-bottom: 10px;">
-<h4>Viết kết quả:</h4>
+<img style="width: 40px; height: 40px"class="" src="{{ asset('image/' . $updatekq->image) }}" >
+@else
+@endif
+</div>
+<div class="custom-div mt-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;">
+<h3 style="color: #33CCFF	;">Viết kết quả:</h3>
 <form  action="{{ url('capnhatkq/'.$updatekq->id_result) }}" method="post" enctype="multipart/form-data">
         @csrf
     <div class="row mb-3">

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedInteger('sender_id');
             $table->text('status');
             $table->text('content');
-            $table->foreign('id_cons')->references('id_cons')->on('consults');
+            $table->foreign('id_cons')->references('id_cons')->on('consults')->onDelete('cascade');
         });
     }
 

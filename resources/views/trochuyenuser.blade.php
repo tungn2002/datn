@@ -216,7 +216,7 @@
                         
         <div class="col">
                     <div class="card-custom m-2 d-flex flex-column">
-                        <img src="https://via.placeholder.com/80" alt="Avatar">
+                        <img src="{{ asset('anhnv.png') }}" alt="Avatar">
                         <h5 class="mt-3">{{$item->name}}</h5>
                   
                         <a href="{{ route('chatuser', ['id' => $item->id_user]) }}" class="btn btn-primary mt-auto">Chat ngay</a>

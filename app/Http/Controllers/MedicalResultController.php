@@ -88,10 +88,13 @@ class MedicalResultController extends Controller
     }
     public function destroy(Request $request)
     {
+       
         $request->validate([
-            'id_result' => 'required|exists:medicalresults,id_result',
+            'id_result'=>'required|exists:medicalresults,id_result',
+        ],[
+        'id_result.required'=>'Hãy chọn đơn cần xóa',
+        'id_result.exists'=>'Không tồn tại đơn cần xóa',
         ]);
-
         $medicalResult = MedicalResult::find($request->id_result);
         $medicalResult->delete();
         return redirect()->back()->with('message', 'Xóa kết quả khám bệnh thành công');

@@ -58,8 +58,12 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
     Route::get('/themhoso', [PatientRecordController::class, 'themhoso'])->name('themhoso');
 
     Route::post('/addhoso', [PatientRecordController::class, 'addhoso']);
-    Route::post('/xoahoso', [PatientRecordController::class, 'destroy'])->name('xoahoso');
-    Route::post('capnhathoso/id={id}', [PatientRecordController::class, 'update'])->name('capnhathoso');
+    
+Route::post('capnhaths/', [PatientRecordController::class, 'capnhaths'])->name('capnhaths');
+//dungchung
+Route::post('/xoahs', [PatientRecordController::class, 'destroy'])->name('xoahs');
+
+
 
 
 
@@ -73,7 +77,7 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 
 
-//Đặt lịch khám hiendl k hienda dat
+//Đặt lịch khám 
 
 Route::get('/servicef', [ServiceController::class, 'servicef'])->name('servicef');
 Route::get('/serviceb', [ServiceController::class, 'serviceb'])->name('serviceb');
@@ -85,26 +89,74 @@ Route::get('/serviceffff/{id}', [ServiceController::class, 'serviceffff'])->name
 Route::get('/servicebf/{id}', [ServiceController::class, 'servicebf'])->name('servicebf');
 
 
-Route::get('/your-path/{id}', [YourController::class, 'yourMethod'])->name('your.route.name');
-
+//Route::get('/your-path/{id}', [YourController::class, 'yourMethod'])->name('your.route.name');
+//đặt lịch khám 
 Route::post('/addmrsv', [ServiceController::class, 'addmrsv'])->name('addmrsv');
 
-//admin
+//Nhân viên: 
+Route::get('/empl', [UserController::class, 'empl'])->name('empl');//trang thông tin
+Route::get('/empl_choduyet', [UserController::class, 'choduyet_empl'])->name('empl_choduyet'); //chờ duyệt
+Route::get('/xacnhanduyet/{id}', [UserController::class, 'xacnhanduyet'])->name('xacnhanduyet');//xác nhận duyệt
+
+Route::get('/empl_chothanhtoan', [UserController::class, 'chothanhtoan_empl'])->name('empl_chothanhtoan');//chờ thanh toán
+Route::get('/xacnhanthanhtoan/{id}', [UserController::class, 'xacnhanthanhtoan'])->name('xacnhanthanhtoan');//xác nhận thanh toán
+
+Route::get('/empl_dathanhtoan', [UserController::class, 'dathanhtoan_empl'])->name('empl_dathanhtoan');//trang đã thanh toán và đã khám
+//tìm kiếm
+Route::post('/findchoduyet', [UserController::class, 'findchoduyet'])->name('findchoduyet');
+
+Route::post('/findchothanhtoan', [UserController::class, 'findchothanhtoan'])->name('findchothanhtoan');
+
+//trò chuyện nhân viên
+    
+Route::get('/trochuyenempl', [ConsultController::class, 'trochuyenempl'])->name('trochuyenempl');
+Route::get('/chatempl/{id}', [ConsultController::class, 'chatempl'])->name('chatempl');
+
+Route::get('/trochuyenemplAjax', [ConsultController::class, 'trochuyenemplAjax'])->name('trochuyenemplAjax');
+
+//nhanvine 
+Route::get('/messages2/{conversation_id}', [ConsultController::class, 'getMessages2'])->name('messages2.get');
+Route::post('/addmessage2', [ConsultController::class, 'addmessage2']);
+
+
+
+//Bác sĩ 
+Route::get('/doctor', [UserController::class, 'doctor'])->name('doctor');// thông tin cá nhân bác sĩ
+Route::get('/lichlamviec', [UserController::class, 'lichlamviec'])->name('lichlamviec');//xem lịch làm việc
+
+Route::get('/lichlamviecf/{date}', [UserController::class, 'lichlamviecf'])->name('lichlamviecf');//xem giờ làm việc
+Route::get('/lichlamviecdetail/{id}', [UserController::class, 'lichlamviecdetail'])->name('lichlamviecdetail');//xem thông tin bệnh nhân
+Route::post('/capnhatkq/{id}', [UserController::class, 'capnhatkq'])->name('capnhatkq');//cập nhật kết quả khám 
+
+Route::get('/themdonthuoc/{id}', [UserController::class, 'themdonthuoc'])->name('themdonthuoc');// trang kê đơn cho bệnh nhân
+
+//timthuoc
+Route::post('/findthuoc', [UserController::class, 'findthuoc'])->name('findthuoc');
+
+
+//cập nhật và xóa thuốc
+Route::post('capnhatttdt/{id}', [UserController::class, 'capnhatttdt'])->name('capnhatttdt');
+Route::post('capnhatdt/{id}', [UserController::class, 'capnhatdt'])->name('capnhatdt');
+
+Route::post('/xoadtd', [UserController::class, 'xoadtd'])->name('xoadtd');
+
+
+//admin người quản trị 
 Route::get('/admin1', [UserController::class, 'admin1'])->name('admin1');
-//hos
-Route::get('/hospital', [HospitalController::class, 'index'])->name('hospital-index');
+    //Quản lý bệnh viện
+    Route::get('/hospital', [HospitalController::class, 'index'])->name('hospital-index');
 
-Route::post('/addhospital', [HospitalController::class, 'store']);
-Route::post('/xoahos', [HospitalController::class, 'destroy'])->name('xoahos');
-Route::post('capnhathos/id={id}', [HospitalController::class, 'update'])->name('capnhathos');
+    Route::post('/addhospital', [HospitalController::class, 'store']);
+    Route::post('/xoahos', [HospitalController::class, 'destroy'])->name('xoahos');
+    Route::post('capnhathos/id={id}', [HospitalController::class, 'update'])->name('capnhathos');
 
-//sp
+    //quản lý chuyên khoa
 
-Route::get('/specialist', [SpecialistController::class, 'index'])->name('specialist-index');
+    Route::get('/specialist', [SpecialistController::class, 'index'])->name('specialist-index');
 
-Route::post('/addspecialist', [SpecialistController::class, 'store']);
-Route::post('/xoasp', [SpecialistController::class, 'destroy'])->name('xoasp');
-Route::post('capnhatsp/id={id}', [SpecialistController::class, 'update'])->name('capnhatsp');
+    Route::post('/addspecialist', [SpecialistController::class, 'store']);
+    Route::post('/xoasp', [SpecialistController::class, 'destroy'])->name('xoasp');
+    Route::post('capnhatsp/id={id}', [SpecialistController::class, 'update'])->name('capnhatsp');
 
 
 //role
@@ -181,43 +233,18 @@ Route::post('capnhatpr/id={id}', [PatientRecordController::class, 'update'])->na
 //kq
 Route::get('/mr', [MedicalResultController::class, 'index'])->name('mr-index');
 
-Route::post('/addmr', [MedicalResultController::class, 'store']);
+//Route::post('/addmr', [MedicalResultController::class, 'store']);
 Route::post('/xoamr', [MedicalResultController::class, 'destroy'])->name('xoamr');
-Route::post('capnhatmr/id={id}', [MedicalResultController::class, 'update'])->name('capnhatmr');
+//Route::post('capnhatmr/id={id}', [MedicalResultController::class, 'update'])->name('capnhatmr');
 
 
 
+// đơn tư vấn
+Route::get('/consult', [ConsultController::class, 'index'])->name('consult-index');
+
+Route::post('/xoaconsult', [ConsultController::class, 'destroy'])->name('xoaconsult');
 
 
-//user
-Route::post('capnhaths/', [PatientRecordController::class, 'capnhaths'])->name('capnhaths');
-Route::post('/xoahs', [PatientRecordController::class, 'destroy'])->name('xoahs');
-
-//employ
-Route::get('/empl', [UserController::class, 'empl'])->name('empl');
-Route::get('/empl_choduyet', [UserController::class, 'choduyet_empl'])->name('empl_choduyet');
-Route::get('/xacnhanduyet/{id}', [UserController::class, 'xacnhanduyet'])->name('xacnhanduyet');
-
-Route::get('/empl_chothanhtoan', [UserController::class, 'chothanhtoan_empl'])->name('empl_chothanhtoan');
-Route::get('/xacnhanthanhtoan/{id}', [UserController::class, 'xacnhanthanhtoan'])->name('xacnhanthanhtoan');
-
-Route::get('/empl_dathanhtoan', [UserController::class, 'dathanhtoan_empl'])->name('empl_dathanhtoan');
-
-//doctor
-Route::get('/doctor', [UserController::class, 'doctor'])->name('doctor');
-Route::get('/lichlamviec', [UserController::class, 'lichlamviec'])->name('lichlamviec');
-
-Route::get('/lichlamviecf/{date}', [UserController::class, 'lichlamviecf'])->name('lichlamviecf');
-Route::get('/lichlamviecdetail/{id}', [UserController::class, 'lichlamviecdetail'])->name('lichlamviecdetail');
-Route::post('/capnhatkq/{id}', [UserController::class, 'capnhatkq'])->name('capnhatkq');
-
-Route::get('/themdonthuoc/{id}', [UserController::class, 'themdonthuoc'])->name('themdonthuoc');
-
-
-Route::post('capnhatttdt/{id}', [UserController::class, 'capnhatttdt'])->name('capnhatttdt');
-Route::post('capnhatdt/{id}', [UserController::class, 'capnhatdt'])->name('capnhatdt');
-
-Route::post('/xoadtd', [UserController::class, 'xoadtd'])->name('xoadtd');
 
 
 
@@ -243,16 +270,6 @@ Route::get('/messages/{conversation_id}', [ConsultController::class, 'getMessage
 //
 //cho all
 Route::post('/addmessage', [ConsultController::class, 'addmessage']);
-
-
-Route::get('/trochuyenempl', [ConsultController::class, 'trochuyenempl'])->name('trochuyenempl');
-Route::get('/chatempl/{id}', [ConsultController::class, 'chatempl'])->name('chatempl');
-
-Route::get('/trochuyenemplAjax', [ConsultController::class, 'trochuyenemplAjax'])->name('trochuyenemplAjax');
-
-//nhanvine 
-Route::get('/messages2/{conversation_id}', [ConsultController::class, 'getMessages2'])->name('messages2.get');
-Route::post('/addmessage2', [ConsultController::class, 'addmessage2']);
 
 
 
@@ -289,9 +306,6 @@ Route::post('capnhatqlkhachhang/id={id}', [UserController::class, 'capnhatqlkhac
 Route::get('/qlnhanvien', [UserController::class, 'qlnhanvien'])->name('qlnhanvien');
 Route::post('/addqlnhanvien', [UserController::class, 'addqlnhanvien']);
 
-Route::post('/xoaqlkhachhang', [UserController::class, 'xoaqlkhachhang'])->name('xoaqlkhachhang');
-Route::post('capnhatqlkhachhang/id={id}', [UserController::class, 'capnhatqlkhachhang'])->name('capnhatqlkhachhang');
-
 
 //tim kiem
 Route::post('/timkiemsv', [ServiceController::class, 'timkiemsv'])->name('timkiemsv');
@@ -313,6 +327,3 @@ Route::post('/findnhanvien', [UserController::class, 'findnhanvien'])->name('fin
 Route::post('/findconsult', [UserController::class, 'findconsult'])->name('findconsult');
 
 //
-Route::get('/consult', [ConsultController::class, 'index'])->name('consult-index');
-
-Route::post('/xoaconsult', [ConsultController::class, 'destroy'])->name('xoaconsult');

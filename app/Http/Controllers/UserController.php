@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use App\Models\MedicalResult;
 use App\Models\Prescription;
 use App\Models\PrescriptionMedicine;
+use App\Models\Medicine;
 
 use Illuminate\Support\Str; 
 use Illuminate\Support\Facades\Mail;
@@ -338,18 +339,37 @@ $results = DB::table('medicalresults')
 
 
 
-//nhanvien
-
+//nhân viên
+//trang thông tin
         public function empl(){
             return view('empl');
         }
 
 
-//
+//trang danh sách chờ duyệt
 
 public function choduyet_empl()
 {
-    $medicalResults = MedicalResult::where('status', 'chờ duyệt')->paginate(5);
+    $medicalResults = MedicalResult::join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
+    ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
+    ->where('medicalresults.status', 'chờ duyệt')
+    ->select('medicalresults.*', 'appointments.*', 'patientrecords.*')
+    ->paginate(5);
+
+    return view('empl_2', [
+        'medicalResults' => $medicalResults,
+    ]);
+    
+}
+public function findchoduyet(Request $request)
+{
+    
+    $medicalResults = MedicalResult::join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
+    ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
+    ->where('medicalresults.status', 'chờ duyệt')
+    ->where('patientrecords.phonenumber',  $request->dl)
+    ->select('medicalresults.*', 'appointments.*', 'patientrecords.*')
+    ->paginate(5);
 
     return view('empl_2', [
         'medicalResults' => $medicalResults,
@@ -363,9 +383,11 @@ public function xacnhanduyet($id)
         return redirect()->back()->with('message', 'ID đơn đặt khám hợp lệ.');
     }
 
-    $medicalResults = MedicalResult::find($id);
+    $exists = MedicalResult::where('id_result', $id)
+    ->where('status', 'chờ duyệt')
+    ->exists();
 
-    if (!$medicalResults) {
+    if (!$exists) {
         return redirect()->back()->with('message', 'Không tìm thấy.');
     }
 
@@ -378,7 +400,30 @@ public function xacnhanduyet($id)
 
 public function chothanhtoan_empl()
 {
-    $medicalResults = MedicalResult::where('status', 'chưa thanh toán')->paginate(5);
+    $medicalResults = MedicalResult::join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
+    ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
+    ->join('clinics', 'appointments.id_clinic', '=', 'clinics.id_clinic')
+    ->join('services', 'clinics.id_service', '=', 'services.id_service')
+    ->where('medicalresults.status', 'chưa thanh toán')
+    ->select('medicalresults.*', 'appointments.*', 'patientrecords.*','services.*')
+    ->paginate(5);
+
+    return view('empl_3', [
+        'medicalResults' => $medicalResults,
+    ]);
+    
+}
+
+public function findchothanhtoan(Request $request)
+{
+    $medicalResults = MedicalResult::join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
+    ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
+    ->join('clinics', 'appointments.id_clinic', '=', 'clinics.id_clinic')
+    ->join('services', 'clinics.id_service', '=', 'services.id_service')
+    ->where('medicalresults.status', 'chưa thanh toán')
+    ->where('patientrecords.phonenumber',  $request->dl)
+    ->select('medicalresults.*', 'appointments.*', 'patientrecords.*','services.*')
+    ->paginate(5);
 
     return view('empl_3', [
         'medicalResults' => $medicalResults,
@@ -392,12 +437,14 @@ public function xacnhanthanhtoan($id)
         return redirect()->back()->with('message', 'ID đơn đặt khám hợp lệ.');
     }
 
-    $medicalResults = MedicalResult::find($id);
+    
+    $exists = MedicalResult::where('id_result', $id)
+    ->where('status', 'chưa thanh toán')
+    ->exists();
 
-    if (!$medicalResults) {
+    if (!$exists) {
         return redirect()->back()->with('message', 'Không tìm thấy.');
     }
-
     $medicalResults = MedicalResult::find($id);
     $medicalResults->status='đã thanh toán';
     $medicalResults->update();
@@ -409,10 +456,14 @@ public function dathanhtoan_empl()
 {
     $statuses = ['đã khám', 'đã thanh toán'];
 
-    $medicalResults = DB::table('medicalresults')
+    $medicalResults = MedicalResult::join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
+    ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
+    ->join('clinics', 'appointments.id_clinic', '=', 'clinics.id_clinic')
+    ->join('services', 'clinics.id_service', '=', 'services.id_service')
     ->whereIn('medicalresults.status', $statuses)
-    ->select('medicalresults.*')
+    ->select('medicalresults.*', 'appointments.*', 'patientrecords.*','services.*')
     ->paginate(5);
+    
     return view('empl_4', [
         'medicalResults' => $medicalResults
     ]);
@@ -422,7 +473,15 @@ public function dathanhtoan_empl()
 
 
 public function doctor(){
-    return view('doctor');
+    $medicine = Medicine::paginate(5); 
+
+    return view('doctor',['medicine' => $medicine]);
+}
+public function findthuoc(Request $request){
+
+$medicine = Medicine::where('medicinename','like', '%'.$request->dl.'%')->paginate(5);
+
+    return view('doctor',['medicine' => $medicine]);
 }
 
 public function lichlamviec()
@@ -617,7 +676,7 @@ public function capnhatttdt(Request $request,$id)
 
         
     ], [
-        'detail.required' => 'Tên là bắt buộc.',
+        'name.required' => 'Tên là bắt buộc.',
         'diagnostic.required' => 'Chuẩn đoán là bắt buộc.',
     ]);
 
@@ -686,7 +745,7 @@ $mrz=DB::table('consults') ->where('consults.id_cons', $id)->first();
         'mr' => $mr,'medi'=>$medi,'pm'=>$pm
     ]);
 }
-
+//admin quản lý bác sĩ
 //thembacsi
 public function qldoctor(){
     $specialist= DB::select('SELECT * from specialists');
@@ -707,9 +766,9 @@ public function qldoctor(){
 public function addqldoctor(Request $request)
 {
     $request->validate([
-        'name' => 'required',
-'password' => 'required',
-'phonenumber'=>'required|regex:/^0[0-9]{9}$/',
+        'name' => 'required|max:20',
+'password' => 'required|min:6',
+'phonenumber'=>'required|regex:/^0[0-9]{9}$/|unique:users,phonenumber',
 'email'=>'required|email|unique:users,email',
 'avatar' => 'required|image',
 'signature' => 'required|image',
@@ -718,8 +777,11 @@ public function addqldoctor(Request $request)
     ],[
         'name.required' => 'Vui lòng nhập tên.',
         'password.required' => 'Vui lòng nhập mật khẩu.',
+        'name.max' => 'Tên quá dài phải <20 ký tự.',
+        'password.min' => 'Mật khẩu quá ngắn phải >6 ký tự.',
         'phonenumber.required' => 'Vui lòng nhập số điện thoại.',
         'phonenumber.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số.',
+        'phonenumber.unique' => 'Số điện thoại bị trùng.',
         'email.required' => 'Vui lòng nhập email.',
         'email.email' => 'Email không hợp lệ.',
         'email.unique' => 'Email đã tồn tại.',
@@ -729,7 +791,7 @@ public function addqldoctor(Request $request)
         'signature.image' => 'Chữ ký phải là định dạng hình ảnh.',
         'price.required' => 'Vui lòng nhập giá.',
         'price.numeric' => 'Giá phải là số.',
-        'price.min' => 'Giá phải lớn hơn hoặc bằng 0.',
+        'price.min' => 'Giá phải lớn hơn hoặc bằng 10000.',
         'id_specialist.required' => 'Vui lòng chọn chuyên khoa.',
         'id_specialist.exists' => 'Chuyên khoa không tồn tại.'
     ]);
@@ -762,9 +824,10 @@ public function addqldoctor(Request $request)
 public function xoaqldoctor(Request $request)
 {
     $request->validate([
-        'id_user'=>'required',
+        'id_user'=>'required|exists:users,id_user',
     ],[
     'id_user.required'=>'Hãy chọn bác sĩ cần xóa',
+    'id_user.exists'=>'Không tìm thấy bác sĩ cần xóa',
 
     ]);
     
@@ -776,8 +839,9 @@ public function xoaqldoctor(Request $request)
 public function capnhatqldoctor(Request $request,$id)
     {
         $request->validate([
-            'name' => 'required',
-    'phonenumber'=>'required|regex:/^0[0-9]{9}$/',
+            'name' => 'required|max:20',
+            'password' => 'nullable|min:6',
+            'phonenumber' => 'required|regex:/^0[0-9]{9}$/|unique:users,phonenumber,' . $id. ',id_user',                 
     'email' => 'required|email|unique:users,email,' . $id . ',id_user',
     'avatar' => 'nullable|image',
     'signature' => 'nullable|image',
@@ -785,8 +849,11 @@ public function capnhatqldoctor(Request $request,$id)
     'id_specialist' => 'required|exists:specialists,id_specialist',
         ],[
             'name.required' => 'Vui lòng nhập tên.',
+            'name.max' => 'Tên quá dài phải <20 ký tự.',
+            'password.min' => 'Mật khẩu quá ngắn phải >6 ký tự.',
             'phonenumber.required' => 'Vui lòng nhập số điện thoại.',
             'phonenumber.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số.',
+            'phonenumber.unique' => 'Số điện thoại đã tồn tại.',
             'email.required' => 'Vui lòng nhập email.',
             'email.email' => 'Email không hợp lệ.',
             'email.unique' => 'Email đã tồn tại.',
@@ -840,7 +907,7 @@ $imageName = time() . '.' . $request->avatar->extension();
         $user->update();
         return redirect()->back()->with('message', 'Sửa thành công');
     }
-       
+       //bác sĩ cập nhật khung giừo
     public function updatewh(Request $request)
     {
         $request->validate([
@@ -862,11 +929,6 @@ $imageName = time() . '.' . $request->avatar->extension();
         ->select('users.*')
         ->paginate(5);
     
-    
-        if (!$user) {
-            return view('qlkhachhang', ['message' => 'không có khách hàng nào']);
-        
-        }
         return view('qlkhachhang', ['user' => $user]);
     }
     
@@ -874,16 +936,19 @@ $imageName = time() . '.' . $request->avatar->extension();
     public function addqlkhachhang(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-    'password' => 'required',
-    'phonenumber'=>'required|regex:/^0[0-9]{9}$/',
+            'name' => 'required|max:20',
+            'password' => 'required|min:6',
+'phonenumber'=>'required|regex:/^0[0-9]{9}$/|unique:users,phonenumber',
     'email'=>'required|email|unique:users,email',
    
         ],[
             'name.required' => 'Vui lòng nhập tên.',
             'password.required' => 'Vui lòng nhập mật khẩu.',
+            'name.max' => 'Tên quá dài phải <20 ký tự.',
+            'password.min' => 'Mật khẩu quá ngắn phải >6 ký tự.',
             'phonenumber.required' => 'Vui lòng nhập số điện thoại.',
             'phonenumber.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số.',
+            'phonenumber.unique' => 'Số điện thoại đã tồn tại.',
             'email.required' => 'Vui lòng nhập email.',
             'email.email' => 'Email không hợp lệ.',
             'email.unique' => 'Email đã tồn tại.',
@@ -904,10 +969,11 @@ $imageName = time() . '.' . $request->avatar->extension();
     public function xoaqlkhachhang(Request $request)
     {
         $request->validate([
-            'id_user'=>'required',
+            'id_user'=>'required|exists:users,id_user',
         ],[
         'id_user.required'=>'Hãy chọn khách hàng cần xóa',
-    
+        'id_user.exists'=>'Không tồn tại khách hàng cần xóa',
+
         ]);
         
         $s = User::find($request->id_user);
@@ -918,27 +984,31 @@ $imageName = time() . '.' . $request->avatar->extension();
     public function capnhatqlkhachhang(Request $request,$id)
         {
             $request->validate([
-                'name' => 'required',
-        'phonenumber'=>'required|regex:/^0[0-9]{9}$/',
+                'name' => 'required|max:20',
+                'password' => 'nullable|min:6',
+                'phonenumber' => 'required|regex:/^0[0-9]{9}$/|unique:users,phonenumber,' . $id. ',id_user',  
         'email' => 'required|email|unique:users,email,' . $id . ',id_user',
         'password'=>'nullable'
             ],[
                 'name.required' => 'Vui lòng nhập tên.',
+                'name.max' => 'Tên quá dài phải <20 ký tự.',
+                'password.min' => 'Mật khẩu quá ngắn phải >6 ký tự.',
                 'phonenumber.required' => 'Vui lòng nhập số điện thoại.',
                 'phonenumber.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số.',
+                'phonenumber.unique' => 'Số điện thoại đã tồn tại.',
                 'email.required' => 'Vui lòng nhập email.',
                 'email.email' => 'Email không hợp lệ.',
                 'email.unique' => 'Email đã tồn tại.',
             ]);
             
             if (empty($id)) {
-                return redirect()->back()->with('message', 'ID khách hàng không hợp lệ.');
+                return redirect()->back()->with('message', 'ID không hợp lệ.');
             }
         
             $u = User::find($id);
         
             if (!$u) {
-                return redirect()->back()->with('message', 'Không tìm thấy khách hàng .');
+                return redirect()->back()->with('message', 'Không tìm thấy id .');
             }
     
             $user = User::find($id);
@@ -972,16 +1042,19 @@ $imageName = time() . '.' . $request->avatar->extension();
     public function addqlnhanvien(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-    'password' => 'required',
-    'phonenumber'=>'required|regex:/^0[0-9]{9}$/',
+            'name' => 'required|max:20',
+            'password' => 'required|min:6',
+'phonenumber'=>'required|regex:/^0[0-9]{9}$/|unique:users,phonenumber',
     'email'=>'required|email|unique:users,email',
    
         ],[
             'name.required' => 'Vui lòng nhập tên.',
             'password.required' => 'Vui lòng nhập mật khẩu.',
+            'name.max' => 'Tên quá dài phải <20 ký tự.',
+            'password.min' => 'Mật khẩu quá ngắn phải >6 ký tự.',
             'phonenumber.required' => 'Vui lòng nhập số điện thoại.',
             'phonenumber.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số.',
+            'phonenumber.unique' => 'Số điện thoại đã tồn tại.',
             'email.required' => 'Vui lòng nhập email.',
             'email.email' => 'Email không hợp lệ.',
             'email.unique' => 'Email đã tồn tại.',

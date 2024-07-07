@@ -303,7 +303,7 @@ $otherIdConsults = DB::table('messages')
                 
                         return view('chatdoctor', ['u' => $u,'message' => $message,'idcon'=>$id]);
             }
-
+//quản lý đơn tư vấn admin
             public function index(){
 
         
@@ -317,10 +317,12 @@ $otherIdConsults = DB::table('messages')
            
             public function destroy(Request $request)
             {
+             
                 $request->validate([
-                    'id_cons'=>'required',
+                    'id_cons'=>'required|exists:consults,id_cons',
                 ],[
-                'id_cons.required'=>'Hãy chọn phòng tư vấn cần xóa',
+                'id_cons.required'=>'Hãy chọn bệnh viện cần xóa',
+                'id_cons.exists'=>'Không tồn tại bệnh viện cần xóa',
                 ]);
                 
                 $consult = Consult::find($request->id_cons);

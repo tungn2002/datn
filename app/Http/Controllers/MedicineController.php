@@ -10,9 +10,7 @@ class MedicineController extends Controller
     
     public function index(){
         $medicine = Medicine::paginate(5); 
-        if (!$medicine) {
-            return view('medicine', ['message' => 'No medicine record found.']);
-        }
+       
         return view('medicine', ['medicine' => $medicine]);
     }
 
@@ -44,9 +42,10 @@ class MedicineController extends Controller
     public function destroy(Request $request)
     {
         $request->validate([
-            'id_medicine'=>'required',
+            'id_medicine'=>'required|exists:medicines,id_medicine',
         ],[
         'id_medicine.required'=>'Hãy chọn thuốc',
+        'id_medicine.exists'=>'Không tồn tại thuốc',
 
         ]);
         
@@ -69,7 +68,6 @@ class MedicineController extends Controller
         'medicine.required'=>'Không được bỏ trống tên',
         'detail.required'=>'Không được bỏ trống thông tin',
         'ingredient.required'=>'Không được bỏ trống thành phần',
-
         ]);
         
         if (empty($id)) {

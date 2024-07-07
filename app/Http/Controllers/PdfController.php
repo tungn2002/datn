@@ -70,9 +70,13 @@ class PdfController extends Controller
         $pdf->loadHTML('<style>body {
         font-family:DejaVu Sans; 
         }</style><div>
-        <h3 style="display: inline-block; vertical-align: middle; margin-left: 100px">'.$h->hospitalname.'</h3>
-        <p style="display: inline-block; vertical-align: middle; margin-left: 250px">Địa chỉ: '.$h->address.'</p>
-    </div>
+        <div style="  text-align: center; ">
+      <h3>'.$h->hospitalname.'</h3>
+      </div>
+       <div style="  text-align: right; ">
+      <p>Địa chỉ: '.$h->address.'</p>
+      </div>
+        </div>
         <h1><center>ĐƠN THUỐC</center></h1>
        <div>
         <p style="display: inline-block; vertical-align: middle; margin-left: 100px">Họ và tên: '.$p->name.' </p>
@@ -89,7 +93,7 @@ class PdfController extends Controller
                     <img style=" margin-right:80px; float: right; height: 80px;width: 80px" src="data:image/png;base64,'.base64_encode(file_get_contents($imagePath)).'" alt="">
     </div>
 
-             <p style="text-align: right; margin-right: 90px; margin-top: 100px; ">'.$user->name.'</p>
+             <p style="text-align: right; margin-right: 50px; margin-top: 100px; ">'.$user->name.'</p>
 
         ');
         return $pdf->stream();
@@ -149,8 +153,12 @@ class PdfController extends Controller
       $pdf->loadHTML('<style>body {
       font-family:DejaVu Sans; 
       }</style><div>
-      <h3 style="display: inline-block; vertical-align: middle; margin-left: 100px">'.$h->hospitalname.'</h3>
-      <p style="display: inline-block; vertical-align: middle; margin-left: 250px">Địa chỉ: '.$h->address.'</p>
+      <div style="  text-align: center; ">
+      <h3>'.$h->hospitalname.'</h3>
+      </div>
+       <div style="  text-align: right; ">
+      <p>Địa chỉ: '.$h->address.'</p>
+      </div>
   </div>
       <h1><center>ĐƠN THUỐC</center></h1>
      <div>
@@ -168,7 +176,7 @@ class PdfController extends Controller
                   <img style=" margin-right:80px; float: right; height: 80px;width: 80px" src="data:image/png;base64,'.base64_encode(file_get_contents($imagePath)).'" alt="">
   </div>
 
-           <p style="text-align: right; margin-right: 90px; margin-top: 100px; ">'.$bacsi->name.'</p>
+           <p style="text-align: right; margin-right: 50px; margin-top: 100px; ">'.$bacsi->name.'</p>
 
       ');
       return $pdf->stream();
@@ -225,9 +233,13 @@ class PdfController extends Controller
      $pdf->loadHTML('<style>body {
      font-family:DejaVu Sans; 
      }</style><div>
-     <h3 style="display: inline-block; vertical-align: middle; margin-left: 100px">'.$h->hospitalname.'</h3>
-     <p style="display: inline-block; vertical-align: middle; margin-left: 250px">Địa chỉ: '.$h->address.'</p>
- </div>
+    <div style="  text-align: center; ">
+      <h3>'.$h->hospitalname.'</h3>
+      </div>
+       <div style="  text-align: right; ">
+      <p>Địa chỉ: '.$h->address.'</p>
+      </div>
+     </div>
      <h1><center>ĐƠN THUỐC</center></h1>
     <div>
      <p style="display: inline-block; vertical-align: middle; margin-left: 100px">Họ và tên: '.$p->name.' </p>
@@ -244,7 +256,7 @@ class PdfController extends Controller
                  <img style=" margin-right:80px; float: right; height: 80px;width: 80px" src="data:image/png;base64,'.base64_encode(file_get_contents($imagePath)).'" alt="">
  </div>
 
-          <p style="text-align: right; margin-right: 90px; margin-top: 100px; ">'.$bacsi->name.'</p>
+          <p style="text-align: right; margin-right: 50px; margin-top: 100px; ">'.$bacsi->name.'</p>
 
      ');
      return $pdf->stream();

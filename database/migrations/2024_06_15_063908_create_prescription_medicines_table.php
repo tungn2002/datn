@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('information');
 
             $table->primary(['id_prescription', 'id_medicine']); // Khóa chính ghép
-            $table->foreign('id_prescription')->references('id_pre')->on('prescriptions');
-            $table->foreign('id_medicine')->references('id_medicine')->on('medicines');
+            $table->foreign('id_prescription')->references('id_pre')->on('prescriptions')->onDelete('cascade');
+            $table->foreign('id_medicine')->references('id_medicine')->on('medicines')->onDelete('cascade');
         });
     }
 

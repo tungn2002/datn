@@ -93,9 +93,13 @@ class ServiceController extends Controller
     public function serviceff($id){
         $clinic1 = Clinic::find($id);
         $service =  Service::find($clinic1->id_service);
-        $clinics = Appointment::where('id_clinic',$id)->get();
+        $currentDate = Carbon::now(); // Lấy ngày hiện tại
+        $nextDay = $currentDate->addDays(1);
+        $clinics = Appointment::where('id_clinic',$id)
+        ->whereDate('day', '>', $nextDay ->toDateString())
+        ->get();
 
-        if (!$clinics) {
+        if (!$clinics) {//dk kchay
             return redirect()->route('servicef')->with('message', 'không có dịch vụ nào');
         
         }
@@ -182,7 +186,50 @@ class ServiceController extends Controller
         }
         return view('service', ['service' => $service]);
     }
+  //tìm kiếm dịch vụ
+  public function timkiemsv(Request $request){
+    
+    $clinics = DB::table('clinics')
+    ->join('services', 'clinics.id_service', '=', 'services.id_service')
+    ->where('services.servicename', 'like','%'. $request->dl.'%')
+    ->select('clinics.id_clinic', 'clinics.clinicname', 'services.servicename', 'services.price', 'services.image')
+    ->paginate(6);
 
+
+$firstPost = Hospital::first();
+
+
+//
+
+if (!$clinics) {
+    return view('find_service', ['message' => 'không có dịch vụ nào']);
+
+}
+return view('find_service', ['clinic' => $clinics,'hos'=>  $firstPost]);
+}
+public function timkiemb(Request $request){
+
+$clinics = DB::table('users')
+->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
+->where('id_role',3)
+->where('users.name', 'like','%'. $request->dl.'%')
+
+->select('specialists.spname','users.name', 'users.avatar','users.id_user')
+->paginate(6);
+
+$firstPost = Hospital::first();
+
+
+//
+
+if (!$clinics) {
+return view('find_serviceb', ['message' => 'không có dịch vụ nào']);
+
+}
+return view('find_serviceb', ['clinic' => $clinics,'hos'=>  $firstPost]);
+}
+
+//admin quản lý dịch vụ
     public function store(Request $request)
     {
         $request->validate([
@@ -222,9 +269,10 @@ class ServiceController extends Controller
     public function destroy(Request $request)
     {
         $request->validate([
-            'id_service'=>'required',
+            'id_service'=>'required|exists:services,id_service',
         ],[
         'id_service.required'=>'Hãy chọn dịch vụ cần xóa',
+        'id_service.exists'=>'Không tồn tại dịch vụ cần xóa',
 
         ]);
         
@@ -276,48 +324,7 @@ class ServiceController extends Controller
         $service->update();
         return redirect()->back()->with('message', 'Sửa thành công');
     }
-       
-    public function timkiemsv(Request $request){
-    
-            $clinics = DB::table('clinics')
-            ->join('services', 'clinics.id_service', '=', 'services.id_service')
-            ->where('services.servicename', 'like','%'. $request->dl.'%')
-            ->select('clinics.id_clinic', 'clinics.clinicname', 'services.servicename', 'services.price', 'services.image')
-            ->paginate(6);
-      
-
-        $firstPost = Hospital::first();
-
-
-        //
-
-        if (!$clinics) {
-            return view('find_service', ['message' => 'không có dịch vụ nào']);
-        
-        }
-        return view('find_service', ['clinic' => $clinics,'hos'=>  $firstPost]);
-    }
-    public function timkiemb(Request $request){
-    
-        $clinics = DB::table('users')
-        ->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
-        ->where('id_role',3)
-        ->where('users.name', 'like','%'. $request->dl.'%')
-
-        ->select('specialists.spname','users.name', 'users.avatar','users.id_user')
-        ->paginate(6);
-
-    $firstPost = Hospital::first();
-
-
-    //
-
-    if (!$clinics) {
-        return view('find_serviceb', ['message' => 'không có dịch vụ nào']);
-    
-    }
-    return view('find_serviceb', ['clinic' => $clinics,'hos'=>  $firstPost]);
-}
+     
 
     public function findsv(Request $request){
 

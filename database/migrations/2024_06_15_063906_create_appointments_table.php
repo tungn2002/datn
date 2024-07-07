@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->unsignedInteger('id_clinic'); // Khóa ngoại đến clinic
 
-            $table->foreign('id_clinic')->references('id_clinic')->on('clinics');
+            $table->foreign('id_clinic')->references('id_clinic')->on('clinics')->onDelete('cascade');
         });
     }
   

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -22,17 +23,29 @@ return new class extends Migration
             $table->unsignedInteger('id_sch'); // Khóa ngoại đến appointment
             $table->unsignedInteger('id_prescription')->nullable(); // Khóa ngoại đến prescription (cho phép null)
 
-            $table->foreign('id_mr')->references('id_pr')->on('patientrecords');
-            $table->foreign('id_sch')->references('id_appointment')->on('appointments');
-            $table->foreign('id_prescription')->references('id_pre')->on('prescriptions');
+            $table->foreign('id_mr')->references('id_pr')->on('patientrecords')->onDelete('cascade');
+            $table->foreign('id_sch')->references('id_appointment')->on('appointments')->onDelete('cascade');
+            $table->foreign('id_prescription')->references('id_pre')->on('prescriptions')->onDelete('cascade');
         });
-    }
+
+        DB::unprepared('
+    CREATE TRIGGER delete_prescription_after_medicalresult_delete
+    AFTER DELETE ON medicalresults
+    FOR EACH ROW
+    BEGIN
+        DELETE FROM prescriptions WHERE id_pre = OLD.id_prescription;
+    END
+');
+    }// Tạo trigger
+    
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
+        DB::unprepared('DROP TRIGGER IF EXISTS delete_prescription_after_medicalresult_delete');
+
         Schema::dropIfExists('medicalresults');
     }
 };

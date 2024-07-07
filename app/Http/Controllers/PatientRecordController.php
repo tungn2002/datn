@@ -24,20 +24,27 @@ class PatientRecordController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'prname' => 'required',
+            'prname' => 'required|max:20',
             'birthday' => 'required|date',
-            'phonenumber' => 'required',
+
+            'phonenumber'=>'required|regex:/^0[0-9]{9}$/|unique:patientrecords,phonenumber',
             'gender' => 'required|in:male,female', 
-            'address' => 'required',
+            'address' => 'required|max:30',
             'id_user' => 'required|exists:users,id_user', 
         ], [
             'prname.required' => 'Tên bệnh nhân là bắt buộc.',
+            'prname.max'=>'Tên quá dài, chỉ được phép <20',
             'birthday.required' => 'Ngày sinh là bắt buộc.',
             'birthday.date' => 'Ngày sinh phải là một ngày hợp lệ.',
-            'phonenumber.required' => 'Số điện thoại là bắt buộc.',
+            
+            'phonenumber.required'=>'Không được bỏ trống phonenumber',
+            'phonenumber.regex'=>'Số điện thoại không hợp lệ',
+            'phonenumber.unique'=>'Số điện thoại đã tồn tại',
+
             'gender.required' => 'Giới tính là bắt buộc.',
             'gender.in' => 'Giới tính phải là nam, nữ hoặc khác.',
             'address.required' => 'Địa chỉ là bắt buộc.',
+            'address.max' => 'Địa chỉ quá dài, chỉ được phép <30.',
             'id_user.required' => 'Người dùng liên kết là bắt buộc.',
             'id_user.exists' => 'Người dùng liên kết không tồn tại.',
         ]);
@@ -57,7 +64,14 @@ class PatientRecordController extends Controller
 
     public function destroy(Request $request)
     {
-        $request->validate(['id_pr' => 'required']);
+
+        $request->validate([
+            'id_pr'=>'required|exists:patientrecords,id_pr',
+        ],[
+        'id_pr.required'=>'Hãy chọn id cần xóa',
+        'id_pr.exists'=>'Không tồn tại id cần xóa',
+        ]);
+        
         PatientRecord::destroy($request->id_pr);
         return redirect()->back()->with('message', 'Xóa thành công');
     }
@@ -65,20 +79,28 @@ class PatientRecordController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'prname' => 'required',
+            'prname' => 'required|max:20',
             'birthday' => 'required|date',
-            'phonenumber' => 'required',
-            'gender' => 'required|in:male,famale', 
-            'address' => 'required',
+            'phonenumber' => 'required|regex:/^0[0-9]{9}$/|unique:patientrecords,phonenumber,' . $id. ',id_pr',                 
+            'gender' => 'nullable|in:male,female', 
+            'address' => 'required|max:30',
             'id_user' => 'required|exists:users,id_user', 
         ], [
             'prname.required' => 'Tên bệnh nhân là bắt buộc.',
+            'prname.max'=>'Tên quá dài, chỉ được phép <20',
+
             'birthday.required' => 'Ngày sinh là bắt buộc.',
             'birthday.date' => 'Ngày sinh phải là một ngày hợp lệ.',
-            'phonenumber.required' => 'Số điện thoại là bắt buộc.',
+
+
+            'phonenumber.required'=>'Không được bỏ trống phonenumber',
+            'phonenumber.regex'=>'Số điện thoại không hợp lệ',
+            'phonenumber.unique'=>'Số điện thoại đã tồn tại',
+
             'gender.required' => 'Giới tính là bắt buộc.',
             'gender.in' => 'Giới tính phải là nam, nữ.',
             'address.required' => 'Địa chỉ là bắt buộc.',
+            'address.max' => 'Địa chỉ quá dài, chỉ được phép <30.',
             'id_user.required' => 'Người dùng liên kết là bắt buộc.',
             'id_user.exists' => 'Người dùng liên kết không tồn tại.',
         ]);
@@ -92,8 +114,17 @@ class PatientRecordController extends Controller
             return redirect()->back()->with('message', 'Người dùng này không có quyền sửa hồ sơ bệnh nhân.');
         }
     
-            $patientRecord = PatientRecord::findOrFail($id);
-            $patientRecord->update($request->all());
+            $pr = PatientRecord::findOrFail($id);
+            $pr->prname=$request->prname;
+            $pr->birthday=$request->birthday;
+            $pr->phonenumber=$request->phonenumber;
+            if($request->gender!=null){
+            $pr->gender=$request->gender;
+
+            }
+            $pr->address=$request->address;
+            $pr->id_user=$request->id_user;        
+            $pr->update();
         return redirect()->back()->with('message', 'Sửa thành công');
     }
 
@@ -146,22 +177,17 @@ class PatientRecordController extends Controller
         return redirect()->route('profile2')->with('message', 'Thêm thành công');
     }
 
-    public function xoahoso(Request $request)
-    {
-        $request->validate(['id_pr' => 'required']);
-        PatientRecord::destroy($request->id_pr);
-        return redirect()->back()->with('message', 'Xóa thành công');
-    }
 
-    public function suahoso(Request $request, $id)
+
+
+    public function capnhaths(Request $request)
     {
         $request->validate([
             'prname' => 'required|max:20',
             'birthday' => 'required|date',
-            'phonenumber' => 'required|regex:/^0[0-9]{9}$/|unique:users,phonenumber,' . $request->id_user. ',id_user',                 
-            'gender' => 'required|in:male,famale', 
+            'phonenumber' => 'required|regex:/^0[0-9]{9}$/|unique:patientrecords,phonenumber,' .$request->id_pr. ',id_pr',                 
+            'gender' => 'required|in:male,female', 
             'address' => 'required|max:30',
-            'id_user' => 'required|exists:users,id_user', 
         ], [
             'prname.required' => 'Tên bệnh nhân là bắt buộc.',
             'prname.max'=>'Tên quá dài, chỉ được phép <20',
@@ -178,48 +204,6 @@ class PatientRecordController extends Controller
             'gender.in' => 'Giới tính phải là nam, nữ.',
             'address.required' => 'Địa chỉ là bắt buộc.',
             'address.max' => 'Địa chỉ quá dài, chỉ được phép <30.',
-            'id_user.required' => 'Người dùng liên kết là bắt buộc.',
-            'id_user.exists' => 'Người dùng liên kết không tồn tại.',
-        ]);
-
-    
-            $pr = PatientRecord::findOrFail($id);
-            $pr->prname=$request->prname;
-            $pr->birthday=$request->birthday;
-            $pr->phonenumber=$request->phonenumber;
-            $pr->gender=$request->gender;
-            $pr->address=$request->address;
-            $user = Auth::user();
-            $id = $user->id_user;
-            $pr->id_user=$id;        
-            $pr->update();
-            return redirect()->back()->with('message', 'Sửa thành công');
-    }
-
-
-    public function xoahs(Request $request)
-    {
-        $request->validate(['id_pr' => 'required']);
-        PatientRecord::destroy($request->id_pr);
-        return redirect()->back()->with('message', 'Xóa thành công');
-    }
-
-    public function capnhaths(Request $request)
-    {
-        $request->validate([
-            'prname' => 'required',
-            'birthday' => 'required|date',
-            'phonenumber' => 'required',
-            'gender' => 'required|in:male,famale', 
-            'address' => 'required',
-        ], [
-            'prname.required' => 'Tên bệnh nhân là bắt buộc.',
-            'birthday.required' => 'Ngày sinh là bắt buộc.',
-            'birthday.date' => 'Ngày sinh phải là một ngày hợp lệ.',
-            'phonenumber.required' => 'Số điện thoại là bắt buộc.',
-            'gender.required' => 'Giới tính là bắt buộc.',
-            'gender.in' => 'Giới tính phải là nam, nữ.',
-            'address.required' => 'Địa chỉ là bắt buộc.',
         ]);
 
     

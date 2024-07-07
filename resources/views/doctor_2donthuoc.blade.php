@@ -30,7 +30,7 @@
     <!-- Template Stylesheet -->
     <link href="{{ asset('ad/style.css') }}" rel="stylesheet">
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
   <style>
@@ -53,30 +53,21 @@
 <body>
     
 
-    <div class="container-xxl position-relative bg-white d-flex p-0">
+<div class="container-xxl position-relative bg-white d-flex p-0">
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
             <nav class="navbar bg-light navbar-light" >
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"></i>DOCTOR</h3>
+                    <h3 class="text-primary"><i class="fas fa-user-nurse"></i> Bác sĩ</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4" >
-                    <div class="position-relative">
-                        <img class="rounded-circle" src="{{ asset('ad/img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
-                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                    </div>
-                    <div class="ms-3">
-                        <h6 class="mb-0"> {{ Auth::user()->name }}</h6>
-                        <span>Doctor</span>
-                    </div>
+                    
                 </div>
                 <div class="navbar-nav w-100" >
-                <a href="{{ route('doctor') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('doctor') }}" class="nav-item nav-link active"><i class="far fa-id-card"></i>Thông tin cá nhân</a>
                     <a href="{{ route('lichlamviec') }}" class="nav-item nav-link"><i class="fas fa-calendar-alt"></i>Lịch làm việc</a>
                     <a href="{{ route('trochuyendoctor') }}" class="nav-item nav-link "><i class="fas fa-comment-dots"></i>Trò chuyên</a>
                 
-
-                  
 
                   
                 </div>
@@ -101,32 +92,30 @@
                    
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="{{ asset('ad/img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle me-lg-2"src="{{ asset('image/' . Auth::user()->avatar) }}" alt="" style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex">  {{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">Thông tin</a>
                             <a href="{{ route('logout') }}" class="dropdown-item">Đăng xuất</a>
                         </div>
                     </div>
                 </div>
             </nav>
             <!-- Navbar End -->
-
             <!-- Blank Start -->
 
             <div class="container-fluid pt-4 px-4 ">
             <h4>Thông tin đơn thuốc</h4>
             <div class="container mt-5">
-            <div class="custom-div" style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; margin-bottom: 10px;">
-    @isset($mr)
-    <p>Mã đơn: {{$mr->id_pre}}</p>
-    <p>Tên bệnh nhân: {{$mr->name}}</p>
-    <p>Chuẩn đoán: {{$mr->diagnostic}}</p>
+            <div class="custom-div mt-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;">
+            @isset($mr)
+    <p><i class="fas fa-file-medical"></i> Mã đơn: {{$mr->id_pre}}</p>
+    <p><i class="fas fa-user-injured"></i> Tên bệnh nhân: {{$mr->name}}</p>
+    <p><i class="fas fa-notes-medical"></i> Chuẩn đoán: {{$mr->diagnostic}}</p>
     @endisset
 </div>
-<div class="custom-div" style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; margin-bottom: 10px;">
-<h4>Cập nhật thông tin đơn thuốc</h4>
+<div class="custom-div mt-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;">
+<h4 style="color: #33CCFF	;">Cập nhật thông tin đơn thuốc</h4>
 @isset($mr)
 
 <form id="editForm" action="{{ url('capnhatttdt/'.$mr->id_pre) }}"  method="POST">
@@ -148,46 +137,6 @@
 
 </div>
 
-<h4>Kê thuốc</h4>
-<div class="custom-div" style="border: 1px solid #ccc; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 10px; margin-bottom: 10px;">
-@isset($mr)
-
-<form id="editForm" action="{{ url('capnhatdt/'.$mr->id_pre) }}"  method="POST">
-                @csrf
-
-                <div class="row mb-3">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Thuốc:</label>
-                                <div class="col-sm-10">
-
-                                    @empty($medi)
-                                    @endempty
-                                    <select class="inp-tmnv form-select" name="id_medicine" id="phongban" >
-                                        <option value=""></option> 
-                                        @isset($medi)
-                                            @foreach ($medi as $item)
-                                            <option value="{{$item->id_medicine}}">{{$item->medicinename}}</option>
-                                            @endforeach
-                                        @endisset
-                                    </select>
-                                
-                                   </div> 
-                                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Liều lượng: </label>
-                        <input type="text" class="form-control" id="address" name="information">
-                    </div> 
-                    <div class="row mb-3">
-                                <label for="inputEmail3" class="col-sm-2 col-form-label">Thuốc:</label>
-                                <div class="col-sm-10">
-                    
-                    <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" id="btnUpdate">Cập nhật đơn thuốc</button>
-            </div>
-                </form>
-                @endisset
-
-</div>
-
 
 @if (\Session::has('message'))
                         <div class="alert alert-success">
@@ -203,8 +152,51 @@
         </ul>
     </div>
 @endif
+<div class="custom-div mt-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;">
+<h4 style="color: #33CCFF	;">Kê thuốc</h4>
+@isset($mr)
+
+<form id="editForm" action="{{ url('capnhatdt/'.$mr->id_pre) }}"  method="POST">
+                @csrf
+
+                <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-2 col-form-label">Thuốc:</label>
+                                <div class="col-sm-10">
+
+
+                                    <select class="inp-tmnv form-select" name="id_medicine" id="phongban" >
+
+                                        @isset($medi)
+                                            @foreach ($medi as $item)
+                                            <option value="{{$item->id_medicine}}">{{$item->medicinename}}</option>
+                                            @endforeach
+                                        @endisset
+                                    </select>
+                                
+                                   </div> 
+                                    </div>
+                    <div class="form-group row">
+                        <label for="inputName" class="col-sm-2 col-form-label">Liều lượng: </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="address" name="information">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" id="btnUpdate">Cập nhật đơn thuốc</button>
+            
+@isset($mr)
+
+<a class="btn btn-primary pl-4"  href="{{ route('pdf', ['id' => $mr->id_pre]) }}"><i class="fas fa-file-export"></i> In đơn thuốc</a>
+@endisset
+            </div>
+                </form>
+                @endisset
+
 </div>
-<table class="table table-striped custab mt-4">
+
+
+</div>
+<table class="table table-striped custab mt-4 table-bordered">
     <thead>
         <tr>
             <th>Tên thuốc</th>
@@ -221,7 +213,7 @@
                                 <td>{{$item->id_medicine}}</td>
 
                                 <td class="text-center">       
-                                    <button class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$item->id_prescription}}-{{$item->id_medicine}}">Xóa lay ca 2 id</button>
+                                    <button class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$item->id_prescription}}-{{$item->id_medicine}}">Xóa</button>
                                 </td>
                             </tr>
                          
@@ -267,10 +259,6 @@
 
 @endisset
 
-@isset($dk)
-<a href="" class="btn btn-primary"> Đơn thuốc </a>
-
-@endisset
 </div>
                     
             </div>
@@ -287,7 +275,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa dịch vụ này này?
+                    Bạn có chắc chắn muốn xóa thuốc này?
                     <input type="hidden" name="id_prescription" id="hospitalIdInput">
                     <input type="hidden" name="id_medicine" id="hospitalIdInput2">
 
@@ -299,10 +287,7 @@
         </form>
     </div>
 </div>
-@isset($mr)
 
-<a class="btn btn-primary"  href="{{ route('pdf', ['id' => $mr->id_pre]) }}">In đơn thuốc</a>
-@endisset
         </div>
         <!-- Content End -->
   
@@ -324,7 +309,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <!-- Template Javascript -->
     <script src="{{ asset('ad/main.js') }}"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 <script>
   $(document).ready(function() {
@@ -346,5 +331,7 @@
     });
 });
 </script>
-
+<script type="text/javascript">
+    $("#phongban").select2();
+</script>
 </html>

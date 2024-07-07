@@ -19,10 +19,13 @@ class AppointmentController extends Controller
     public function index2($id)
     {
         $clinics = Clinic::where('id_clinic', $id)->first();
-        $appointments = Appointment::where('id_clinic', $id)->paginate(5); 
+        $user= User::where('id_user', $clinics->id_user)->first();
+        $appointments = Appointment::where('id_clinic', $id)
+        ->orderBy('time', 'asc')
+        ->paginate(5);
         return view('app', [
             'appointments' => $appointments,
-            'clinics' => $clinics
+            'clinics' => $clinics,'user'=>$user
         ]);
     }
     public function store(Request $request)
@@ -39,22 +42,8 @@ class AppointmentController extends Controller
             'id_clinic.exists' => 'Phòng khám không tồn tại.',
         ]);
 
-   // Kiểm tra xung đột giờ
-   $existingAppointment = Appointment::where('id_clinic', $request->id_clinic)
-   ->where('day', $request->day)
-   ->where('time', $request->time)
-   ->exists();
 
-if ($existingAppointment) {
-   return redirect()->back()->with('message', 'Đã có lịch hẹn khác tại phòng khám này vào ngày và giờ đã chọn.');
-}
-
-
-        $app=new Appointment;
-        $app->day=$request->day;
-
-        $app->time=$request->time;
-        $app->id_clinic=$request->id_clinic;
+        //tính time hoàn thành
         $clinic = Clinic::where('id_clinic', $request->id_clinic)->first();
         $sv =Service::where('id_service', $clinic->id_service)->first();
 
@@ -63,6 +52,31 @@ if ($existingAppointment) {
         $totalSeconds = $seconds1 + $seconds2;
         $totalTime = gmdate('H:i', $totalSeconds);
 
+        //
+// Kiểm tra xem có xung đọt giờ khi cùng ngày cùng phòng  không
+$existingAppointment = Appointment::where('day', $request->day)
+->where('id_clinic', $request->id_clinic)
+->where(function ($query) use ($request, $totalTime) {
+    $query->where(function ($query) use ($request, $totalTime) {
+        $query->whereBetween('time', [$request->time, $totalTime])
+              ->orWhereBetween('finishtime', [$request->time, $totalTime]);
+    })
+    ->where(function ($query) use ($request, $totalTime) {
+        $query->where('finishtime', '!=', $request->time)
+              ->where('time', '!=', $totalTime);
+    });
+})
+->exists();
+
+if ($existingAppointment) {
+return redirect()->back()->with(['message' => 'Lịch hẹn này trùng với một lịch hẹn khác trong khoảng thời gian đã chọn. Vui lòng chọn lại.']);
+}
+
+        $app=new Appointment;
+        $app->day=$request->day;
+        $app->time=$request->time;
+        $app->id_clinic=$request->id_clinic;
+       
         $app->finishtime=$totalTime;
 
        $app->save();
@@ -108,28 +122,46 @@ if ($existingAppointment) {
             return redirect()->back()->with('message', 'Không tìm thấy lịch hẹn.');
         }
 
-          // Kiểm tra xung đột giờ (ngoại trừ chính lịch hẹn đang sửa)
-          $existingAppointment = Appointment::where('id_clinic', $request->id_clinic)
-          ->where('day', $request->day)
-          ->where('time', $request->time)
-          ->where('id_appointment', '!=', $id) // Loại trừ lịch hẹn đang sửa
-          ->exists();
 
-      if ($existingAppointment) {
-          return redirect()->back()->with('message', 'Đã có lịch hẹn khác tại phòng khám này vào ngày và giờ đã chọn.');
-      }
+        //tính time hoàn thành
+        $clinic = Clinic::where('id_clinic', $request->id_clinic)->first();
+        $sv =Service::where('id_service', $clinic->id_service)->first();
+
+        $seconds1 = strtotime($request->time) - strtotime('TODAY');
+        $seconds2 = strtotime($sv->time) - strtotime('TODAY');
+        $totalSeconds = $seconds1 + $seconds2;
+        $totalTime = gmdate('H:i', $totalSeconds);
+          // Kiểm tra xung đột giờ (ngoại trừ chính lịch hẹn đang sửa)
+
+
+$existingAppointment = Appointment::where('day', $request->day)
+->where('id_clinic', $request->id_clinic)
+->where('id_appointment', '!=', $id) 
+->where(function ($query) use ($request, $totalTime) {
+    $query->where(function ($query) use ($request, $totalTime) {
+        $query->whereBetween('time', [$request->time, $totalTime])
+              ->orWhereBetween('finishtime', [$request->time, $totalTime]);
+    })
+    ->where(function ($query) use ($request, $totalTime) {
+        $query->where('finishtime', '!=', $request->time)
+              ->where('time', '!=', $totalTime);
+    });
+})
+->exists();
+
+          
+if ($existingAppointment) {
+    return redirect()->back()->with(['message' => 'Lịch hẹn này trùng với một lịch hẹn khác trong khoảng thời gian đã chọn. Vui lòng chọn lại.']);
+    }
 
 
       $appointment->day=$request->day;
 
       $appointment->time=$request->time;
       $appointment->id_clinic=$request->id_clinic;
-      $clinic = Clinic::where('id_clinic', $request->id_clinic)->first();
-      $sv =Service::where('id_service', $clinic->id_service)->first();
+     
 
-      $startTimeFormatted = Carbon::parse($request->time)->addHours($sv->time);
-
-      $appointment->finishtime=$startTimeFormatted;
+      $appointment->finishtime=$totalTime;
         $appointment->update();
         return redirect()->back()->with('message', 'Cập nhật lịch hẹn thành công');
     }

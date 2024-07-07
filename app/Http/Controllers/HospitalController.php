@@ -10,25 +10,22 @@ class HospitalController extends Controller
     
     public function index(){
         $hospital = Hospital::paginate(3); 
-        if (!$hospital) {
-            return view('hospital', ['message' => 'No hospital record found.']);
-        }
         return view('hospital', ['hospital' => $hospital]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'hospitalname'=>'required',
-            'address'=>'required',
+            'hospitalname'=>'required|max:44',
+            'address'=>'required|max:35',
     
         ],[
         'hospitalname.required'=>'Không được bỏ trống tên',
         'address.required'=>'Không được bỏ trống địa chỉ',
-       
-
+        'hospitalname.max'=>'Tên quá dài, chỉ cho phép <44',
+        'address.max'=>'Địa chỉ quá dài, chỉ cho phép <30',
         ]);
-        
+        //chỉ cho chứa 1 bệnh viện
         $existingHospitalCount = Hospital::count();
 
         if ($existingHospitalCount < 1) {
@@ -46,10 +43,10 @@ class HospitalController extends Controller
     public function destroy(Request $request)
     {
         $request->validate([
-            'id_hospital'=>'required',
+            'id_hospital'=>'required|exists:hospitals,id_hospital',
         ],[
         'id_hospital.required'=>'Hãy chọn bệnh viện cần xóa',
-
+        'id_hospital.exists'=>'Không tồn tại bệnh viện cần xóa',
         ]);
         
         $existingHospitalCount = Hospital::count();
@@ -65,22 +62,24 @@ class HospitalController extends Controller
     public function update(Request $request,$id)
     {
         $request->validate([
-            'hospitalname'=>'required',
-            'address'=>'required',
+            'hospitalname'=>'required|max:44',
+            'address'=>'required|max:35',
     
         ],[
-        'hospitalname.required'=>'Không được bỏ trống tên',
-        'address.required'=>'Không được bỏ trống địa chỉ',
+            'hospitalname.required'=>'Không được bỏ trống tên',
+            'address.required'=>'Không được bỏ trống địa chỉ',
+            'hospitalname.max'=>'Tên quá dài, chỉ cho phép <44',
+            'address.max'=>'Địa chỉ quá dài, chỉ cho phép <30',
         ]);
         
+        //nếu không có id
         if (empty($id)) {
             return redirect()->back()->with('message', 'ID bệnh viện không hợp lệ.');
         }
     
-        // Tìm kiếm bệnh viện
         $hospital = Hospital::find($id);
     
-        // Kiểm tra sự tồn tại của bệnh viện trong errors
+        // Kiểm tra sự tồn tại của bệnh viện
         if (!$hospital) {
             return redirect()->back()->with('message', 'Không tìm thấy bệnh viện.');
         }

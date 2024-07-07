@@ -10,9 +10,7 @@ class SpecialistController extends Controller
     
     public function index(){
         $specialist = Specialist::paginate(5); 
-        if (!$specialist) {
-            return view('specialist', ['message' => 'không có chuyên khoa nào']);
-        }
+     
         return view('specialist', ['specialist' => $specialist]);
     }
 
@@ -37,9 +35,10 @@ class SpecialistController extends Controller
     public function destroy(Request $request)
     {
         $request->validate([
-            'id_specialist'=>'required',
+            'id_specialist'=>'required|exists:specialists,id_specialist',
         ],[
-        'id_specialist.required'=>'Hãy chọn bệnh viện cần xóa',
+        'id_specialist.required'=>'Hãy chọn chuyên khoa cần xóa',
+        'id_specialist.exists'=>'Không tìm thấy chuyên khoa cần xóa',
 
         ]);
         

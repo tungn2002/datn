@@ -17,9 +17,9 @@ return new class extends Migration
             $table->unsignedInteger('id_hospital'); // Khóa ngoại đến hospital
             $table->unsignedInteger('id_service'); // Khóa ngoại đến service
             $table->unsignedInteger('id_user');
-            $table->foreign('id_user')->references('id_user')->on('users');
-            $table->foreign('id_hospital')->references('id_hospital')->on('hospitals');
-            $table->foreign('id_service')->references('id_service')->on('services');
+            $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
+            $table->foreign('id_hospital')->references('id_hospital')->on('hospitals')->onDelete('cascade');
+            $table->foreign('id_service')->references('id_service')->on('services')->onDelete('cascade');
             
         });
     }

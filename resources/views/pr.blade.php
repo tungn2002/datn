@@ -4,10 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DASHMIN - Bootstrap Admin Template</title>
+    <title>Admin</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+
 
     <!-- Favicon -->
 
@@ -37,40 +36,34 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
             <nav class="navbar bg-light navbar-light" >
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"></i>ADMIN</h3>
+                <a href="{{ route('admin1') }}" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary"><i class="fas fa-user-cog"></i> ADMIN</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4" >
-                    <div class="position-relative">
-                        <img class="rounded-circle" src="{{ asset('ad/img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
-                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                    </div>
-                    <div class="ms-3">
-                        <h6 class="mb-0">Jhon Doe</h6>
-                        <span>Admin</span>
-                    </div>
+               
                 </div>
                 <div class="navbar-nav w-100" >
-                <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('admin1') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Thông tin cá nhân</a>
                   
-                  <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fas fa-hospital"></i>Bệnh viện</a>
-                  <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fas fa-brain"></i>Chuyên khoa</a>
-                  <a href="{{ route('service-index') }}" class="nav-item nav-link"><i class="fas fa-laptop-medical"></i>Dịch vụ</a>
-                  <a href="{{ route('clinic-index') }}" class="nav-item nav-link"><i class="fas fa-clinic-medical"></i>Phòng khám</a>
-                  <a href="{{ route('medicine-index') }}" class="nav-item nav-link"><i class="fas fa-capsules"></i>Thuốc</a>
-                  <a href="{{ route('pre-index') }}" class="nav-item nav-link"><i class="fas fa-prescription-bottle"></i>Đơn thuốc</a>
-                  <a href="{{ route('pr-index') }}" class="nav-item nav-link"><i class="fas fa-user-injured"></i>Hồ sơ</a>
-                  <a href="{{ route('mr-index') }}" class="nav-item nav-link"><i class="fas fa-poll"></i>Kết quả khám</a>
-                  <a href="" class="nav-item nav-link"><i class="fas fa-comment-dots"></i>Đơn tư vấn</a>
+                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fas fa-hospital"></i>Bệnh viện</a>
+                    <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fas fa-brain"></i>Chuyên khoa</a>
+                    <a href="{{ route('service-index') }}" class="nav-item nav-link"><i class="fas fa-laptop-medical"></i>Dịch vụ</a>
+                    <a href="{{ route('medicine-index') }}" class="nav-item nav-link"><i class="fas fa-capsules"></i>Thuốc</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Người dùng</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="{{ route('qldoctor') }}" class="dropdown-item"><i class="fas fa-user-md"></i> Bác sĩ</a>
+                            <a href="{{ route('qlnhanvien') }}" class="dropdown-item"><i class="fas fa-users-cog"></i> Nhân viên</a>
+                            <a href="{{ route('qlkhachhang') }}" class="dropdown-item"><i class="fas fa-user"></i> Khách hàng</a>
+                        </div>
+                    </div>
+                    <a href="{{ route('clinic-index') }}" class="nav-item nav-link"><i class="fas fa-clinic-medical"></i>Phòng khám</a>
+                    <a href="{{ route('pre-index') }}" class="nav-item nav-link"><i class="fas fa-prescription-bottle"></i>Đơn thuốc</a>
+                    <a href="{{ route('pr-index') }}" class="nav-item nav-link"><i class="fas fa-user-injured"></i>Hồ sơ</a>
+                    <a href="{{ route('mr-index') }}" class="nav-item nav-link"><i class="fas fa-poll"></i>Đơn khám bệnh</a>
+                    <a href="{{ route('consult-index') }}" class="nav-item nav-link"><i class="fas fa-comment-dots"></i>Đơn tư vấn</a>
 
-                  <div class="nav-item dropdown">
-                      <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Người dùng</a>
-                      <div class="dropdown-menu bg-transparent border-0">
-                          <a href="{{ route('qldoctor') }}" class="dropdown-item"><i class="fas fa-user-md"></i> Bác sĩ</a>
-                          <a href="{{ route('qlnhanvien') }}" class="dropdown-item"><i class="fas fa-users-cog"></i> Nhân viên</a>
-                          <a href="{{ route('qlnhanvien') }}" class="dropdown-item"><i class="fas fa-user"></i> Khách hàng</a>
-                      </div>
-                  </div>
+                  
                 </div>
             </nav>
         </div>
@@ -93,11 +86,10 @@
                    
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="{{ asset('ad/img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle me-lg-2" src="{{ asset('anhnv.png') }}" alt="" style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex">  {{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">Thông tin</a>
                             <a href="{{ route('logout') }}" class="dropdown-item">Đăng xuất</a>
                         </div>
                     </div>
@@ -107,52 +99,52 @@
             <!-- Blank Start -->
 
             <div class="container-fluid pt-4 px-4 ">
-            <h4>Hồ sơ</h4>
+            <h4>Hồ sơ bệnh nhân</h4>
 
                 <h1></h1>
             <div class="col-sm-12 col-xl-6"  style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
-                        <div class="bg-light rounded h-100 p-4">
+                        <div class="bg-light rounded h-100 p-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;">
                             <h6 class="mb-4">Horizontal Form</h6>
                             <form action="{{ url('addpr') }}" method="post"> 
                 @csrf
 
                 <div class="row mb-3">
-                    <label for="prname" class="col-sm-2 col-form-label">Tên bệnh nhân:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="prname" id="prname" value="{{ old('prname') }}"> 
+                    <label for="prname" class="col-sm-3 col-form-label">Tên bệnh nhân:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="prname" id="prname" value="{{ old('prname') }}" required> 
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="birthday" class="col-sm-2 col-form-label">Ngày sinh:</label>
-                    <div class="col-sm-10">
-                        <input type="date" class="form-control" name="birthday" id="birthday" value="{{ old('birthday') }}">
+                    <label for="birthday" class="col-sm-3 col-form-label">Ngày sinh:</label>
+                    <div class="col-sm-9">
+                        <input type="date" class="form-control" name="birthday" id="birthday" value="{{ old('birthday') }}" required>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="phonenumber" class="col-sm-2 col-form-label">Số điện thoại:</label>
-                    <div class="col-sm-10">
-                        <input type="tel" class="form-control" name="phonenumber" id="phonenumber" value="{{ old('phonenumber') }}">
+                    <label for="phonenumber" class="col-sm-3 col-form-label">Số điện thoại:</label>
+                    <div class="col-sm-9">
+                        <input type="tel" class="form-control" name="phonenumber" id="phonenumber" value="{{ old('phonenumber') }}" required>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="gender" class="col-sm-2 col-form-label">Giới tính:</label>
-                    <div class="col-sm-10">
-                        <select class="form-select" name="gender" id="gender">
+                    <label for="gender" class="col-sm-3 col-form-label">Giới tính:</label>
+                    <div class="col-sm-9">
+                        <select class="form-select" name="gender" id="gender" required>
                             <option value="male" >Nam</option>
                             <option value="female">Nữ</option>
                         </select>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="address" class="col-sm-2 col-form-label">Địa chỉ:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="address" id="address" value="{{ old('address') }}">
+                    <label for="address" class="col-sm-3 col-form-label">Địa chỉ:</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="address" id="address" value="{{ old('address') }}" required>
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="id_user" class="col-sm-2 col-form-label">Người dùng:</label>
-                    <div class="col-sm-10">
-                        <select class="form-select" name="id_user" id="id_user">
+                    <label for="id_user" class="col-sm-3 col-form-label">Người dùng:</label>
+                    <div class="col-sm-9">
+                        <select class="form-select" name="id_user" id="id_user" required>
                             @foreach ($users as $user)
                                 <option value="{{ $user->id_user }}">{{ $user->name }}</option>
                             @endforeach
@@ -183,7 +175,7 @@
             <div class="row mt-5" style="width: 40%">
                     <form action="{{ route('findpati') }}" class="w-100 d-flex" method="post">@csrf
     <div class="col-md-8">
-        <input type="text" class="form-control" name="dl" placeholder="Nhập từ khóa...">
+        <input type="text" class="form-control" name="dl" placeholder="Nhập tên bệnh nhân...">
     </div>
     <div class="col-md-4">
         <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Tìm kiếm</button>
@@ -262,38 +254,39 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin Bệnh Nhân</h5>
+                <h5 class="modal-title" id="editModalLabel">Sửa thông tin Bệnh Nhân</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="editForm" action="" method="POST"> 
                     @csrf
                     <div class="mb-3">
-                        <label for="prname" class="form-label">Tên bệnh nhân</label>
-                        <input type="text" class="form-control" id="prname" name="prname">
+                        <label for="prname" class="form-label">Tên bệnh nhân:</label>
+                        <input type="text" class="form-control" id="prname" name="prname" required>
                     </div>
                     <div class="mb-3">
                         <label for="birthday" class="form-label">Ngày sinh</label>
-                        <input type="date" class="form-control" id="birthday" name="birthday">
+                        <input type="date" class="form-control" id="birthday" name="birthday" required>
                     </div>
                     <div class="mb-3">
                         <label for="phonenumber" class="form-label">Số điện thoại</label>
-                        <input type="tel" class="form-control" id="phonenumber" name="phonenumber">
+                        <input type="tel" class="form-control" id="phonenumber" name="phonenumber" required>
                     </div>
                     <div class="mb-3">
                         <label for="gender" class="form-label">Giới tính</label>
-                        <select class="form-select" id="gender" name="gender">
+                        <select class="form-select" id="gender" name="gender" >
+                             <option value=""></option>
                             <option value="male">Nam</option>
                             <option value="female">Nữ</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="address" class="form-label">Địa chỉ</label>
-                        <input type="text" class="form-control" id="address" name="address">
+                        <input type="text" class="form-control" id="address" name="address" required>
                     </div>
                     <div class="mb-3">
                         <label for="id_user" class="form-label">Người dùng:</label>
-                        <select class="form-select" name="id_user" id="id_user">
+                        <select class="form-select" name="id_user" id="id_user" required>
                             @foreach ($users as $user)
                                 <option value="{{ $user->id_user }}">{{ $user->name }}</option>
                             @endforeach
@@ -350,15 +343,13 @@
         var prname = row.find('td:eq(1)').text();
         var birthday = row.find('td:eq(2)').text();
         var phonenumber = row.find('td:eq(3)').text();
-        var gender = row.find('td:eq(4)').text().toLowerCase(); // Chuyển về chữ thường để so sánh
         var address = row.find('td:eq(5)').text();
         var idUser = row.find('td:eq(6)').text(); 
-
+        if(gender='Nữ')
         // Điền dữ liệu vào form
         $('#editModal #prname').val(prname);
         $('#editModal #birthday').val(birthday);
         $('#editModal #phonenumber').val(phonenumber);
-        $('#editModal #gender option[value="' + gender + '"]').prop('selected', true);
         $('#editModal #address').val(address);
         $('#editModal #id_user option[value="' + idUser + '"]').prop('selected', true);
 

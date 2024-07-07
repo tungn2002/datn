@@ -1,13 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>DASHMIN - Bootstrap Admin Template</title>
+    <title>Admin</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+
 
     <!-- Favicon -->
 
@@ -37,40 +35,34 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
             <nav class="navbar bg-light navbar-light" >
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"></i>ADMIN</h3>
+                <a href="{{ route('admin1') }}" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary"><i class="fas fa-user-cog"></i> ADMIN</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4" >
-                    <div class="position-relative">
-                        <img class="rounded-circle" src="{{ asset('ad/img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
-                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                    </div>
-                    <div class="ms-3">
-                        <h6 class="mb-0">Jhon Doe</h6>
-                        <span>Admin</span>
-                    </div>
+               
                 </div>
                 <div class="navbar-nav w-100" >
-                <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('admin1') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Thông tin cá nhân</a>
                   
-                  <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fas fa-hospital"></i>Bệnh viện</a>
-                  <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fas fa-brain"></i>Chuyên khoa</a>
-                  <a href="{{ route('service-index') }}" class="nav-item nav-link"><i class="fas fa-laptop-medical"></i>Dịch vụ</a>
-                  <a href="{{ route('clinic-index') }}" class="nav-item nav-link"><i class="fas fa-clinic-medical"></i>Phòng khám</a>
-                  <a href="{{ route('medicine-index') }}" class="nav-item nav-link"><i class="fas fa-capsules"></i>Thuốc</a>
-                  <a href="{{ route('pre-index') }}" class="nav-item nav-link"><i class="fas fa-prescription-bottle"></i>Đơn thuốc</a>
-                  <a href="{{ route('pr-index') }}" class="nav-item nav-link"><i class="fas fa-user-injured"></i>Hồ sơ</a>
-                  <a href="{{ route('mr-index') }}" class="nav-item nav-link"><i class="fas fa-poll"></i>Kết quả khám</a>
-                  <a href="" class="nav-item nav-link"><i class="fas fa-comment-dots"></i>Đơn tư vấn</a>
+                    <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fas fa-hospital"></i>Bệnh viện</a>
+                    <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fas fa-brain"></i>Chuyên khoa</a>
+                    <a href="{{ route('service-index') }}" class="nav-item nav-link"><i class="fas fa-laptop-medical"></i>Dịch vụ</a>
+                    <a href="{{ route('medicine-index') }}" class="nav-item nav-link"><i class="fas fa-capsules"></i>Thuốc</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Người dùng</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="{{ route('qldoctor') }}" class="dropdown-item"><i class="fas fa-user-md"></i> Bác sĩ</a>
+                            <a href="{{ route('qlnhanvien') }}" class="dropdown-item"><i class="fas fa-users-cog"></i> Nhân viên</a>
+                            <a href="{{ route('qlkhachhang') }}" class="dropdown-item"><i class="fas fa-user"></i> Khách hàng</a>
+                        </div>
+                    </div>
+                    <a href="{{ route('clinic-index') }}" class="nav-item nav-link"><i class="fas fa-clinic-medical"></i>Phòng khám</a>
+                    <a href="{{ route('pre-index') }}" class="nav-item nav-link"><i class="fas fa-prescription-bottle"></i>Đơn thuốc</a>
+                    <a href="{{ route('pr-index') }}" class="nav-item nav-link"><i class="fas fa-user-injured"></i>Hồ sơ</a>
+                    <a href="{{ route('mr-index') }}" class="nav-item nav-link"><i class="fas fa-poll"></i>Đơn khám bệnh</a>
+                    <a href="{{ route('consult-index') }}" class="nav-item nav-link"><i class="fas fa-comment-dots"></i>Đơn tư vấn</a>
 
-                  <div class="nav-item dropdown">
-                      <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Người dùng</a>
-                      <div class="dropdown-menu bg-transparent border-0">
-                          <a href="{{ route('qldoctor') }}" class="dropdown-item"><i class="fas fa-user-md"></i> Bác sĩ</a>
-                          <a href="{{ route('qlnhanvien') }}" class="dropdown-item"><i class="fas fa-users-cog"></i> Nhân viên</a>
-                          <a href="{{ route('qlnhanvien') }}" class="dropdown-item"><i class="fas fa-user"></i> Khách hàng</a>
-                      </div>
-                  </div>
+                  
                 </div>
             </nav>
         </div>
@@ -93,11 +85,10 @@
                    
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="{{ asset('ad/img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle me-lg-2" src="{{ asset('anhnv.png') }}" alt="" style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex">  {{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">Thông tin</a>
                             <a href="{{ route('logout') }}" class="dropdown-item">Đăng xuất</a>
                         </div>
                     </div>
@@ -112,27 +103,27 @@
 
                 <h1></h1>
             <div class="col-sm-12 col-xl-6"  style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
-                        <div class="bg-light rounded h-100 p-4">
+                        <div class="bg-light rounded h-100 p-4"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;">
                             <h6 class="mb-4">Horizontal Form</h6>
                             <form  action="{{ url('addservice') }}" method="post" enctype="multipart/form-data">
                             @csrf
 
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Tên dịch vụ</label>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Tên dịch vụ:</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="servicename" id="inputEmail3">
+                                        <input type="text" class="form-control" name="servicename" id="inputEmail3" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Chi tiết</label>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Chi tiết:</label>
                                     <div class="col-sm-10">
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="detail" rows="3"></textarea>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="detail" rows="3" required></textarea>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Giá</label>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Giá:</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" name="price" id="inputEmail3">
+                                        <input type="number" class="form-control" name="price" id="inputEmail3" required>
                                     </div>
                                 </div>
 
@@ -141,13 +132,13 @@
                                 <div class="row mb-3 mt-4">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Ảnh dich vụ: </label>
                                     <div class="col-sm-10">
-                                    <input type="file" name="image" id="image">
+                                    <input type="file" name="image" id="image" required>
                                     </div>
                                 </div>
                                 
                                 <div class="mb-3">
                                     <label for="time" class="form-label">Thời gian khám 1 đơn:</label>
-                                    <input type="text" class="form-control" name="time" id="time" placeholder="Giờ:phút">
+                                    <input type="text" class="form-control" name="time" id="time" placeholder="Giờ:phút" required>
                             </div>
                             
                                 <button type="submit" class="btn btn-primary">Thêm</button>
@@ -173,7 +164,7 @@
             <div class="row mt-5" style="width: 40%">
                     <form action="{{ route('findsv') }}" class="w-100 d-flex" method="post">@csrf
     <div class="col-md-8">
-        <input type="text" class="form-control" name="dl" placeholder="Nhập từ khóa...">
+        <input type="text" class="form-control" name="dl" placeholder="Nhập tên dịch vụ...">
     </div>
     <div class="col-md-4">
         <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Tìm kiếm</button>
@@ -259,7 +250,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin chuyên khoa</h5>
+                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin dịch vụ</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -267,21 +258,21 @@
                 @csrf
 
                     <div class="mb-3">
-                        <label for="hospitalname" class="form-label">Tên chuyên khoa</label>
-                        <input type="text" class="form-control" id="hospitalname" name="servicename">
+                        <label for="hospitalname" class="form-label">Tên dịch vụ:</label>
+                        <input type="text" class="form-control" id="hospitalname" name="servicename" required>
                     </div>
                     <div class="mb-3">
-                        <label for="hospitalname" class="form-label">Chi tiết</label>
-                        <textarea class="form-control"  id="detail" name="detail"name="detail" rows="3"></textarea>
+                        <label for="hospitalname" class="form-label">Chi tiết:</label>
+                        <textarea class="form-control"  id="detail" name="detail"name="detail" rows="3"required></textarea>
 
                     </div>
                     <div class="mb-3">
-                        <label for="hospitalname" class="form-label">Price</label>
-                        <input type="text" class="form-control" id="price" name="price">
+                        <label for="hospitalname" class="form-label">Giá:</label>
+                        <input type="text" class="form-control" id="price" name="price" required>
                     </div>
                     <div class="mb-3">
                         <label for="editTime" class="form-label">Thời gian khám 1 đơn:</label>
-                        <input type="text" class="form-control" name="time" id="editTime" placeholder="Giờ:phút">
+                        <input type="text" class="form-control" name="time" id="editTime" placeholder="Giờ:phút" required>
                     </div>
                     <div class="row mb-3 mt-4">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Ảnh dịch vụ: </label>

@@ -4,10 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DASHMIN - Bootstrap Admin Template</title>
+    <title>Bác sĩ</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+
 
     <!-- Favicon -->
 
@@ -38,22 +37,15 @@
         <div class="sidebar pe-4 pb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
             <nav class="navbar bg-light navbar-light" >
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"></i>DOCTOR</h3>
+                    <h3 class="text-primary"><i class="fas fa-user-nurse"></i> Bác sĩ</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4" >
-                    <div class="position-relative">
-                        <img class="rounded-circle" src="{{ asset('ad/img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
-                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                    </div>
-                    <div class="ms-3">
-                        <h6 class="mb-0"> {{ Auth::user()->name }}</h6>
-                        <span>Doctor</span>
-                    </div>
+                    
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="{{ route('doctor') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ route('doctor') }}" class="nav-item nav-link active"><i class="far fa-id-card"></i>Thông tin cá nhân</a>
                     <a href="{{ route('lichlamviec') }}" class="nav-item nav-link"><i class="fas fa-calendar-alt"></i>Lịch làm việc</a>
-                    <a href="{{ route('trochuyendoctor') }}" class="nav-item nav-link "><i class="fas fa-comment-dots"></i>Trò chuyên</a>
+                    <a href="{{ route('trochuyendoctor') }}" class="nav-item nav-link "><i class="fas fa-comment-dots"></i>Trò chuyện</a>
                 
 
                   
@@ -79,11 +71,10 @@
                    
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="{{ asset('ad/img/user.jpg') }}" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle me-lg-2"src="{{ asset('image/' . Auth::user()->avatar) }}" alt="" style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex">  {{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">Thông tin</a>
                             <a href="{{ route('logout') }}" class="dropdown-item">Đăng xuất</a>
                         </div>
                     </div>
@@ -95,21 +86,22 @@
 
             <div class="container-fluid pt-4 px-4 ">
             <h4>Thông tin bác sĩ:</h4>
-            <div class="col-sm-12 col-xl-6" style=" padding: 20px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
-                    <p>Tên: {{ Auth::user()->name }}</p>
-                    <p>Email: {{ Auth::user()->email }}</p>
-                    <p>Số điện thoại: {{ Auth::user()->phonenumber }}</p>
-                    <p>Mã chuyên khoa: {{ Auth::user()->id_specialist }}</p>
-                    <p>Avatar và chữ ký:</p>
+            
+            <div class="col-sm-12 col-xl-6" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;width: 50em">
+                    <p><i class="fas fa-user"></i> Tên: {{ Auth::user()->name }}</p>
+                    <p><i class="fas fa-envelope"></i> Email: {{ Auth::user()->email }}</p>
+                    <p><i class="fas fa-phone-alt"></i> Số điện thoại: {{ Auth::user()->phonenumber }}</p>
+                    <p><i class="fas fa-stethoscope"></i> Mã chuyên khoa: {{ Auth::user()->id_specialist }}</p>
+                    <p><i class="far fa-image"></i> Ảnh đại diện và chữ ký:</p>
                     <div class="image-container">
-                    <img src="{{ asset('image/' . Auth::user()->avatar) }}" alt="Left Image" class="left-image">
-                    <img src="{{ asset('image/' . Auth::user()->signature) }}" alt="Right Image" class="right-image">
+                    <img style="height: 150px;width: 150px" src="{{ asset('image/' . Auth::user()->avatar) }}" alt="Left Image" class="left-image">
+                    <img style="height: 100px;width: 100px" src="{{ asset('image/' . Auth::user()->signature) }}" alt="Right Image" class="right-image">
                     </div>
-                    <p>Thời gian khung giờ làm việc:</p>
+                    <p><i class="far fa-calendar-check"></i> Thời gian khung giờ làm việc:</p>
                     {{ Auth::user()->working_hours }}
             </div>
 
-            <div class="col-sm-12 col-xl-6" style=" padding: 20px; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
+            <div class="col-sm-12 col-xl-6 mt-4" style=" box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;width: 50em">
                 <p>Cập nhật khung giờ làm việc </p>  
                 <form id="editForm" action="{{ route('updatewh') }}"  method="POST" >
                 @csrf
@@ -138,66 +130,59 @@
                 </div>
             @endif
         </div>
+
+        <h4 class="mt-4">Tra cứu thuốc:</h4>
+        <div class="row mt-5" style="width: 40%">
+                    <form action="{{ route('findthuoc') }}" class="w-100 d-flex" method="post">@csrf
+    <div class="col-md-8">
+        <input type="text" class="form-control" name="dl" placeholder="Nhập từ khóa...">
+    </div>
+    <div class="col-md-4">
+        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Tìm kiếm</button>
+    </div>   
+    <div class="col-md-4">
+        <a class="btn btn-primary" href="{{ route('doctor') }}">Tất cả</a>
+    </div>   
+</form>
+</div>
+
+        <table class="table table-striped custab mt-4 table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên thuốc</th>
+            <th>Chi tiết</th>
+            <th>Thành phần</th>
+        </tr>
+    </thead>
+    @isset($medicine)
+                            @foreach ($medicine as $item)
+                            <tr>
+                                <td>{{$item->id_medicine}}</td>
+                                <td >{{$item->medicinename}}</td>
+                                <td class=" text-wrap">{{ $item->detail}}</td>
+                                <td>{{$item->ingredient}}</td>
+
+                            
+                            </tr>
+                         
+                            @endforeach
+                        @endisset
+
+         
+
+    </table>
+    @isset($medicine)
+    <div class="container-footer-kt">
+            <nav aria-label="Page navigation example" class="ml-5 footer-kt">
+                {{ $medicine->links('pagination::bootstrap-4') }}
+            </nav>
+        </div>
+    @endisset
             </div>
             <!-- Blank End -->
-
-
-   
         </div>
-        <!-- Content End -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form method="POST" action="{{ route('xoahos') }}" id="deleteForm"> 
-            @csrf
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Xác nhận xóa</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa bệnh viện này?
-                    <input type="hidden" name="id_hospital" id="hospitalIdInput">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
-                    <button type="submit" class="btn btn-danger">Có, xóa!</button> </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin Bệnh Viện</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="editForm" action=""  method="POST">
-                @csrf
-
-                    <div class="mb-3">
-                        <label for="hospitalname" class="form-label">Tên Bệnh Viện</label>
-                        <input type="text" class="form-control" id="hospitalname" name="hospitalname">
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Địa Chỉ</label>
-                        <input type="text" class="form-control" id="address" name="address">
-                    </div> 
-                    <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="submit" class="btn btn-primary" id="btnUpdate">Lưu Thay Đổi</button>
-            </div>
-                </form>
-            </div>
-           
-        </div>
-    </div>
-</div>
-
-
+      
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
