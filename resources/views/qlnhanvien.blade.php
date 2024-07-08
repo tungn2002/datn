@@ -155,7 +155,7 @@
             <!-- Blank End -->
 
             <div class="row mt-5" style="width: 40%">
-                    <form action="{{ route('findnhanvien') }}" class="w-100 d-flex" method="post">@csrf
+                    <form action="{{ route('findnhanvien') }}" class="w-100 d-flex" >
     <div class="col-md-8">
         <input type="text" class="form-control" name="dl" placeholder="Nhập tên nhân viên...">
     </div>
@@ -201,7 +201,7 @@
     @isset($user)
     <div class="container-footer-kt">
             <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $user->links('pagination::bootstrap-4') }}
+                {{ $user->withQueryString()->links('pagination::bootstrap-4') }}
             </nav>
         </div>
     @endisset
@@ -217,7 +217,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa khách hàng này?
+                    Bạn có chắc chắn muốn xóa nhân viên này?
                     <input type="hidden" name="id_user" id="hospitalIdInput">
                 </div>
                 <div class="modal-footer">

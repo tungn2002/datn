@@ -122,17 +122,16 @@
                         <strong>{!! \Session::get('message') !!}</strong>
                         </div>
                     @endif
-    <div class="sidebar">
             <div class="sidebar-block">
-              <h3 class="sidebar-title">Tìm kiếm</h3>
-              <form action="{{ route('timkiemsv') }}" class="search-form" method="post">
-                @csrf
+              <h3 class="sidebar-title">Tìm kiếm dịch vụ</h3>
+              <form action="{{ route('timkiemsv') }}" class="search-form">
+              
                 <div class="form-group">
-                  <input type="text" class="form-control" name="dl" placeholder="Nhập thông tin">
+                  <input type="text" class="form-control" name="dl" placeholder="Nhập tên dịch vụ...">
                   <button type="submit" class="btn"><i class="fas fa-search"></i></span></button>
                 </div>
               </form>
-              <div class="row"></div>
+            <div class="row"></div>
               <a href="{{ route('servicef') }}" class="btn btn-primary">Dịch vụ</a>
               <a href="{{ route('serviceb') }}" class="btn btn-primary" style="border: 2px solid #00D9A5;background-color: #fff; color: #000000	">Bác sĩ</a>
 
@@ -140,7 +139,7 @@
 
 
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
           <div class="row">
 
           @isset($clinic)
@@ -154,11 +153,16 @@
                     <img src=" {{ asset('image/' . $item->image) }}" style=" width: 100%;height: 100%;object-fit: cover;" alt="">
                 </div>
                 <div class="body">
-                  <h5 class="post-title"><a href="{{ route('serviceff', ['id' => $item->id_clinic]) }}">{{$item->servicename}}</a></h5>
+                  <h5 class="post-title"><a href="{{ route('serviceff', ['id' => $item->id_clinic]) }}" style="font-weight: bold;font-size: 16px;" title="{{$item->servicename}}">
+                
+@if(mb_strlen($item->servicename) > 23)
+    {{ mb_substr($item->servicename, 0, 23) . '...' }}
+@else
+    {{ $item->servicename }}
+@endif                </a></h5>
                   <div class="site-info">
                     
-                    <div class="site-info"> Phòng: 
-                    {{$item->clinicname}}
+                    <div class="site-info" style="font-size: 13px"> Phòng: {{$item->clinicname}}
                   </div>
                    
                   </div>
@@ -167,18 +171,16 @@
             </div>
             @endforeach
                         @endisset
+                       
                         @isset($clinic)
+  
     <div class="container-footer-kt">
             <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $clinic->links('pagination::bootstrap-4') }}
+                {{ $clinic->withQueryString()->links('pagination::bootstrap-4') }}
             </nav>
         </div>
     @endisset
-        <div class="col-lg-4">
-          
-           
-           
-          </div>
+ 
         </div> 
         <div class="sidebar-block">
               <h3 class="sidebar-title">Thông tin bệnh viện</h3>

@@ -153,7 +153,7 @@
             </div>
             <!-- Blank End -->
             <div class="row mt-5" style="width: 40%">
-                    <form action="{{ route('findkhachhang') }}" class="w-100 d-flex" method="post">@csrf
+                    <form action="{{ route('findkhachhang') }}" class="w-100 d-flex" >
     <div class="col-md-8">
         <input type="text" class="form-control" name="dl" placeholder="Nhập tên khách hàng...">
     </div>
@@ -200,7 +200,7 @@
     @isset($user)
     <div class="container-footer-kt">
             <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $user->links('pagination::bootstrap-4') }}
+                {{ $user->withQueryString()->links('pagination::bootstrap-4') }}
             </nav>
         </div>
     @endisset

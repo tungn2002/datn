@@ -120,27 +120,29 @@
 
   <div class="page-section">
     <div class="container">
-    <div class="card mb-3" style="height: auto; overflow: hidden;">
+    <div class="card mb-3" style="height: auto; overflow: hidden; border:2px solid green">
+      
     <div class="row no-gutters">
         <div class="col-md-4">
             <div style="height: 100%; display: flex; align-items: center;">
-                <img src="{{ asset('image/' . $service->image) }}" class="card-img" alt="..." style="height: 100%; object-fit: cover; width: auto;">
+                <img src="{{ asset('image/' . $service->image) }}" class="card-img" alt="..." style="height: 150px;width:200px ;object-fit: cover; width: auto;">
             </div>
         </div>
         <div class="col-md-8" style="padding-left:2em">
             <div class="card-body">
                 <h5 class="card-title mb-1">Dịch vụ: {{$service->servicename}}</h5>
-                <p class="card-text mb-1">Giá: {{$service->price}} đồng</p>
+                <p class="card-text mb-1">Giá:<span style="color: #049371;"> {{$service->price}} đồng</span> </p>
                 <p class="card-text mb-1">Phòng: {{$clinic1->clinicname}}</p>
             </div>
         </div>
     </div>
 </div>
 
-<div class="card mb-3" style="height: 300px; overflow-x: auto;">
+<div class="card mb-3" style="height: 150px; overflow-x: auto;border:2px solid #049371">
+  <div style="padding:10px;">
     @if (count($uniqueDates))
-        <h4><b> Chọn ngày:</b></h4>
-        <div class="btn-group d-flex flex-wrap" style="width: fit-content; max-width: 100%; margin-top: 10px; white-space: nowrap;">
+        <h4 ><b> Chọn ngày:</b></h4>
+        <div class="btn-group d-flex" style="width: fit-content; max-width: 100%; margin-top: 10px; white-space: nowrap; overflow-x: auto;">
             @foreach ($uniqueDates as $date)
                 <a href="{{ route('servicefff', ['id' => $clinic1->id_clinic, 'day' => $date]) }}" class="btn btn-primary mb-2 mr-2">{{ $date }}</a>
             @endforeach
@@ -148,13 +150,15 @@
     @else
         <p>Không có lịch hẹn nào.</p>
     @endif
+  </div>
 </div>
 
 
 
-            <div class="card mb-3 " style="height: 400px">
-              <h4> <b>Chi tiết dịch vụ: </b> </h4>
-              <p style="margin-left: 3em;margin-top: 1em; font-size: 1em;"> {{$service->detail}}</p>
+            <div class="card mb-3 " style="height: 300px;border:2px solid #049371">
+              <h4 style="padding-top:10px; padding-left: 10px"> <b>Chi tiết dịch vụ: </b> </h4>
+              <p style="margin-left: 3em;margin-top: 1em; font-size: 1em;">{!! nl2br($service->detail) !!}</p>
+            
             </div>
     </div> <!-- .container -->
     

@@ -92,7 +92,7 @@
 
  
 <div style="display: flex; align-items: center;" class="mt-5" >
-<form action="{{ route('findchothanhtoan') }}" method="post">@csrf
+<form action="{{ route('findchothanhtoan') }}" >
     <input  type="tel" style="width: 250px" class="form-control" name="dl" placeholder="Nhập số điện thoại...">
     <button class="btn btn-primary"  type="submit" style="margin-left: 5px;"> <i class="fas fa-search"></i> Tìm kiếm</button>
 </form>
@@ -133,7 +133,7 @@
     @isset($medicalResults)
     <div class="container-footer-kt">
         <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-            {{ $medicalResults->links('pagination::bootstrap-4') }}
+            {{ $medicalResults->withQueryString()->links('pagination::bootstrap-4') }}
         </nav>
     </div>
     @endisset

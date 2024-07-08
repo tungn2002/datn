@@ -16,7 +16,7 @@ class ConsultController extends Controller
 {
     public function trochuyenuser(){
      
-        $nv = User::where('id_role', 4)->paginate(5);
+        $nv = User::where('id_role', 4)->get();
 
         //nguoi chua tro chuyen
 
@@ -32,20 +32,20 @@ class ConsultController extends Controller
         $chuachat = User::where('id_role', 3)
         ->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
         ->whereNotIn('id_user', $u1)
-        ->paginate(5);
+        ->paginate(3);
 
         //nguoi da tro chuyen
         
         $dachat = User::where('id_role', 3)
         ->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
         ->whereIn('id_user', $u1)
-        ->paginate(5);
+        ->get();
 
         return view('trochuyenuser', ['nv' => $nv,'chuachat' => $chuachat,'dachat' => $dachat]);
     }
     public function finddoctorchat(Request $request){
      
-        $nv = User::where('id_role', 4)->paginate(5);
+        $nv = User::where('id_role', 4)->get();
 
         //nguoi chua tro chuyen
 
@@ -62,14 +62,14 @@ class ConsultController extends Controller
         ->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
         ->whereNotIn('id_user', $u1)
         ->where('name','like','%'.$request->dl.'%')
-        ->paginate(5);
+        ->paginate(3);
 
         //nguoi da tro chuyen
         
         $dachat = User::where('id_role', 3)
         ->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
         ->whereIn('id_user', $u1)
-        ->paginate(5);
+        ->get();
 
         return view('trochuyenuser', ['nv' => $nv,'chuachat' => $chuachat,'dachat' => $dachat]);
     }

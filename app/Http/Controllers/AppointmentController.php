@@ -15,13 +15,13 @@ use DB;
 class AppointmentController extends Controller
 {
   
-   
     public function index2($id)
     {
         $clinics = Clinic::where('id_clinic', $id)->first();
         $user= User::where('id_user', $clinics->id_user)->first();
         $appointments = Appointment::where('id_clinic', $id)
-        ->orderBy('time', 'asc')
+        ->orderBy('day', 'asc')
+        ->orderBy('time', 'asc')        
         ->paginate(5);
         return view('app', [
             'appointments' => $appointments,
@@ -169,11 +169,17 @@ if ($existingAppointment) {
     public function findapp(Request $request,$id)
     {
         $clinics = Clinic::where('id_clinic', $id)->first();
-        $appointments = Appointment::where('day', $request->dl)->where('id_clinic', $id)->paginate(5); 
+        $user= User::where('id_user', $clinics->id_user)->first();
+
+        $appointments = Appointment::where('day', $request->dl)
+        ->where('id_clinic', $id)
+        ->orderBy('time', 'asc')        
+        ->paginate(5); 
         return view('app', [
             'appointments' => $appointments,
-            'clinics' => $clinics
+            'clinics' => $clinics,'user'=>$user
         ]);
     }
+   
 
 }

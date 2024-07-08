@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id_pr'); 
             $table->string('prname');
             $table->date('birthday');
-            $table->string('phonenumber');
+            $table->string('phonenumber')->unique();
             $table->string('gender');
             $table->string('address');
             $table->unsignedInteger('id_user'); 

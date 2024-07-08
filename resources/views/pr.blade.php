@@ -173,7 +173,7 @@
             </div>
             <!-- Blank End -->
             <div class="row mt-5" style="width: 40%">
-                    <form action="{{ route('findpati') }}" class="w-100 d-flex" method="post">@csrf
+                    <form action="{{ route('findpati') }}" class="w-100 d-flex" >
     <div class="col-md-8">
         <input type="text" class="form-control" name="dl" placeholder="Nhập tên bệnh nhân...">
     </div>
@@ -222,7 +222,7 @@
     @isset($patientRecords)
     <div class="container-footer-kt">
             <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $patientRecords->links('pagination::bootstrap-4') }}
+                {{ $patientRecords->withQueryString()->links('pagination::bootstrap-4') }}
             </nav>
         </div>
     @endisset

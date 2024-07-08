@@ -74,9 +74,16 @@
             border-radius: 50%;
             object-fit: cover;
         }
-        .card-custom .btn {
-            margin-top: auto;
-        }
+        .card-custom h5, .card-custom p {
+        margin: 0;
+    }
+    .card-custom form {
+        margin-top: auto;
+        width: 100%;
+    }
+    .card-custom .btn {
+        width: 100%;
+    }
     </style>
 </head>
 <body>
@@ -180,22 +187,19 @@
   <div class="page-section">
     <div class="container">
       <h2 class="text-center wow fadeInUp">Trò chuyện với bác sĩ và nhân viên </h2>
-
-
-      @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+              @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
 
 
 
-      <div class="container">
 
 
 
@@ -204,44 +208,33 @@
 
 
         
-        <div class="container">
+   <h4> <b> Nhân viên: </b></h4>
+   <div class="row d-flex align-items-stretch" style="display: flex; flex-wrap: nowrap; overflow-x: auto;">
 
-        <div class="container">        <h4> <b> Nhân viên: </b></h4>
-        <div class="row d-flex align-items-stretch">
 
+        
           
-    @isset($nv)
+                  @isset($nv)
                             @foreach ($nv as $item)
-                          
-                        
-        <div class="col">
-                    <div class="card-custom m-2 d-flex flex-column">
-                        <img src="{{ asset('anhnv.png') }}" alt="Avatar">
-                        <h5 class="mt-3">{{$item->name}}</h5>
-                  
-                        <a href="{{ route('chatuser', ['id' => $item->id_user]) }}" class="btn btn-primary mt-auto">Chat ngay</a>
-                    </div>
-                </div>
-                            
+                
+            <div class="col" style="padding-left:100px">
+    <div class="card-custom m-2 d-flex flex-column">
+    <img src="{{ asset('anhnv.png') }}" alt="Avatar">
+        <h5 class="mt-3" style="font-size: 16px;font-weight: bold;">{{$item->name}}</h5>
+        <a href="{{ route('chatuser', ['id' => $item->id_user]) }}" class="btn btn-primary mt-auto">Chat ngay</a>
+    </div>
+</div>
                             @endforeach
                         @endisset
-
-                        @isset($service)
-    <div class="container-footer-kt">
-            <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $service->links('pagination::bootstrap-4') }}
-            </nav>
-        </div>
-    @endisset
        
     </div>
 
 <hr>
     <h4> <b> Bác sĩ : </b></h4>
-            <div class="row mt-5" style="width: 40%">
-                    <form action="{{ route('finddoctorchat') }}" class="w-100 d-flex" method="post">@csrf
+            <div class="row mt-5" style="width: 400px">
+                    <form action="{{ route('finddoctorchat') }}" class="w-100 d-flex">
     <div class="col-md-8">
-        <input type="text" class="form-control" name="dl" placeholder="Nhập từ khóa...">
+        <input type="text" class="form-control" name="dl" placeholder="Nhập tên bác sĩ...">
     </div>
     <div class="col-md-4">
         <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
@@ -251,78 +244,65 @@
     </div>   
 </form>
 </div>
+
     <div class="row d-flex align-items-stretch">
 
                   
-    @isset($chuachat)
+                       @isset($chuachat)
                             @foreach ($chuachat as $item)
-                          
+                        
 
+                            <div class="col" style="padding-left:100px">
+    <div class="card-custom m-2 d-flex flex-column">
+        <img src="{{ asset('image/' . $item->avatar) }}" alt="Avatar">
+        <h5 class="mt-3" style="font-size: 16px;font-weight: bold;">{{$item->name}}</h5>
+        <p>Chuyên khoa: {{$item->spname}}</p>
+        <p>Giá: {{$item->price}} đ</p>
+        <form action="{{ route('online-checkout') }}" method="post" class="w-100">
+            @csrf
+            <input type="text" name="id" value="{{$item->id_user}}" hidden>
+            <button type="submit" class="btn btn-primary w-100 mt-2">Thanh toán</button>
+        </form>
+    </div>
+</div>
 
-                            <div class="col">
-            <div class="card-custom m-2 d-flex flex-column">
-                <img src="{{ asset('image/' . $item->avatar) }}" alt="Avatar">
-                <h5 class="mt-3">{{$item->name}}</h5>
-                <p>Chuyên khoa:{{$item->spname}} </p>
-                <p>Giá: {{$item->price}}</p>
-                <form action="{{ route('online-checkout') }}" method="post">
-                  @csrf
-                    <input type="text" name="id" value="{{$item->id_user}}" hidden>
-                    <button type="submit" class="btn btn-primary mt-auto" >Chat ngay</button>
-
-                </form>
-
-            </div>
-        </div>
-
+        
                             @endforeach
                         @endisset
 
-                        @isset($service)
-    <div class="container-footer-kt">
-            <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $service->links('pagination::bootstrap-4') }}
-            </nav>
-        </div>
-    @endisset
        
 
         
     </div>
-    <hr>
-    <h4> <b> Bác sĩ có thể trò chuyện : </b></h4>
+                        @isset($chuachat)
 
-
-    <div class="row d-flex align-items-stretch">
-                         
-    @isset($dachat)
-                            @foreach ($dachat as $item)
-                          
-
-
-                            <div class="col">
-            <div class="card-custom m-2 d-flex flex-column">
-            <img src="{{ asset('image/' . $item->avatar) }}" alt="Avatar">
-            <h5 class="mt-3">{{$item->name}}</h5>
-                <p>Chuyên khoa:{{$item->spname}} </p>
-                <p>Giá: {{$item->price}}</p>
-                <a href="{{ route('chatuser2', ['id' => $item->id_user]) }}" class="btn btn-primary mt-auto">Chat ngay</a>
-
-
-            </div>
-        </div>
-
-                            @endforeach
-                        @endisset
-
-                        @isset($service)
-    <div class="container-footer-kt">
+    <div class="container-footer-kt" style="padding-top: 40px;">
             <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $service->links('pagination::bootstrap-4') }}
+                {{ $chuachat->withQueryString()->links('pagination::bootstrap-4') }}
             </nav>
         </div>
     @endisset
+    <hr>
+    <h4> <b> Bác sĩ có thể trò chuyện : </b></h4>
+
+    <div class="row d-flex align-items-stretch" style="display: flex; flex-wrap: nowrap; overflow-x: auto;">
+    @isset($dachat)
+        @foreach ($dachat as $item)
+            
+
+            <div class="col" style="padding-left:100px">
+    <div class="card-custom m-2 d-flex flex-column">
+        <img src="{{ asset('image/' . $item->avatar) }}" alt="Avatar">
+        <h5 class="mt-3" style="font-size: 16px;font-weight: bold;">{{$item->name}}</h5>
+        <p>Chuyên khoa: {{$item->spname}}</p>
+        <a href="{{ route('chatuser2', ['id' => $item->id_user]) }}" class="btn btn-primary mt-auto">Chat ngay</a>
     </div>
+</div>
+        @endforeach
+    @endisset
+</div>
+
+
 </div>
 
 
@@ -331,15 +311,7 @@
 
     <!-- /.col-md-4 -->
         <div class="col-md-10">
-      <div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show " id="home" role="tabpanel" aria-labelledby="home-tab">
-
-  
-    </div>
-    
-  </div>
   <div class="tab-pane fades show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
 
 
 </div>   

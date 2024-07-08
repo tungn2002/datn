@@ -92,7 +92,7 @@
   <a href="{{ route('empl_dathanhtoan') }}" type="button" class="btn btn-primary"  style="border-radius: 2rem ;">Đã thanh toán</a>
    
   <div class="row mt-5" style="width: 40%">
-                    <form action="{{ route('findchoduyet') }}" class="w-100 d-flex" method="post">@csrf
+                    <form action="{{ route('findchoduyet') }}" class="w-100 d-flex" >
     <div class="col-md-8">
         <input type="tel" class="form-control" name="dl" placeholder="Nhập số điện thoại...">
     </div>
@@ -142,7 +142,7 @@
     @isset($medicalResults)
     <div class="container-footer-kt">
         <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-            {{ $medicalResults->links('pagination::bootstrap-4') }}
+            {{ $medicalResults->withQueryString()->links('pagination::bootstrap-4') }}
         </nav>
     </div>
     @endisset

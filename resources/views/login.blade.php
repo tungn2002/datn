@@ -52,6 +52,11 @@
                         <strong>{!! \Session::get('message') !!}</strong>
                         </div>
                     @endif
+					@if (\Session::has('message2'))
+                        <div class="alert alert-danger">
+                        <strong>{!! \Session::get('message2') !!}</strong>
+                        </div>
+                    @endif
 					@if ($errors->any())
     <div class="alert alert-danger">
         <ul>

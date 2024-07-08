@@ -118,7 +118,7 @@
 @endif
             <!-- Blank End -->
             <div class="row mt-5" style="width: 40%" table-bordered>
-                    <form action="{{ route('findpre') }}" class="w-100 d-flex" method="post">@csrf
+                    <form action="{{ route('findpre') }}" class="w-100 d-flex">
     <div class="col-md-8">
         <input type="text" class="form-control" name="dl" placeholder="Nhập tên bệnh nhân...">
     </div>
@@ -164,9 +164,9 @@
     @isset($prescription)
     <div class="container-footer-kt">
             <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $prescription->links('pagination::bootstrap-4') }}
+                {{ $prescription->withQueryString()->links('pagination::bootstrap-4') }}
             </nav>
-        </div>
+        </div>   
     @endisset
         </div>
         <!-- Content End -->

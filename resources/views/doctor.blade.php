@@ -98,7 +98,7 @@
                     <img style="height: 100px;width: 100px" src="{{ asset('image/' . Auth::user()->signature) }}" alt="Right Image" class="right-image">
                     </div>
                     <p><i class="far fa-calendar-check"></i> Thời gian khung giờ làm việc:</p>
-                    {{ Auth::user()->working_hours }}
+                    <p>{!! nl2br(Auth::user()->working_hours) !!}</p>
             </div>
 
             <div class="col-sm-12 col-xl-6 mt-4" style=" box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;width: 50em">
@@ -133,7 +133,7 @@
 
         <h4 class="mt-4">Tra cứu thuốc:</h4>
         <div class="row mt-5" style="width: 40%">
-                    <form action="{{ route('findthuoc') }}" class="w-100 d-flex" method="post">@csrf
+                    <form action="{{ route('findthuoc') }}" class="w-100 d-flex" >
     <div class="col-md-8">
         <input type="text" class="form-control" name="dl" placeholder="Nhập từ khóa...">
     </div>
@@ -175,7 +175,7 @@
     @isset($medicine)
     <div class="container-footer-kt">
             <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $medicine->links('pagination::bootstrap-4') }}
+                {{ $medicine->withQueryString()->links('pagination::bootstrap-4') }}
             </nav>
         </div>
     @endisset

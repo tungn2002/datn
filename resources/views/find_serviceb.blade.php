@@ -132,11 +132,10 @@
       <div class="container text-center wow fadeInUp">
         <nav aria-label="Breadcrumb">
           <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Chọn dịch vụ</li>
+          <li class="breadcrumb-item"><a href="{{ route('trangchu') }}">Trang chủ</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Bác sĩ</li>
           </ol>
         </nav>
-        <h1 class="font-weight-normal">Dịch vụ</h1>
       </div> <!-- .container -->
     </div> <!-- .banner-section -->
   </div> <!-- .page-banner -->
@@ -146,11 +145,10 @@
       
 
 
-    <div class="sidebar">
             <div class="sidebar-block">
               <h3 class="sidebar-title">Tìm kiếm</h3>
-              <form action="{{ route('timkiemb') }}" class="search-form" method="post">
-                @csrf
+              <form action="{{ route('timkiemb') }}" class="search-form" >
+          
                 <div class="form-group">
                   <input type="text" class="form-control" name="dl" placeholder="Nhập thông tin">
                   <button type="submit" class="btn"><i class="fas fa-search"></i></span></button>
@@ -169,7 +167,7 @@
 
 
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
           <div class="row">
 
           @isset($clinic)
@@ -178,9 +176,8 @@
           <div class="col">
             <div class="card-custom m-2 d-flex flex-column">
                 <img src="{{ asset('image/' . $item->avatar) }}" alt="Avatar">
-                <h5 class="mt-3">{{$item->name}}</h5>
+                <h5 class="mt-3" style="font-size:17px">{{$item->name}}</h5>
                 <p>Chuyên khoa: {{$item->spname}}</p>
-
                     <a href="{{ route('servicebf', ['id' => $item->id_user]) }}" class="btn btn-primary mt-auto" >Đặt khám</a>
             </div>
         </div>
@@ -188,19 +185,21 @@
       
             @endforeach
                         @endisset
-                        @isset($clinic)
-    <div class="container-footer-kt">
-            <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $clinic->links('pagination::bootstrap-4') }}
-            </nav>
-        </div>
-    @endisset
+                    
         <div class="col-lg-4">
           
            
-           
+    
           </div>
+       
         </div> 
+           @isset($clinic)
+    <div class="container-footer-kt">
+            <nav aria-label="Page navigation example" class="ml-5 footer-kt">
+                {{ $clinic->withQueryString()->links('pagination::bootstrap-4') }}
+            </nav>
+        </div>
+    @endisset
         <div class="sidebar-block">
               <h3 class="sidebar-title">Thông tin bệnh viện</h3>
               @isset($clinic)

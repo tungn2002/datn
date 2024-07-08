@@ -119,7 +119,7 @@
     </div> <!-- .banner-section -->
   </div> <!-- .page-banner -->
   <div class="d-flex justify-content-center align-items-center mt-5">
-            <div class="card mb-3" style="height: 300px; width: 70%">
+            <div class="card mb-3" style="height: 220px; width: 70%; border:2px solid #049371">
             <form action="{{ url('addmrsv') }}" method="post" class="m-4">
             @csrf
             <input type="text" name="id_sch" value="{{$idapp}}"hidden>
@@ -141,7 +141,11 @@
                         
                     </div> 
                 </div>
-                <button class="btn btn-primary">Xác nhận</button>
+                <div class="row mb-3">
+    <div class="col-sm-10 offset-sm-2 d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary">Xác nhận</button>
+    </div>
+  </div>
             </form>
             </div>
 </div>

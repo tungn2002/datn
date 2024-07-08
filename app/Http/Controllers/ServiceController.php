@@ -22,14 +22,7 @@ class ServiceController extends Controller
 {
     //Tìm dịch vụ
     public function servicef(){
-        //trả về các id của phòng có lịch: sirvice phòng bác sĩ giá
-        /*
-        $clinics = DB::table('clinics')
-        ->join('services', 'clinics.id_service', '=', 'services.id_service')
-        ->join('users', 'clinics.id_user', '=', 'users.id_user')
-        ->select('clinics.id_clinic', 'clinics.clinicname', 'services.servicename', 'services.price', 'services.image', 'users.name', 'users.avatar')
-        ->paginate(5);
-        */
+       
         $clinics = DB::table('clinics')
         ->join('services', 'clinics.id_service', '=', 'services.id_service')
         ->select('clinics.id_clinic', 'clinics.clinicname', 'services.servicename', 'services.price', 'services.image')
@@ -47,19 +40,12 @@ class ServiceController extends Controller
     }
     //tìm bác sĩ
     public function serviceb(){
-        //trả về các id của phòng có lịch: sirvice phòng bác sĩ giá
-        /*
-        $clinics = DB::table('clinics')
-        ->join('services', 'clinics.id_service', '=', 'services.id_service')
-        ->join('users', 'clinics.id_user', '=', 'users.id_user')
-        ->select('clinics.id_clinic', 'clinics.clinicname', 'services.servicename', 'services.price', 'services.image', 'users.name', 'users.avatar')
-        ->paginate(5);
-        */
+      
         $clinics = DB::table('users')
         ->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
         ->where('id_role',3)
         ->select('specialists.spname','users.name', 'users.avatar','users.id_user')
-        ->paginate(6);
+        ->paginate(4);
 
         $firstPost = Hospital::first();
 
@@ -215,7 +201,7 @@ $clinics = DB::table('users')
 ->where('users.name', 'like','%'. $request->dl.'%')
 
 ->select('specialists.spname','users.name', 'users.avatar','users.id_user')
-->paginate(6);
+->paginate(4);
 
 $firstPost = Hospital::first();
 

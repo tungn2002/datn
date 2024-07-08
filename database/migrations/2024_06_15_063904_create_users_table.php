@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('password');
             $table->string('email')->unique();
-            $table->string('phonenumber');
+            $table->string('phonenumber')->unique();
             $table->string('avatar')->nullable(); // Cho phép giá trị null
             $table->unsignedInteger('id_role'); // Khóa ngoại (integer unsigned)
             $table->string('signature')->nullable();

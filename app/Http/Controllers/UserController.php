@@ -479,7 +479,7 @@ public function doctor(){
 }
 public function findthuoc(Request $request){
 
-$medicine = Medicine::where('medicinename','like', '%'.$request->dl.'%')->paginate(5);
+$medicine = Medicine::where('medicinename','like', '%'.$request->dl.'%')->paginate(3);
 
     return view('doctor',['medicine' => $medicine]);
 }

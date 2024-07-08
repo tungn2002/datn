@@ -148,7 +148,7 @@
             </div>
             <!-- Blank End -->
             <div class="row mt-5" style="width: 40%">
-                    <form action="{{ route('findmedi') }}" class="w-100 d-flex" method="post">@csrf
+                    <form action="{{ route('findmedi') }}" class="w-100 d-flex" >
     <div class="col-md-8">
         <input type="text" class="form-control" name="dl" placeholder="Nhập tên thuốc...">
     </div>
@@ -195,7 +195,7 @@
     @isset($medicine)
     <div class="container-footer-kt">
             <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $medicine->links('pagination::bootstrap-4') }}
+                {{ $medicine->withQueryString()->links('pagination::bootstrap-4') }}
             </nav>
         </div>
     @endisset

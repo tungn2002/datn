@@ -142,7 +142,7 @@
         </div>
 
         <div class="row mt-5" style="width: 40%">
-                    <form action="{{ route('findapp', ['id' => $clinics->id_clinic ]) }}" class="w-100 d-flex" method="post">@csrf
+                    <form action="{{ route('findapp', ['id' => $clinics->id_clinic ]) }}" class="w-100 d-flex" >
     <div class="col-md-8">
         <input type="date" class="form-control" name="dl" placeholder="Nhập từ khóa...">
     </div>
@@ -186,7 +186,7 @@
         @isset($appointments)
             <div class="container-footer-kt">
                 <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                    {{ $appointments->links('pagination::bootstrap-4') }}
+                    {{ $appointments->withQueryString()->links('pagination::bootstrap-4') }}
                 </nav>
             </div>
         @endisset
