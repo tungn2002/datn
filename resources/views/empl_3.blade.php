@@ -122,7 +122,7 @@
                 <th>{{$item->prname }}</th>
                 <th>{{$item->phonenumber }}</th>
                 <td class="text-center">
-                    <a class="btn btn-primary" href="{{ route('xacnhanthanhtoan', ['id' => $item->id_result]) }}">Duyệt</a>
+                    <a class="btn btn-primary" href="{{ route('xacnhanthanhtoan', ['id' => $item->id_result]) }}">Xác nhận</a>
                     <button class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $item->id_result }}">Hủy</button>
                 </td>
             </tr>

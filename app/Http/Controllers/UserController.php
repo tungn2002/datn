@@ -36,21 +36,21 @@ class UserController extends Controller
     //đang ký
     public function store(Request $request)
     {
-        $request->validate([
+        $request->validate([ 
             'name'=>'required|max:20',
             'phonenumber'=>'required|regex:/^0[0-9]{9}$/|unique:users,phonenumber',
             'email'=>'required|email|unique:users,email',
             'password'=>'required|min:6'
         ],[
-        'name.required'=>'Không được bỏ trống name',
+        'name.required'=>'Không được bỏ trống tên',
         'name.max'=>'Tên quá dài, chỉ được phép <20',
-        'phonenumber.required'=>'Không được bỏ trống phonenumber',
+        'phonenumber.required'=>'Không được bỏ trống số điện thoại',
         'phonenumber.regex'=>'Số điện thoại không hợp lệ',
         'phonenumber.unique'=>'Số điện thoại đã tồn tại',
         'email.required'=>'Không được bỏ trống email',
         'email.email'=>'Không phải email hợp lệ',
         'email.unique'=>'email đã tồn tại',
-        'password.required'=>'Không được bỏ trống password',
+        'password.required'=>'Không được bỏ trống mật khẩu',
         'password.min'=>'Mật khẩu có độ dài trên 6',
 
         ]);
@@ -122,13 +122,11 @@ class UserController extends Controller
     public function dangnhap(Request $request)
     {
         $validatedData = $request->validate([
-            'email' => 'required|email|exists:users,email',
+            'email' => 'required',
             'password' => 'required'
         ],[
-            'email.required'=>'Vui lòng nhập địa chỉ email.',
-            'email.email'=>'Không phải email hợp lệ',
-            'email.exists'=>'Không phải email không tồn tại',
-            'password.required'=>'Không được bỏ trống password'
+            'email.required'=>'Không được bỏ trống email',
+            'password.required'=>'Không được bỏ trống mật khẩu'
         ]);
     
     $credentials = $request->only(['email', 'password']);
@@ -388,7 +386,7 @@ public function xacnhanduyet($id)
     ->exists();
 
     if (!$exists) {
-        return redirect()->back()->with('message', 'Không tìm thấy.');
+        return redirect()->back()->with('message', 'Không tìm thấy đơn.');
     }
 
     $medicalResults = MedicalResult::find($id);
@@ -443,12 +441,12 @@ public function xacnhanthanhtoan($id)
     ->exists();
 
     if (!$exists) {
-        return redirect()->back()->with('message', 'Không tìm thấy.');
+        return redirect()->back()->with('message', 'Không tìm thấy đơn.');
     }
     $medicalResults = MedicalResult::find($id);
     $medicalResults->status='đã thanh toán';
     $medicalResults->update();
-    return redirect()->back()->with('message', 'Duyệt thành công');
+    return redirect()->back()->with('message', 'Thanh toán thành công');
 }
 
 
@@ -584,7 +582,7 @@ public function capnhatkq(Request $request,$id)
         'image' => 'nullable|image',
         
     ], [
-        'detail.required' => 'Chi tiết là bắt buộc.',
+        'detail.required' => 'Không được bỏ trống kết quả',
         'image.image' => 'Hình ảnh phải là file ảnh hợp lệ.',
     ]);
 
@@ -650,8 +648,8 @@ public function capnhatdt(Request $request,$id)
 
         
     ], [
-        'id_medicine.required' => 'Chưa chọn thuốc.',
-        'information.required' => 'Chưa nhập liều lượng.',
+        'id_medicine.required' => 'Không được bỏ trống thuốc',
+        'information.required' => 'Không được bỏ trống liều lượng',
     ]);
 
     $pm=new PrescriptionMedicine;
@@ -664,7 +662,7 @@ public function capnhatdt(Request $request,$id)
 
     $pr->day= Carbon::now()->format('Y-m-d');
     $pr->update();
-    return redirect()->back()->with('message', 'Cập nhật thuốc thành công');
+    return redirect()->back()->with('message', 'Cập nhật đơn thuốc thành công');
 }
 
 
@@ -676,8 +674,8 @@ public function capnhatttdt(Request $request,$id)
 
         
     ], [
-        'name.required' => 'Tên là bắt buộc.',
-        'diagnostic.required' => 'Chuẩn đoán là bắt buộc.',
+        'name.required' => 'Không được bỏ trống tên',
+        'diagnostic.required' => 'Không được bỏ trống chuẩn đoán',
     ]);
 
    
@@ -694,7 +692,7 @@ public function capnhatttdt(Request $request,$id)
     $pr->update();
 
    
-    return redirect()->back()->with('message', 'Cập nhật kết quả khám bệnh thành công');
+    return redirect()->back()->with('message', 'Cập nhật đơn thuốc thành công');
 }
 
 public function xoadtd(Request $request)
@@ -754,11 +752,6 @@ public function qldoctor(){
     ->select('users.*')
     ->paginate(5);
 
-
-    if (!$user) {
-        return view('qldoctor', ['message' => 'không có dịch vụ nào']);
-    
-    }
     return view('qldoctor', ['user' => $user,'specialist' => $specialist]);
 }
 
@@ -775,24 +768,24 @@ public function addqldoctor(Request $request)
 'price' => 'required|numeric|min:10000',
 'id_specialist' => 'required|exists:specialists,id_specialist',
     ],[
-        'name.required' => 'Vui lòng nhập tên.',
-        'password.required' => 'Vui lòng nhập mật khẩu.',
+        'name.required' => 'Không được bỏ trống tên.',
+        'password.required' => 'Không được bỏ trống mật khẩu.',
         'name.max' => 'Tên quá dài phải <20 ký tự.',
         'password.min' => 'Mật khẩu quá ngắn phải >6 ký tự.',
-        'phonenumber.required' => 'Vui lòng nhập số điện thoại.',
-        'phonenumber.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số.',
+        'phonenumber.required' => 'Không được bỏ trống điện thoại.',
+        'phonenumber.regex' => 'Số điện thoại không hợp lệ',
         'phonenumber.unique' => 'Số điện thoại bị trùng.',
-        'email.required' => 'Vui lòng nhập email.',
+        'email.required' => 'Không được bỏ trống email.',
         'email.email' => 'Email không hợp lệ.',
         'email.unique' => 'Email đã tồn tại.',
-        'avatar.required' => 'Vui lòng tải lên ảnh đại diện.',
+        'avatar.required' => 'Không được bỏ trống ảnh đại diện.',
         'avatar.image' => 'Ảnh đại diện phải là định dạng hình ảnh.',
-        'signature.required' => 'Vui lòng tải lên chữ ký.',
+        'signature.required' => 'Không được bỏ trống chữ ký.',
         'signature.image' => 'Chữ ký phải là định dạng hình ảnh.',
-        'price.required' => 'Vui lòng nhập giá.',
+        'price.required' => 'Không được bỏ trống giá.',
         'price.numeric' => 'Giá phải là số.',
         'price.min' => 'Giá phải lớn hơn hoặc bằng 10000.',
-        'id_specialist.required' => 'Vui lòng chọn chuyên khoa.',
+        'id_specialist.required' => 'Không được bỏ trống chuyên khoa.',
         'id_specialist.exists' => 'Chuyên khoa không tồn tại.'
     ]);
     
@@ -848,21 +841,21 @@ public function capnhatqldoctor(Request $request,$id)
     'price' => 'required|numeric|min:10000',
     'id_specialist' => 'required|exists:specialists,id_specialist',
         ],[
-            'name.required' => 'Vui lòng nhập tên.',
+            'name.required' => 'Không được bỏ trống tên.',
             'name.max' => 'Tên quá dài phải <20 ký tự.',
             'password.min' => 'Mật khẩu quá ngắn phải >6 ký tự.',
-            'phonenumber.required' => 'Vui lòng nhập số điện thoại.',
-            'phonenumber.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số.',
+            'phonenumber.required' => 'Không được bỏ trống số điện thoại.',
+            'phonenumber.regex' => 'Số điện thoại không hợp lệ',
             'phonenumber.unique' => 'Số điện thoại đã tồn tại.',
-            'email.required' => 'Vui lòng nhập email.',
+            'email.required' => 'Không được bỏ trống email.',
             'email.email' => 'Email không hợp lệ.',
             'email.unique' => 'Email đã tồn tại.',
             'avatar.image' => 'Ảnh đại diện phải là định dạng hình ảnh.',
             'signature.image' => 'Chữ ký phải là định dạng hình ảnh.',
-            'price.required' => 'Vui lòng nhập giá.',
+            'price.required' => 'Không được bỏ trống giá.',
             'price.numeric' => 'Giá phải là số.',
-            'price.min' => 'Giá phải lớn hơn hoặc bằng 0.',
-            'id_specialist.required' => 'Vui lòng chọn chuyên khoa.',
+            'price.min' => 'Giá phải lớn hơn hoặc bằng 10000.',
+            'id_specialist.required' => 'Không được bỏ trống chuyên khoa.',
             'id_specialist.exists' => 'Chuyên khoa không tồn tại.'
         ]);
         
@@ -913,13 +906,13 @@ $imageName = time() . '.' . $request->avatar->extension();
         $request->validate([
             'wh' => 'required',
         ],[
-            'wh.required' => 'Vui lòng nhập khung giờ làm việc.',
+            'wh.required' => 'Vui lòng nhập giờ làm việc.',
         ]);
         
         $user = User::find(Auth::User()->id_user);
         $user->working_hours=$request->wh;
         $user->update();
-        return redirect()->back()->with('message', 'Sửa thành công');
+        return redirect()->back()->with('message', 'Cập nhật thành công');
     }
        
 
@@ -942,14 +935,14 @@ $imageName = time() . '.' . $request->avatar->extension();
     'email'=>'required|email|unique:users,email',
    
         ],[
-            'name.required' => 'Vui lòng nhập tên.',
-            'password.required' => 'Vui lòng nhập mật khẩu.',
+            'name.required' => 'Không được bỏ trống tên.',
+            'password.required' => 'Không được bỏ trống mật khẩu.',
             'name.max' => 'Tên quá dài phải <20 ký tự.',
             'password.min' => 'Mật khẩu quá ngắn phải >6 ký tự.',
-            'phonenumber.required' => 'Vui lòng nhập số điện thoại.',
-            'phonenumber.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số.',
+            'phonenumber.required' => 'Không được bỏ trống số điện thoại.',
+            'phonenumber.regex' => 'Số điện thoại không hợp lệ',
             'phonenumber.unique' => 'Số điện thoại đã tồn tại.',
-            'email.required' => 'Vui lòng nhập email.',
+            'email.required' => 'Không được bỏ trống email.',
             'email.email' => 'Email không hợp lệ.',
             'email.unique' => 'Email đã tồn tại.',
            
@@ -971,8 +964,8 @@ $imageName = time() . '.' . $request->avatar->extension();
         $request->validate([
             'id_user'=>'required|exists:users,id_user',
         ],[
-        'id_user.required'=>'Hãy chọn khách hàng cần xóa',
-        'id_user.exists'=>'Không tồn tại khách hàng cần xóa',
+        'id_user.required'=>'Hãy chọn người cần xóa',
+        'id_user.exists'=>'Không tồn tại người cần xóa',
 
         ]);
         
@@ -990,13 +983,13 @@ $imageName = time() . '.' . $request->avatar->extension();
         'email' => 'required|email|unique:users,email,' . $id . ',id_user',
         'password'=>'nullable'
             ],[
-                'name.required' => 'Vui lòng nhập tên.',
+                'name.required' => 'Không được bỏ trống tên.',
                 'name.max' => 'Tên quá dài phải <20 ký tự.',
                 'password.min' => 'Mật khẩu quá ngắn phải >6 ký tự.',
-                'phonenumber.required' => 'Vui lòng nhập số điện thoại.',
-                'phonenumber.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số.',
+                'phonenumber.required' => 'Không được bỏ trống số điện thoại.',
+                'phonenumber.regex' => 'Số điện thoại không hợp lệ',
                 'phonenumber.unique' => 'Số điện thoại đã tồn tại.',
-                'email.required' => 'Vui lòng nhập email.',
+                'email.required' => 'Không được bỏ trống email.',
                 'email.email' => 'Email không hợp lệ.',
                 'email.unique' => 'Email đã tồn tại.',
             ]);
@@ -1033,10 +1026,7 @@ $imageName = time() . '.' . $request->avatar->extension();
         ->paginate(5);
     
     
-        if (!$user) {
-            return view('qlnhanvien', ['message' => 'không có nhân viên nào']);
         
-        }
         return view('qlnhanvien', ['user' => $user]);
     }
     public function addqlnhanvien(Request $request)
@@ -1048,14 +1038,14 @@ $imageName = time() . '.' . $request->avatar->extension();
     'email'=>'required|email|unique:users,email',
    
         ],[
-            'name.required' => 'Vui lòng nhập tên.',
-            'password.required' => 'Vui lòng nhập mật khẩu.',
+            'name.required' => 'Không được bỏ trống tên.',
+            'password.required' => 'Không được bỏ trống mật khẩu.',
             'name.max' => 'Tên quá dài phải <20 ký tự.',
             'password.min' => 'Mật khẩu quá ngắn phải >6 ký tự.',
-            'phonenumber.required' => 'Vui lòng nhập số điện thoại.',
-            'phonenumber.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số.',
+            'phonenumber.required' => 'Không được bỏ trống số điện thoại.',
+            'phonenumber.regex' => 'Số điện thoại không hợp lệ',
             'phonenumber.unique' => 'Số điện thoại đã tồn tại.',
-            'email.required' => 'Vui lòng nhập email.',
+            'email.required' => 'Không được bỏ trống email.',
             'email.email' => 'Email không hợp lệ.',
             'email.unique' => 'Email đã tồn tại.',
            

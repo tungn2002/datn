@@ -42,7 +42,7 @@ class PatientRecordController extends Controller
             'phonenumber.unique'=>'Số điện thoại đã tồn tại',
 
             'gender.required' => 'Giới tính là bắt buộc.',
-            'gender.in' => 'Giới tính phải là nam, nữ hoặc khác.',
+            'gender.in' => 'Giới tính phải là nam, nữ.',
             'address.required' => 'Địa chỉ là bắt buộc.',
             'address.max' => 'Địa chỉ quá dài, chỉ được phép <30.',
             'id_user.required' => 'Người dùng liên kết là bắt buộc.',
@@ -146,18 +146,17 @@ class PatientRecordController extends Controller
             'gender' => 'required|in:male,female', 
             'address' => 'required|max:30',
         ], [
-            'prname.required' => 'Tên bệnh nhân là bắt buộc.',
+            'prname.required' => 'Không được bỏ trống tên.',
             'prname.max'=>'Tên quá dài, chỉ được phép <20',
-            'birthday.required' => 'Ngày sinh là bắt buộc.',
+            'birthday.required' => 'Không được bỏ trống ngày sinh.',
             'birthday.date' => 'Ngày sinh phải là một ngày hợp lệ.',
             
-            'phonenumber.required'=>'Không được bỏ trống phonenumber',
+            'phonenumber.required'=>'Không được bỏ trống số điện thoại',
             'phonenumber.regex'=>'Số điện thoại không hợp lệ',
             'phonenumber.unique'=>'Số điện thoại đã tồn tại',
-
-            'gender.required' => 'Giới tính là bắt buộc.',
-            'gender.in' => 'Giới tính phải là nam, nữ hoặc khác.',
-            'address.required' => 'Địa chỉ là bắt buộc.',
+            'gender.required' => 'Không được bỏ trống giới tính.',
+            'gender.in' => 'Giới tính phải là nam, nữ.',
+            'address.required' => 'Không được bỏ trống địa chỉ.',
             'address.max' => 'Địa chỉ quá dài, chỉ được phép <30.',
 
         ]);
@@ -189,20 +188,20 @@ class PatientRecordController extends Controller
             'gender' => 'required|in:male,female', 
             'address' => 'required|max:30',
         ], [
-            'prname.required' => 'Tên bệnh nhân là bắt buộc.',
+            'prname.required' => 'Không được bỏ trống tên',
             'prname.max'=>'Tên quá dài, chỉ được phép <20',
 
-            'birthday.required' => 'Ngày sinh là bắt buộc.',
+            'birthday.required' => 'Không được bỏ trống ngày sinh',
             'birthday.date' => 'Ngày sinh phải là một ngày hợp lệ.',
 
 
-            'phonenumber.required'=>'Không được bỏ trống phonenumber',
+            'phonenumber.required'=>'Không được bỏ trống số điện thoại',
             'phonenumber.regex'=>'Số điện thoại không hợp lệ',
             'phonenumber.unique'=>'Số điện thoại đã tồn tại',
 
-            'gender.required' => 'Giới tính là bắt buộc.',
+            'gender.required' => 'Không được bỏ trống giới tính',
             'gender.in' => 'Giới tính phải là nam, nữ.',
-            'address.required' => 'Địa chỉ là bắt buộc.',
+            'address.required' => 'Không được bỏ trống địa chỉ',
             'address.max' => 'Địa chỉ quá dài, chỉ được phép <30.',
         ]);
 

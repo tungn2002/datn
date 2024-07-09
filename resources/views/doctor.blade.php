@@ -110,7 +110,7 @@
                         <label for="hospitalname" class="form-label">Khung giờ làm việc:</label>
                         <textarea class="form-control"  id="detailz" name="wh" rows="3"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    <button type="submit" class="btn btn-primary">Cập nhật khung giờ</button>
                 </form> 
                 
                 

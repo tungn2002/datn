@@ -29,13 +29,6 @@ class ServiceController extends Controller
         ->paginate(6);
         $firstPost = Hospital::first();
 
-
-        //
-
-        if (!$clinics) {
-            return view('find_service', ['message' => 'không có dịch vụ nào']);
-        
-        }
         return view('find_service', ['clinic' => $clinics,'hos'=>  $firstPost]);
     }
     //tìm bác sĩ
@@ -49,13 +42,6 @@ class ServiceController extends Controller
 
         $firstPost = Hospital::first();
 
-
-        //
-
-        if (!$clinics) {
-            return view('find_serviceb', ['message' => 'không có bác sĩ nào']);
-        
-        }
         return view('find_serviceb', ['clinic' => $clinics,'hos'=>  $firstPost]);
     }
     //thông tin bác sĩ
@@ -141,6 +127,10 @@ class ServiceController extends Controller
 
     //lưu đơn
     public function addmrsv(Request $request) {
+        if(MedicalResult::where('id_sch', $request->id_sch)->exists()){
+            return redirect()->route('servicef')->with('message', 'Đã có người đặt');
+        }
+        
         $request->validate([
             'id_mr' => 'required',
        
@@ -166,10 +156,7 @@ class ServiceController extends Controller
        }
     public function index(){
         $service = Service::paginate(5); 
-        if (!$service) {
-            return view('service', ['message' => 'không có dịch vụ nào']);
-        
-        }
+       
         return view('service', ['service' => $service]);
     }
   //tìm kiếm dịch vụ
@@ -187,10 +174,6 @@ $firstPost = Hospital::first();
 
 //
 
-if (!$clinics) {
-    return view('find_service', ['message' => 'không có dịch vụ nào']);
-
-}
 return view('find_service', ['clinic' => $clinics,'hos'=>  $firstPost]);
 }
 public function timkiemb(Request $request){
@@ -225,15 +208,15 @@ return view('find_serviceb', ['clinic' => $clinics,'hos'=>  $firstPost]);
     'time' => 'required|date_format:H:i',
     'image' => 'required|image',
         ],[
-            'servicename.required' => 'Tên dịch vụ là bắt buộc.',
-            'detail.required' => 'Chi tiết là bắt buộc.',
-            'price.required' => 'Giá là bắt buộc.',
+            'servicename.required' => 'Không được bỏ trống tên.',
+            'detail.required' => 'Không được bỏ trống chi tiết.',
+            'price.required' => 'Không được bỏ trống giá',
             'price.numeric' => 'Giá phải là một số.',
             'price.min' => 'Giá phải lớn hơn 0.',
-            'time.required' => 'Thời gian khám là bắt buộc.',
+            'time.required' => 'Không được bỏ trống thời gian khám.',
             'time.date_format' => 'Thời gian khám phải nhập: giờ:phút',
 
-            'image.required' => 'Hình ảnh là bắt buộc.',
+            'image.required' => 'Không được bỏ trống tên hình ảnh',
             'image.image' => 'Hình ảnh phải là file ảnh hợp lệ.',
         ]);
         
@@ -275,17 +258,17 @@ return view('find_serviceb', ['clinic' => $clinics,'hos'=>  $firstPost]);
 
          'price' => 'required|numeric|min:0', 
           'image' => 'nullable|image',        
-        ],[ 'servicename.required' => 'Tên dịch vụ là bắt buộc.', 
-        'detail.required' => 'Chi tiết là bắt buộc.',
-         'price.required' => 'Giá là bắt buộc.',
+        ],[ 'servicename.required' => 'Không được bỏ trống tên', 
+        'detail.required' => 'Không được bỏ trống chi tiết',
+         'price.required' => 'Không được bỏ trống giá',
           'price.numeric' => 'Giá phải là một số.', 
           'price.min' => 'Giá phải lớn hơn 0.', 
-          'time.required' => 'Thời gian khám là bắt buộc.',
+          'time.required' => 'Không được bỏ trống thời gian khám',
           'time.date_format' => 'Thời gian khám phải nhập: giờ:phút',
           'image.image' => 'Hình ảnh phải là file ảnh hợp lệ.', ]);
         
         if (empty($id)) {
-            return redirect()->back()->with('message', 'ID chuyên khoa không hợp lệ.');
+            return redirect()->back()->with('message', 'ID dịch vụ không hợp lệ.');
         }
     
         $service = Service::find($id);

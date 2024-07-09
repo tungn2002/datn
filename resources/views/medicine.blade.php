@@ -177,8 +177,23 @@
                             <tr>
                                 <td>{{$item->id_medicine}}</td>
                                 <td>{{$item->medicinename}}</td>
-                                <td>{{ substr($item->detail, 0, 50) }}</td>
-                                <td>{{$item->ingredient}}</td>
+                                <td>
+                                @if(mb_strlen($item->detail) > 30)
+                                    {{ mb_substr($item->detail, 0, 30) . '...' }}
+                                @else
+                                    {{ $item->detail }}
+                                @endif
+                            </td>
+                            <td>
+                                @if(mb_strlen($item->ingredient) > 30)
+                                    {{ mb_substr($item->ingredient, 0, 30) . '...' }}
+                                @else
+                                    {{ $item->ingredient }}
+                                @endif
+                            </td>
+
+                                <td hidden>{{$item->detail}}</td>
+                                <td hidden>{{$item->ingredient}}</td>
 
                                 <td class="text-center">       
                                 <button class="btn btn-warning btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $item->id_medicine }}">Sửa</button> 
@@ -296,8 +311,8 @@ $('.btn-edit').click(function() {
 
     // Lấy dữ liệu từ các ô trong hàng
     var hospitalName = row.find('td:eq(1)').text(); // Ô thứ 2 chứa tên bệnh viện
-    var address = row.find('td:eq(2)').text(); // Ô thứ 3 chứa địa chỉ
-    var h = row.find('td:eq(3)').text();    
+    var address = row.find('td:eq(4)').text(); // Ô thứ 3 chứa địa chỉ
+    var h = row.find('td:eq(5)').text();    
     // Điền dữ liệu vào form
     $('#editHospitalId').val(hospitalId);
     $('#hospitalname').val(hospitalName);

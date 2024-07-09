@@ -38,11 +38,11 @@ class ClinicController extends Controller
             'id_user' => 'required|exists:users,id_user|unique:clinics,id_user',
             
         ],[
-            'clinicname.required' => 'Tên phòng là bắt buộc.',
+            'clinicname.required' => 'Không được bỏ trống tên phòng.',
     
-            'id_service.required' => 'Dịch vụ là bắt buộc.',
+            'id_service.required' => 'Không được bỏ trống dịch vụ.',
             'id_service.exists' => 'Dịch vụ không tồn tại.',
-            'id_user.required' => 'Bác sĩ là bắt buộc.',
+            'id_user.required' => 'Không được bỏ trống bác sĩ.',
             'id_user.exists' => 'Bác sĩ không tồn tại.',
             'id_user.unique' => 'Bác sĩ đã có phòng.',
 
@@ -94,8 +94,8 @@ class ClinicController extends Controller
             'id_user' => 'nullable|exists:users,id_user|unique:clinics,id_user,' . $id . ',id_user',                 
 
         ],[
-            'clinicname.required' => 'Tên phòng là bắt buộc.',
-            'id_service.required' => 'Dịch vụ là bắt buộc.',
+            'clinicname.required' => 'Không được bỏ trống tên phòng.',
+            'id_service.required' => 'Không được bỏ trống dịch vụ.',
             'id_service.exists' => 'Dịch vụ không tồn tại.',
             'id_user.exists' => 'Bác sĩ không tồn tại.',
             'id_user.unique' => 'Bác sĩ đã có phòng.',

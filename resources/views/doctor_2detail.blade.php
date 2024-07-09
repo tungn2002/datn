@@ -138,7 +138,7 @@
             </div>
         </div>
         <div class="row mb-3 mt-4">
-            <label for="inputEmail3" class="col-sm-2 col-form-label">Ảnh xét nghiệm: </label>
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Ảnh khám: </label>
             <div class="col-sm-10">
             <input type="file" name="image" id="image">
             </div>

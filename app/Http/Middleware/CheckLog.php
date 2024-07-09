@@ -6,21 +6,17 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Auth;
-class RoleMiddleware
+
+class CheckLog
 {
     /**
      * Handle an incoming request.
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, $role=null): Response
+    public function handle(Request $request, Closure $next): Response
     {
-        //da dang nhap
-       if(!Auth::check()){
-             return redirect()->route('login')->with('message2', 'Bạn phải đăng nhập');    
-        }
-        
-       if( Auth::user()->id_role != $role){
+        if(Auth::check()){
             if(Auth::user()->id_role==1){
                 return redirect()->route('admin1');
             }
@@ -34,8 +30,7 @@ class RoleMiddleware
                 return redirect()->route('empl');
             }
             return redirect()->route('trangchu');
-       }
+        }
         return $next($request);
-
-    } 
+    }
 }

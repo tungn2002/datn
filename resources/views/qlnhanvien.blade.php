@@ -60,7 +60,7 @@
                     <a href="{{ route('pre-index') }}" class="nav-item nav-link"><i class="fas fa-prescription-bottle"></i>Đơn thuốc</a>
                     <a href="{{ route('pr-index') }}" class="nav-item nav-link"><i class="fas fa-user-injured"></i>Hồ sơ</a>
                     <a href="{{ route('mr-index') }}" class="nav-item nav-link"><i class="fas fa-poll"></i>Kết quả khám</a>
-                    <a href="" class="nav-item nav-link"><i class="fas fa-comment-dots"></i>Đơn tư vấn</a>
+                    <a href="{{ route('consult-index') }}" class="nav-item nav-link"><i class="fas fa-comment-dots"></i>Đơn tư vấn</a>
 
                   
                 </div>

@@ -19,27 +19,33 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PatientRecordController;
 use App\Http\Controllers\MedicalResultController;
 use App\Http\Middleware\RoleMiddleware;
+use App\Http\Middleware\CheckLog;
 
 
 //Đăng ký, đăng nhập, quên mật khẩu
 
-    Route::get('/login', [UserController::class, 'login'])->name('login'); //trang đăng nhập
+Route::middleware(CheckLog::class)->group(function () {
+      Route::get('/login', [UserController::class, 'login'])->name('login'); //trang đăng nhập
 Route::get('/register', [UserController::class, 'register'])->name('register'); //trang đăng ký
+Route::get('/forget', [UserController::class, 'forget'])->name('forget');;// trang quên mk
+Route::post('/dangnhap', [UserController::class, 'dangnhap']);//nút đăng nhập
 
 Route::post('/dangky', [UserController::class, 'store']);//gửi tt dk
+});
+
+
+
 
 
 
 
 //
-Route::get('/forget', [UserController::class, 'forget'])->name('forget');;// trang quên mk
 
 Route::post('/quenmk', [UserController::class, 'quenmk']);// gửi email
 Route::get('/get-password/{user}/{token}', [UserController::class, 'getPass'])->name('user.getPass');//mở trang nhập pass
 
 Route::post('/get-password/{user}/{token}', [UserController::class, 'postGetPass']);//update mk mới
 //
-Route::post('/dangnhap', [UserController::class, 'dangnhap']);//nút đăng nhập
 
 //Trang chủ
 Route::get('/trangchu', [UserController::class, 'trangchu'])->name('trangchu');

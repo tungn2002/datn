@@ -35,10 +35,10 @@ class AppointmentController extends Controller
             'time' => 'required',
             'id_clinic' => 'required|exists:clinics,id_clinic',
         ], [
-            'day.required' => 'Ngày khám là bắt buộc.',
+            'day.required' => 'Không được bỏ trống ngày khám',
             'day.date' => 'Ngày khám không hợp lệ.',
-            'time.required' => 'Thời gian khám là bắt buộc.',
-            'id_clinic.required' => 'Phòng khám là bắt buộc.',
+            'time.required' => 'Không được bỏ trống thời gian khám',
+            'id_clinic.required' => 'Không được bỏ trống phòng khám',
             'id_clinic.exists' => 'Phòng khám không tồn tại.',
         ]);
 
@@ -69,7 +69,7 @@ $existingAppointment = Appointment::where('day', $request->day)
 ->exists();
 
 if ($existingAppointment) {
-return redirect()->back()->with(['message' => 'Lịch hẹn này trùng với một lịch hẹn khác trong khoảng thời gian đã chọn. Vui lòng chọn lại.']);
+return redirect()->back()->with(['message' => 'Lịch khám này trùng với một lịch khám khác trong khoảng thời gian đã chọn. Vui lòng chọn lại.']);
 }
 
         $app=new Appointment;
@@ -80,20 +80,22 @@ return redirect()->back()->with(['message' => 'Lịch hẹn này trùng với m�
         $app->finishtime=$totalTime;
 
        $app->save();
-        return redirect()->back()->with('message', 'Thêm lịch hẹn thành công');
+        return redirect()->back()->with('message', 'Thêm thành công');
     }
 
     public function destroy(Request $request)
     {
         $request->validate([
-            'id_appointment' => 'required',
+            'id_appointment' => 'required|exists:appointments,id_appointment',
         ], [
-            'id_appointment.required' => 'Hãy chọn lịch hẹn cần xóa',
+            'id_appointment.required' => 'Hãy chọn lịch khám cần xóa',
+            'id_service.exists'=>'Không tồn tại lịch khám cần xóa',
+
         ]);
 
         $appointment = Appointment::find($request->id_appointment);
         $appointment->delete();
-        return redirect()->back()->with('message', 'Xóa lịch hẹn thành công');
+        return redirect()->back()->with('message', 'Xóa thành công');
     }
 
     public function update(Request $request, $id)
@@ -106,20 +108,20 @@ return redirect()->back()->with(['message' => 'Lịch hẹn này trùng với m�
             'time' => 'required',
             'id_clinic' => 'required|exists:clinics,id_clinic',
         ], [
-'day.required' => 'Ngày khám là bắt buộc.',
+'day.required' => 'Không được bỏ trống ngày khám',
             'day.date' => 'Ngày khám không hợp lệ.',
-            'time.required' => 'Thời gian khám là bắt buộc.',
+            'time.required' => 'Không được bỏ trống thời gian khám.',
          
-            'id_clinic.required' => 'Phòng khám là bắt buộc.',
+            'id_clinic.required' => 'Không được bỏ trống phòng khám.',
             'id_clinic.exists' => 'Phòng khám không tồn tại.',        ]);
 
         if (empty($id)) {
-            return redirect()->back()->with('message', 'ID lịch hẹn không hợp lệ.');
+            return redirect()->back()->with('message', 'ID lịch khám không hợp lệ.');
         }
 
         $appointment = Appointment::find($id);
         if (!$appointment) {
-            return redirect()->back()->with('message', 'Không tìm thấy lịch hẹn.');
+            return redirect()->back()->with('message', 'Không tìm thấy lịch khám.');
         }
 
 
@@ -151,7 +153,7 @@ $existingAppointment = Appointment::where('day', $request->day)
 
           
 if ($existingAppointment) {
-    return redirect()->back()->with(['message' => 'Lịch hẹn này trùng với một lịch hẹn khác trong khoảng thời gian đã chọn. Vui lòng chọn lại.']);
+    return redirect()->back()->with(['message' => 'Lịch khám này trùng với một lịch khám khác trong khoảng thời gian đã chọn. Vui lòng chọn lại.']);
     }
 
 
@@ -163,7 +165,7 @@ if ($existingAppointment) {
 
       $appointment->finishtime=$totalTime;
         $appointment->update();
-        return redirect()->back()->with('message', 'Cập nhật lịch hẹn thành công');
+        return redirect()->back()->with('message', 'Sửa thành công');
     }
        
     public function findapp(Request $request,$id)

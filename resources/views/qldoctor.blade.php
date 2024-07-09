@@ -60,7 +60,7 @@
                     <a href="{{ route('pre-index') }}" class="nav-item nav-link"><i class="fas fa-prescription-bottle"></i>Đơn thuốc</a>
                     <a href="{{ route('pr-index') }}" class="nav-item nav-link"><i class="fas fa-user-injured"></i>Hồ sơ</a>
                     <a href="{{ route('mr-index') }}" class="nav-item nav-link"><i class="fas fa-poll"></i>Kết quả khám</a>
-                    <a href="" class="nav-item nav-link"><i class="fas fa-comment-dots"></i>Đơn tư vấn</a>
+                    <a href="{{ route('consult-index') }}" class="nav-item nav-link"><i class="fas fa-comment-dots"></i>Đơn tư vấn</a>
 
                   
                 </div>
@@ -240,8 +240,14 @@
                                 <td><img style="width: 40px; height: 40px"class="" src="{{ asset('image/' . $item->signature) }}" ></td>
                                 <td>{{$item->price}}</td>
                                 <td>{{$item->id_specialist}}</td>
-                                <th>{{ substr($item->working_hours, 0, 50) }}</th>
-                                <th hidden>$item->working_hours </th>
+                                <td>
+                                @if(mb_strlen($item->working_hours) > 20)
+                                    {{ mb_substr($item->working_hours, 0, 20) . '...' }}
+                                @else
+                                    {{ $item->working_hours }}
+                                @endif
+                            </td>
+                                <td hidden>{{$item->working_hours }}</td>
 
                                 <td class="text-center">       
                                 <button class="btn btn-warning btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $item->id_user }}">Sửa</button> 

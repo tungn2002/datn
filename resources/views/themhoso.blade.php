@@ -168,7 +168,7 @@
                 <div class="row mb-3">
                     <label for="gender" class="col-sm-2 col-form-label">Giới tính:</label>
                     <div class="col-sm-10">
-                        <select class="form-select" name="gender" id="gender">
+                        <select class="form-control" name="gender" id="gender">
                             <option value="male" >Nam</option>
                             <option value="female">Nữ</option>
                         </select>

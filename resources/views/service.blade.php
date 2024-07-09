@@ -193,8 +193,20 @@
                             @foreach ($service as $item)
                             <tr>
                                 <td>{{$item->id_service}}</td>
-                                <td>{{$item->servicename}}</td>
-                                <td>{{ substr($item->detail, 0, 50) }}</td>
+                                <td>
+                                @if(mb_strlen($item->servicename) > 20)
+                                    {{ mb_substr($item->servicename, 0, 20) . '...' }}
+                                @else
+                                    {{ $item->servicename }}
+                                @endif
+                                </td>
+                                <td>
+                                @if(mb_strlen($item->detail) > 30)
+                                    {{ mb_substr($item->detail, 0, 30) . '...' }}
+                                @else
+                                    {{ $item->detail }}
+                                @endif
+                            </td>
 
                                 <td>{{$item->price}}</td>
 
@@ -202,6 +214,8 @@
                                 <td><img style="width: 40px; height: 40px"class="" src="{{ asset('image/' . $item->image) }}" ></td>
 
                                 <td>{{ substr($item->time, 0, 5) }}</td>
+                                <td hidden>{{$item->servicename}}</td>
+                                <td hidden>{{$item->detail}}</td>
 
                                 <td class="text-center">       
                                 <button class="btn btn-warning btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $item->id_service }}">Sửa</button> 
@@ -330,8 +344,8 @@ $('.btn-edit').click(function() {
     var row = $(this).closest('tr'); // Lấy hàng chứa nút "Sửa"
 
     // Lấy dữ liệu từ các ô trong hàng
-    var hospitalName = row.find('td:eq(1)').text(); // Ô thứ 2 chứa tên bệnh viện
-    var detail = row.find('td:eq(2)').text(); // Ô thứ 3 chứa địa chỉ
+    var hospitalName = row.find('td:eq(6)').text(); // Ô thứ 2 chứa tên bệnh viện
+    var detail = row.find('td:eq(7)').text(); // Ô thứ 3 chứa địa chỉ
     var price= row.find('td:eq(3)').text(); 
     var time= row.find('td:eq(5)').text(); 
 
