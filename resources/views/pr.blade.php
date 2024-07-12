@@ -43,7 +43,7 @@
                
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="{{ route('admin1') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Thông tin cá nhân</a>
+                    <a href="{{ route('admin1') }}" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Thông tin cá nhân</a>
                   
                     <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fas fa-hospital"></i>Bệnh viện</a>
                     <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fas fa-brain"></i>Chuyên khoa</a>
@@ -59,7 +59,7 @@
                     </div>
                     <a href="{{ route('clinic-index') }}" class="nav-item nav-link"><i class="fas fa-clinic-medical"></i>Phòng khám</a>
                     <a href="{{ route('pre-index') }}" class="nav-item nav-link"><i class="fas fa-prescription-bottle"></i>Đơn thuốc</a>
-                    <a href="{{ route('pr-index') }}" class="nav-item nav-link"><i class="fas fa-user-injured"></i>Hồ sơ</a>
+                    <a href="{{ route('pr-index') }}" class="nav-item nav-link active"><i class="fas fa-user-injured"></i>Hồ sơ</a>
                     <a href="{{ route('mr-index') }}" class="nav-item nav-link"><i class="fas fa-poll"></i>Đơn khám bệnh</a>
                     <a href="{{ route('consult-index') }}" class="nav-item nav-link"><i class="fas fa-comment-dots"></i>Đơn tư vấn</a>
 
@@ -90,7 +90,7 @@
                             <span class="d-none d-lg-inline-flex">  {{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="{{ route('logout') }}" class="dropdown-item">Đăng xuất</a>
+                            <a href="{{ route('logout') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
                         </div>
                     </div>
                 </div>

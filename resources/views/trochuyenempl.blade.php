@@ -263,10 +263,10 @@
                  
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="{{ route('empl') }}" class="nav-item nav-link active"><i class="fas fa-id-card"></i>Thông tin cá nhân</a>
+                    <a href="{{ route('empl') }}" class="nav-item nav-link"><i class="fas fa-id-card"></i>Thông tin cá nhân</a>
                     <a href="{{ route('empl_choduyet') }}" class="nav-item nav-link"><i class="far fa-check-square"></i>Xác nhận đơn</a>
 
-                    <a href="{{ route('trochuyenempl') }}" class="nav-item nav-link "><i class="fas fa-sms"></i>Trò chuyện</a>
+                    <a href="{{ route('trochuyenempl') }}" class="nav-item nav-link active"><i class="fas fa-sms"></i>Trò chuyện</a>
                 
 
                   
@@ -296,7 +296,7 @@
                             <span class="d-none d-lg-inline-flex">  {{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="{{ route('logout') }}" class="dropdown-item">Đăng xuất</a>
+                            <a href="{{ route('logout') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
                         </div>
                     </div>
                 </div>

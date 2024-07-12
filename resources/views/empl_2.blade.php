@@ -77,7 +77,7 @@
                             <span class="d-none d-lg-inline-flex">  {{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="{{ route('logout') }}" class="dropdown-item">Đăng xuất</a>
+                            <a href="{{ route('logout') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
                         </div>
                     </div>
                 </div>
@@ -127,8 +127,8 @@
                 <td>{{ $item->day }}</td>
                 <td>{{ substr($item->time, 0, 5) }}</td>
                 <td>{{ substr($item->finishtime, 0, 5) }}</td>
-                <th>{{$item->prname }}</th>
-                <th>{{$item->phonenumber }}</th>
+                <td>{{$item->prname }}</td>
+                <td>{{$item->phonenumber }}</td>
 
                 <td class="text-center">
                     <a class="btn btn-primary" href="{{ route('xacnhanduyet', ['id' => $item->id_result]) }}">Duyệt</a>

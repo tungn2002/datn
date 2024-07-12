@@ -152,10 +152,10 @@
                 {{ Auth::user()->name }}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ route('profile') }}">Thông tin tài khoản</a>
+                <a class="dropdown-item" href="{{ route('profile') }}"><i class="far fa-user"></i> Thông tin tài khoản</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('logout') }}">
-                    Đăng xuất<i class="fas fa-sign-out-alt ml-1"></i>
+                <i class="fas fa-sign-out-alt"></i>Đăng xuất
                 </a>
               
             </div>

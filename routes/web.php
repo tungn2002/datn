@@ -28,24 +28,16 @@ Route::middleware(CheckLog::class)->group(function () {
       Route::get('/login', [UserController::class, 'login'])->name('login'); //trang đăng nhập
 Route::get('/register', [UserController::class, 'register'])->name('register'); //trang đăng ký
 Route::get('/forget', [UserController::class, 'forget'])->name('forget');;// trang quên mk
+
+});
 Route::post('/dangnhap', [UserController::class, 'dangnhap']);//nút đăng nhập
 
 Route::post('/dangky', [UserController::class, 'store']);//gửi tt dk
-});
-
-
-
-
-
-
-
-//
-
+//quenmk
 Route::post('/quenmk', [UserController::class, 'quenmk']);// gửi email
 Route::get('/get-password/{user}/{token}', [UserController::class, 'getPass'])->name('user.getPass');//mở trang nhập pass
 
 Route::post('/get-password/{user}/{token}', [UserController::class, 'postGetPass']);//update mk mới
-//
 
 //Trang chủ
 Route::get('/trangchu', [UserController::class, 'trangchu'])->name('trangchu');
@@ -90,12 +82,12 @@ Route::middleware([ RoleMiddleware::class . ':2'])->group(function () {
 Route::get('/trochuyenuser', [ConsultController::class, 'trochuyenuser'])->name('trochuyenuser');
 
 //user
-Route::get('/timkiemsv', [ServiceController::class, 'timkiemsv'])->name('timkiemsv');
-Route::get('/timkiemb', [ServiceController::class, 'timkiemb'])->name('timkiemb');
+
 Route::get('/finddoctorchat', [ConsultController::class, 'finddoctorchat'])->name('finddoctorchat');
 
 });
-
+Route::get('/timkiemsv', [ServiceController::class, 'timkiemsv'])->name('timkiemsv');
+Route::get('/timkiemb', [ServiceController::class, 'timkiemb'])->name('timkiemb');
 //trochuyenkh
 
 //thnahtoan

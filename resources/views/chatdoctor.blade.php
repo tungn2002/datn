@@ -262,9 +262,9 @@
                     
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="{{ route('doctor') }}" class="nav-item nav-link active"><i class="far fa-id-card"></i>Thông tin cá nhân</a>
+                    <a href="{{ route('doctor') }}" class="nav-item nav-link "><i class="far fa-id-card"></i>Thông tin cá nhân</a>
                     <a href="{{ route('lichlamviec') }}" class="nav-item nav-link"><i class="fas fa-calendar-alt"></i>Lịch làm việc</a>
-                    <a href="{{ route('trochuyendoctor') }}" class="nav-item nav-link "><i class="fas fa-comment-dots"></i>Trò chuyên</a>
+                    <a href="{{ route('trochuyendoctor') }}" class="nav-item nav-link active"><i class="fas fa-comment-dots"></i>Trò chuyện</a>
                 
 
                   
@@ -294,7 +294,7 @@
                             <span class="d-none d-lg-inline-flex">  {{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="{{ route('logout') }}" class="dropdown-item">Đăng xuất</a>
+                            <a href="{{ route('logout') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
                         </div>
                     </div>
                 </div>
@@ -329,12 +329,12 @@
                                         <div class="user_info">
                                             <span>    @isset($u)
                                 
-                                                Chat với {{$u->name}}
+                                                Trò chuyện với {{$u->name}}
                                                     @endisset
                                             </span>
                                         </div>
                                     </div>
-                                <span id="action_menu_btn"><a href="{{ route('themdonthuoc2', ['id' => $idcon]) }}" class="btn btn-primary">Kê đơn</a>                                </span>
+                                <span id="action_menu_btn"><a href="{{ route('themdonthuoc2', ['id' => $idcon]) }}" class="btn btn-success" style="background-color:#0bc26d">Kê đơn</a>                                </span>
                             </div>
 
                     <div class="card-body msg_card_body" id="sc">
