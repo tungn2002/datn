@@ -42,11 +42,11 @@
                
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="{{ route('admin1') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Thông tin cá nhân</a>
+                    <a href="{{ route('admin1') }}" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Thông tin cá nhân</a>
                   
                     <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fas fa-hospital"></i>Bệnh viện</a>
                     <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fas fa-brain"></i>Chuyên khoa</a>
-                    <a href="{{ route('service-index') }}" class="nav-item nav-link"><i class="fas fa-laptop-medical"></i>Dịch vụ</a>
+                    <a href="{{ route('service-index') }}" class="nav-item nav-link active"><i class="fas fa-laptop-medical"></i>Dịch vụ</a>
                     <a href="{{ route('medicine-index') }}" class="nav-item nav-link"><i class="fas fa-capsules"></i>Thuốc</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Người dùng</a>

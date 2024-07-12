@@ -42,10 +42,10 @@
                
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="{{ route('admin1') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Thông tin cá nhân</a>
+                    <a href="{{ route('admin1') }}" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Thông tin cá nhân</a>
                   
                     <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fas fa-hospital"></i>Bệnh viện</a>
-                    <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fas fa-brain"></i>Chuyên khoa</a>
+                    <a href="{{ route('specialist-index') }}" class="nav-item nav-link active"><i class="fas fa-brain"></i>Chuyên khoa</a>
                     <a href="{{ route('service-index') }}" class="nav-item nav-link"><i class="fas fa-laptop-medical"></i>Dịch vụ</a>
                     <a href="{{ route('medicine-index') }}" class="nav-item nav-link"><i class="fas fa-capsules"></i>Thuốc</a>
                     <div class="nav-item dropdown">
@@ -234,7 +234,6 @@
     </div>
 </div>
         <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
     <!-- JavaScript Libraries -->
