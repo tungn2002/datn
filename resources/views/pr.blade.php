@@ -104,7 +104,7 @@
                 <h1></h1>
             <div class="col-sm-12 col-xl-6"  style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
                         <div class="bg-light rounded h-100 p-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;">
-                            <h6 class="mb-4">Horizontal Form</h6>
+                            <h6 class="mb-4">Thêm hồ sơ</h6>
                             <form action="{{ url('addpr') }}" method="post"> 
                 @csrf
 
@@ -254,7 +254,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Sửa thông tin Bệnh Nhân</h5>
+                <h5 class="modal-title" id="editModalLabel">Sửa thông tin bệnh nhân</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -265,15 +265,15 @@
                         <input type="text" class="form-control" id="prname" name="prname" required>
                     </div>
                     <div class="mb-3">
-                        <label for="birthday" class="form-label">Ngày sinh</label>
+                        <label for="birthday" class="form-label">Ngày sinh:</label>
                         <input type="date" class="form-control" id="birthday" name="birthday" required>
                     </div>
                     <div class="mb-3">
-                        <label for="phonenumber" class="form-label">Số điện thoại</label>
+                        <label for="phonenumber" class="form-label">Số điện thoại:</label>
                         <input type="tel" class="form-control" id="phonenumber" name="phonenumber" required>
                     </div>
                     <div class="mb-3">
-                        <label for="gender" class="form-label">Giới tính</label>
+                        <label for="gender" class="form-label">Giới tính:</label>
                         <select class="form-select" id="gender" name="gender" >
                              <option value=""></option>
                             <option value="male">Nam</option>
@@ -281,7 +281,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="address" class="form-label">Địa chỉ</label>
+                        <label for="address" class="form-label">Địa chỉ:</label>
                         <input type="text" class="form-control" id="address" name="address" required>
                     </div>
                     <div class="mb-3">

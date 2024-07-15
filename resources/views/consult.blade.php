@@ -99,7 +99,7 @@
             <!-- Blank Start -->
 
             <div class="container-fluid pt-4 px-4 ">
-            <h4>Đơn tư vấn</h4>
+            <h4>Phòng trò chuyện</h4>
 
                 <h1></h1>
         
@@ -184,7 +184,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa phòng tư vấn này này?
+                    Bạn có chắc chắn muốn xóa phòng tư vấn này?
                     <input type="hidden" name="id_cons" id="hospitalIdInput">
                 </div>
                 <div class="modal-footer">

@@ -104,7 +104,7 @@
                 <h1></h1>
             <div class="col-sm-12 col-xl-6"  style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
                         <div class="bg-light rounded h-100 p-4"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;">
-                            <h6 class="mb-4">Horizontal Form</h6>
+                            <h6 class="mb-4">Thêm nhân viên</h6>
                             <form  action="{{ url('addqlnhanvien') }}" method="post" enctype="multipart/form-data">
                             @csrf
 

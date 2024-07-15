@@ -103,12 +103,12 @@
                 <h1></h1>
             <div class="col-sm-12 col-xl-6"  style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
                         <div class="bg-light rounded h-100 p-4"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;">
-                            <h6 class="mb-4">Horizontal Form</h6>
+                            <h6 class="mb-4">Thêm chuyên khoa</h6>
                             <form  action="{{ url('addspecialist') }}" method="post" >
                             @csrf
 
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-3 col-form-label">Tên chuyên khoa</label>
+                                    <label for="inputEmail3" class="col-sm-3 col-form-label">Tên chuyên khoa:</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" name="spname" id="inputEmail3" required>
                                     </div>
@@ -196,7 +196,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa chuyên khoa này này?
+                    Bạn có chắc chắn muốn xóa chuyên khoa này?
                     <input type="hidden" name="id_specialist" id="hospitalIdInput">
                 </div>
                 <div class="modal-footer">
@@ -212,7 +212,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin chuyên khoa</h5>
+                <h5 class="modal-title" id="editModalLabel">Sửa thông tin chuyên khoa</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -220,7 +220,7 @@
                 @csrf
 
                     <div class="mb-3">
-                        <label for="hospitalname" class="form-label">Tên chuyên khoa</label>
+                        <label for="hospitalname" class="form-label">Tên chuyên khoa:</label>
                         <input type="text" class="form-control" id="hospitalname" name="spname" required>
                     </div>
                     <div class="modal-footer">

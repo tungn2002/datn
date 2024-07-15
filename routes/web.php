@@ -41,7 +41,6 @@ Route::post('/get-password/{user}/{token}', [UserController::class, 'postGetPass
 
 //Trang chủ
 Route::get('/', [UserController::class, 'trangchu']);
-
 Route::get('/trangchu', [UserController::class, 'trangchu'])->name('trangchu');
 
 //đăng xuất
@@ -328,7 +327,6 @@ Route::get('/pdff/{id}', [PdfController::class, 'pdff'])->name('pdff');
 //
 Route::get('/messages/{conversation_id}', [ConsultController::class, 'getMessages'])->name('messages.get');
 //
-//cho all
 Route::post('/addmessage', [ConsultController::class, 'addmessage']);
 
 

@@ -196,7 +196,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin đơn</h5>
+                <h5 class="modal-title" id="editModalLabel">Sửa thông tin đơn</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -204,15 +204,15 @@
                 @csrf
 
                     <div class="mb-3">
-                        <label for="hospitalname" class="form-label">Tên bệnh nhân</label>
+                        <label for="hospitalname" class="form-label">Tên bệnh nhân:</label>
                         <input type="text" class="form-control" id="hospitalname" name="name">
                     </div>
                     <div class="mb-3">
-                        <label for="address" class="form-label">Chẩn đoán</label>
+                        <label for="address" class="form-label">Chẩn đoán:</label>
                         <input type="text" class="form-control" id="address" name="diagnostic">
                     </div> 
                     <div class="mb-3">
-                        <label for="address" class="form-label">Ngày kê đơn</label>
+                        <label for="address" class="form-label">Ngày kê đơn:</label>
                         <input type="text" class="form-control" id="address2" name="day">
                     </div> 
                     <div class="modal-footer">

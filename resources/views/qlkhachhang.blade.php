@@ -103,30 +103,30 @@
                 <h1></h1>
             <div class="col-sm-12 col-xl-6"  style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
                         <div class="bg-light rounded h-100 p-4"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;">
-                            <h6 class="mb-4">Horizontal Form</h6>
+                            <h6 class="mb-4">Thêm khách hàng</h6>
                             <form  action="{{ url('addqlkhachhang') }}" method="post" enctype="multipart/form-data">
                             @csrf
 
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Tên khách hàng</label>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Tên khách hàng:</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="name" id="inputEmail3" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Email:</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="email" id="inputEmail3" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Mật khẩu</label>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Mật khẩu:</label>
                                     <div class="col-sm-10">
                                         <input type="password" class="form-control" name="password" id="inputEmail3" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Số điện thoại</label>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Số điện thoại:</label>
                                     <div class="col-sm-10">
                                         <input type="tel" class="form-control" name="phonenumber" id="inputEmail3" required>
                                     </div>
@@ -232,7 +232,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin khách hàng</h5>
+                <h5 class="modal-title" id="editModalLabel">Sửa thông tin khách hàng</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -240,20 +240,20 @@
                 @csrf
 
                     <div class="mb-3">
-                        <label for="hospitalname" class="form-label">Tên</label>
+                        <label for="hospitalname" class="form-label">Tên:</label>
                         <input type="text" class="form-control" id="hospitalname" name="name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="hospitalname" class="form-label">Mật khẩu</label>
+                        <label for="hospitalname" class="form-label">Mật khẩu:</label>
                         <input type="password" class="form-control" id="" name="password">
 
                     </div>
                     <div class="mb-3">
-                        <label for="hospitalname" class="form-label">email</label>
+                        <label for="hospitalname" class="form-label">Email:</label>
                         <input type="text" class="form-control" id="detail" name="email" required>
                     </div>
                     <div class="mb-3">
-                        <label for="hospitalname" class="form-label">Số điện thoại</label>
+                        <label for="hospitalname" class="form-label">Số điện thoại:</label>
                         <input type="tel" class="form-control" id="price" name="phonenumber" required>
                     </div>
 

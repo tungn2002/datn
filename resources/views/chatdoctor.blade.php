@@ -380,58 +380,6 @@
    
         </div>
         <!-- Content End -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form method="POST" action="{{ route('xoahos') }}" id="deleteForm"> 
-            @csrf
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Xác nhận xóa</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa bệnh viện này?
-                    <input type="hidden" name="id_hospital" id="hospitalIdInput">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
-                    <button type="submit" class="btn btn-danger">Có, xóa!</button> </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin Bệnh Viện</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="editForm" action=""  method="POST">
-                @csrf
-
-                    <div class="mb-3">
-                        <label for="hospitalname" class="form-label">Tên Bệnh Viện</label>
-                        <input type="text" class="form-control" id="hospitalname" name="hospitalname">
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Địa Chỉ</label>
-                        <input type="text" class="form-control" id="address" name="address">
-                    </div> 
-                    <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="submit" class="btn btn-primary" id="btnUpdate">Lưu Thay Đổi</button>
-            </div>
-                </form>
-            </div>
-           
-        </div>
-    </div>
-</div>
-
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

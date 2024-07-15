@@ -147,26 +147,26 @@
                 @csrf
                 <h3>Thêm hồ sơ bệnh nhân</h3>
                 <div class="row mb-3">
-                    <label for="prname" class="col-sm-2 col-form-label">Tên bệnh nhân:</label>
-                    <div class="col-sm-10">
+                    <label for="prname" class="col-sm-3 col-form-label">Tên bệnh nhân:</label>
+                    <div class="col-sm-9">
                         <input type="text" class="form-control" name="prname" id="prname" value="{{ old('prname') }}"> 
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="birthday" class="col-sm-2 col-form-label">Ngày sinh:</label>
-                    <div class="col-sm-10">
+                    <label for="birthday" class="col-sm-3 col-form-label">Ngày sinh:</label>
+                    <div class="col-sm-9">
                         <input type="date" class="form-control" name="birthday" id="birthday" value="{{ old('birthday') }}">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="phonenumber" class="col-sm-2 col-form-label">Số điện thoại:</label>
-                    <div class="col-sm-10">
+                    <label for="phonenumber" class="col-sm-3 col-form-label">Số điện thoại:</label>
+                    <div class="col-sm-9">
                         <input type="tel" class="form-control" name="phonenumber" id="phonenumber" value="{{ old('phonenumber') }}">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="gender" class="col-sm-2 col-form-label">Giới tính:</label>
-                    <div class="col-sm-10">
+                    <label for="gender" class="col-sm-3 col-form-label">Giới tính:</label>
+                    <div class="col-sm-9">
                         <select class="form-control" name="gender" id="gender">
                             <option value="male" >Nam</option>
                             <option value="female">Nữ</option>
@@ -174,8 +174,8 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="address" class="col-sm-2 col-form-label">Địa chỉ:</label>
-                    <div class="col-sm-10">
+                    <label for="address" class="col-sm-3 col-form-label">Địa chỉ:</label>
+                    <div class="col-sm-9">
                         <input type="text" class="form-control" name="address" id="address" value="{{ old('address') }}">
                     </div>
                 </div>
@@ -248,7 +248,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
 
-<script src="{{ asset('main/google-maps.js') }}"></script>
 
 <script src="{{ asset('main/theme.js') }}"></script>
 

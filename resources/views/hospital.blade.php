@@ -104,18 +104,18 @@
                 <h1></h1>
             <div class="col-sm-12 col-xl-6"  style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; width: 50em">
                         <div class="bg-light rounded h-100 p-4"style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;">
-                            <h6 class="mb-4">Horizontal Form</h6>
+                            <h6 class="mb-4">Thêm bệnh viện</h6>
                             <form  action="{{ url('addhospital') }}" method="post" >
                             @csrf
 
                                 <div class="row mb-3">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Tên bệnh viện</label>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Tên bệnh viện:</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="hospitalname" id="inputEmail3" required maxlength="44">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Địa chỉ</label>
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Địa chỉ:</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="address" id="inputPassword3" required maxlength="35">
                                     </div>
@@ -206,7 +206,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin Bệnh Viện</h5>
+                <h5 class="modal-title" id="editModalLabel">Sửa thông tin bệnh viện</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -214,11 +214,11 @@
                 @csrf
 
                     <div class="mb-3">
-                        <label for="hospitalname" class="form-label">Tên Bệnh Viện</label>
+                        <label for="hospitalname" class="form-label">Tên Bệnh Viện:</label>
                         <input type="text" class="form-control" id="hospitalname" name="hospitalname" required maxlength="44">
                     </div>
                     <div class="mb-3">
-                        <label for="address" class="form-label">Địa Chỉ</label>
+                        <label for="address" class="form-label">Địa Chỉ:</label>
                         <input type="text" class="form-control" id="address" name="address" required maxlength="35">
                     </div> 
                     <div class="modal-footer">
