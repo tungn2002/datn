@@ -6,8 +6,6 @@
 
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <meta name="copyright" content="MACode ID, https://macodeid.com/">
-
   <title>Chọn giờ</title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
@@ -21,7 +19,6 @@
 <body>
 
   <!-- Back to top button -->
-  <div class="back-to-top"></div>
 
 
   <header>
@@ -50,7 +47,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
-      <a class="navbar-brand" href="{{ route('trangchu') }}"><span class="text-primary">Bệnh viện</span></a>
+      <a class="navbar-brand" href="{{ route('trangchu') }}" style="padding:0px;margin:0px;"><img src="{{ asset('logo.png') }}" width="45px" style="margin-bottom:5px;"><span class="text-primary"> Bệnh viện</span></a>
 
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupport" aria-controls="navbarSupport" aria-expanded="false" aria-label="Toggle navigation">
@@ -121,7 +118,7 @@
 
   <div class="page-section">
     <div class="container">
-    <div class="card mb-3" style="height: auto; overflow: hidden; border:2px solid green">
+    <div class="card mb-3" style="height: auto; overflow: hidden; border: 2px solid #049371; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
       
       <div class="row no-gutters">
           <div class="col-md-4">
@@ -138,11 +135,11 @@
           </div>
       </div>
   </div>
-  <div class="card mb-3" style="height: 150px; overflow-x: auto;border:2px solid #049371">
+  <div class="card mb-3" style="height: 150px; overflow-x: auto;border: 2px solid #049371; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
   <div style="padding:10px;">
 
   @if (count($app))
-    <h4><b> Chọn giờ:</b></h4>
+    <h4><b style="color: #049371;"> Chọn giờ:</b></h4>
     <div class="btn-group d-flex flex-nowrap" style="width: fit-content; max-width: 100%; margin-top: 10px; white-space: nowrap; overflow-x: auto;">
       @foreach ($app as $item)
         <a href="{{ route('serviceffff', ['id' => $item->id_appointment]) }}" class="btn btn-primary mb-2 mr-2">{{ substr($item->time, 0, 5) }}</a>
@@ -159,11 +156,11 @@
    
 
 
-            <div class="card mb-3 " style="height: 300px;border:2px solid #049371">
-              <h4 style="padding-top:10px; padding-left: 10px"> <b>Chi tiết dịch vụ: </b> </h4>
-              <p style="margin-left: 3em;margin-top: 1em; font-size: 1em;">{!! nl2br($service->detail) !!}</p>
-            
-            </div>
+         
+<div class="card mb-3" style="border: 2px solid #049371; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+  <h4 style="padding: 10px 10px 0; color: #049371;"><b>Chi tiết dịch vụ:</b></h4>
+  <p style="margin: 1em 3em; font-size: 1em; line-height: 1.5; color: #333;">{!! nl2br($service->detail) !!}</p>
+</div>
     </div> <!-- .container -->
     
   </div> <!-- .page-section -->

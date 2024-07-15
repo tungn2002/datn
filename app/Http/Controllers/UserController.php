@@ -277,7 +277,7 @@ $results = DB::table('medicalresults')
     
             $medicalResult = MedicalResult::find($request->id_result);
             $medicalResult->delete();
-            return redirect()->back()->with('message', 'Xóa đơn bệnh thành công');
+            return redirect()->back()->with('message', 'Xóa đơn khám bệnh thành công');
         }
     
 

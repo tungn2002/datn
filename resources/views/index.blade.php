@@ -45,9 +45,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
-        <a class="navbar-brand" href="{{ route('trangchu') }}"><span class="text-primary">Bệnh viện</span></a>
-
-      
+        <a class="navbar-brand" href="{{ route('trangchu') }}" style="padding:0px;margin:0px;"><img src="{{ asset('logo.png') }}" width="45px" style="margin-bottom:5px;"><span class="text-primary"> Bệnh viện</span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupport" aria-controls="navbarSupport" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -103,7 +101,7 @@
   <div class="page-hero bg-image overlay-dark" style="background-image: url({{ asset('main/image/bg_image_1.jpg') }});">
     <div class="hero-section">
       <div class="container text-center ">
-        <h3 class="mb-3"><span class="subhead ">Website đặt lịch khám bệnh và kê đơn thuốc</span> </h3>
+        <h3 class="mb-3"><span class="subhead ">Đặt lịch khám bệnh và kê đơn thuốc</span> </h3>
 
         <div style="height: 50px"></div>
 
@@ -129,37 +127,39 @@
     </div>
   </div>
 
-
-  <div class="bg-light">
-    <div class="page-section py-3 mt-md-n5 custom-index">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-4 py-3 py-md-0">
-            <div class="card-service">
-              <div class="circle-shape bg-secondary text-white">
-                <i class="fas fa-comments"></i>              </div>
-              <p><span>Trò chuyện</span> với bác sĩ</p>
+  <div class="bg-light d-flex justify-content-center align-items-center">
+  <div class="page-section py-3 mt-md-n5 custom-index">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-4 py-4 py-md-0 ">
+          <div class="card-service">
+            <div class="circle-shape bg-secondary text-white">
+              <i class="fas fa-comments"></i>
             </div>
+            <p><span>Trò chuyện</span> với bác sĩ</p>
           </div>
-          <div class="col-md-4 py-3 py-md-0">
-            <div class="card-service ">
-              <div class="circle-shape bg-primary text-white">
-                <i class="fas fa-check-square"></i>
-              </div>
-              <p><span>Chữa</span> trị </p>
+        </div>
+        <div class="col-md-4 py-3 py-md-0">
+          <div class="card-service">
+            <div class="circle-shape bg-primary text-white">
+              <i class="fas fa-check-square"></i>
             </div>
+            <p><span>Chữa</span> trị</p>
           </div>
-          <div class="col-md-4 py-3 py-md-0">
-            <div class="card-service ">
-              <div class="circle-shape bg-accent text-white">
+        </div>
+        <div class="col-md-4 py-3 py-md-0 ">
+          <div class="card-service">
+            <div class="circle-shape bg-accent text-white">
               <i class="fas fa-briefcase-medical"></i>
-              </div>
-              <p><span>Khám</span> bệnh</p>
             </div>
+            <p><span>Khám</span> bệnh</p>
           </div>
         </div>
       </div>
-    </div> <!-- .page-section -->
+    </div>
+  </div>
+</div>
+
 
     <div class="page-section pb-0" id="inf">
       <div class="container">

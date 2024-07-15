@@ -115,7 +115,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
-      <a class="navbar-brand" href="{{ route('trangchu') }}"><span class="text-primary">Bệnh viện</span></a>
+      <a class="navbar-brand" href="{{ route('trangchu') }}" style="padding:0px;margin:0px;"><img src="{{ asset('logo.png') }}" width="45px" style="margin-bottom:5px;"><span class="text-primary"> Bệnh viện</span></a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupport" aria-controls="navbarSupport" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -221,7 +221,7 @@
     <div class="card-custom m-2 d-flex flex-column">
     <img src="{{ asset('anhnv.png') }}" alt="Avatar">
         <h5 class="mt-3" style="font-size: 16px;font-weight: bold;">{{$item->name}}</h5>
-        <a href="{{ route('chatuser', ['id' => $item->id_user]) }}" class="btn btn-primary mt-auto">Chat ngay</a>
+        <a href="{{ route('chatuser', ['id' => $item->id_user]) }}" class="btn btn-primary mt-auto">Trò chuyện</a>
     </div>
 </div>
                             @endforeach
@@ -295,7 +295,7 @@
         <img src="{{ asset('image/' . $item->avatar) }}" alt="Avatar">
         <h5 class="mt-3" style="font-size: 16px;font-weight: bold;">{{$item->name}}</h5>
         <p>Chuyên khoa: {{$item->spname}}</p>
-        <a href="{{ route('chatuser2', ['id' => $item->id_user]) }}" class="btn btn-primary mt-auto">Chat ngay</a>
+        <a href="{{ route('chatuser2', ['id' => $item->id_user]) }}" class="btn btn-primary mt-auto">Trò chuyện</a>
     </div>
 </div>
         @endforeach

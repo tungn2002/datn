@@ -6,7 +6,6 @@
 
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <meta name="copyright" content="MACode ID, https://macodeid.com/">
 
   <title>Đơn </title>
 
@@ -87,7 +86,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
-      <a class="navbar-brand" href="{{ route('trangchu') }}"><span class="text-primary">Bệnh viện</span></a>
+      <a class="navbar-brand" href="{{ route('trangchu') }}" style="padding:0px;margin:0px;"><img src="{{ asset('logo.png') }}" width="45px" style="margin-bottom:5px;"><span class="text-primary"> Bệnh viện</span></a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupport" aria-controls="navbarSupport" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -157,7 +156,7 @@
 
   <div class="page-section">
     <div class="container">
-      <h1 class="text-center wow fadeInUp">Thông tin cá nhân</h1>
+      <h1 class="text-center wow fadeInUp">Thông tin tài khoản</h1>
 
 
       @if ($errors->any())
@@ -180,24 +179,25 @@
 
       <div class="container">
   <div class="row">
-    <div class="col-md-2 mb-3 " style="border-right: 2px solid black;">
+    <div class="col-md-3  mb-3 " style="border-right: 2px solid black;">
         <ul class="nav nav-pills flex-column" id="myTab" role="tablist" >
-    <li class="nav-item">
-    <a class="nav-link active" href="{{ route('themhoso') }}"   style="background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%); color: #fff">Thêm hồ sơ</a>
+    
+   <li class="nav-item">
+    <a class="nav-link active" href="{{ route('themhoso') }}"   style="background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%); color: #fff"><i class="fas fa-user-plus"></i> <b>Thêm hồ sơ</b></a>
   </li>
   <li class="nav-item" >
-    <a class="nav-link"href="{{ route('profile2') }}" role="tab" aria-controls="home" aria-selected="false">Hồ sơ bệnh nhân</a>
+    <a class="nav-link"href="{{ route('profile2') }}" role="tab" aria-controls="home" aria-selected="false" ><i class="far fa-id-badge"></i> <b>Hồ sơ bệnh nhân</b></a>
   </li>
   <li class="nav-item" >
-    <a class="nav-link" href="{{ route('profile') }}" role="tab" aria-controls="profile" aria-selected="false" >Thông tin cá nhân</a>
+    <a class="nav-link" href="{{ route('profile') }}" role="tab" aria-controls="profile" aria-selected="false"><i class="fas fa-user-circle"></i> <b>Thông tin cá nhân</b></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{{ route('profile3') }}" role="tab" aria-controls="contact" aria-selected="false" style="    color: #07be94;
+    <a class="nav-link" href="{{ route('profile3') }}" role="tab" aria-controls="contact" aria-selected="false"  style="    color: #07be94;
     background-color: #fff;
-    border: 2px solid #4CF5BC;">Đơn khám bệnh</a>
+    border: 2px solid #4CF5BC;"><i class="fas fa-file-medical"></i> <b>Đơn khám bệnh</b></a>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="{{ route('trochuyenuser') }}" role="tab" aria-controls="home" aria-selected="true" style="color: #fff;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Trò chuyện</a>
+    <a class="nav-link active" href="{{ route('trochuyenuser') }}" role="tab" aria-controls="home" aria-selected="true" style="color: #fff;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);"><i class="fas fa-comments"></i> <b>Trò chuyện</b></a>
   </li>
 </ul>
 
@@ -210,7 +210,7 @@
 
 
     <!-- /.col-md-4 -->
-        <div class="col-md-10">
+        <div class="col-md-9">
       <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 

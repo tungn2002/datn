@@ -81,7 +81,7 @@ class PdfController extends Controller
        <div>
         <p style="display: inline-block; vertical-align: middle; margin-left: 100px">Họ và tên: '.$p->name.' </p>
     </div>
-    <div>  <p style="margin-left: 100px"> Chuẩn đoán: '.$p->diagnostic.'
+    <div>  <p style="margin-left: 100px"> Chẩn đoán: '.$p->diagnostic.'
     </div> 
     
       '.$donthuoc.'
@@ -164,7 +164,7 @@ class PdfController extends Controller
      <div>
       <p style="display: inline-block; vertical-align: middle; margin-left: 100px">Họ và tên: '.$p->name.' </p>
   </div>
-  <div>  <p style="margin-left: 100px"> Chuẩn đoán: '.$p->diagnostic.'
+  <div>  <p style="margin-left: 100px"> Chẩn đoán: '.$p->diagnostic.'
   </div> 
   
     '.$donthuoc.'
@@ -244,7 +244,7 @@ class PdfController extends Controller
     <div>
      <p style="display: inline-block; vertical-align: middle; margin-left: 100px">Họ và tên: '.$p->name.' </p>
  </div>
- <div>  <p style="margin-left: 100px"> Chuẩn đoán: '.$p->diagnostic.'
+ <div>  <p style="margin-left: 100px"> Chẩn đoán: '.$p->diagnostic.'
  </div> 
  
    '.$donthuoc.'

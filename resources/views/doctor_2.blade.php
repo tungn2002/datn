@@ -212,48 +212,15 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.45/moment-timezone.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <!-- Template Javascript -->
     <script src="{{ asset('ad/main.js') }}"></script>
-<script>
-  $(document).ready(function() {
-    $('#deleteModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Nút "Xóa" được click
-        var hospitalId = button.data('id'); // Lấy ID từ data-id của nút
 
-        var modal = $(this);
-        modal.find('#hospitalIdInput').val(hospitalId); // Điền ID vào input
-
-        // Cập nhật action của form
-        var form = modal.find('#deleteForm');
-        form.attr('action', form.attr('action').replace(':hospitalId', hospitalId)); 
-    });
-});
-
-
-$('.btn-edit').click(function() {
-    var hospitalId = $(this).data('id');
-    var row = $(this).closest('tr'); // Lấy hàng chứa nút "Sửa"
-
-    // Lấy dữ liệu từ các ô trong hàng
-    var hospitalName = row.find('td:eq(1)').text(); // Ô thứ 2 chứa tên bệnh viện
-    var address = row.find('td:eq(2)').text(); // Ô thứ 3 chứa địa chỉ
-
-    // Điền dữ liệu vào form
-    $('#editHospitalId').val(hospitalId);
-    $('#hospitalname').val(hospitalName);
-    $('#address').val(address);
-    $('#editForm').attr('action', '{{ url("capnhathos") }}/id=' + hospitalId); 
-
-});
-</script>
 
 <script>
     $(document).ready(function() {

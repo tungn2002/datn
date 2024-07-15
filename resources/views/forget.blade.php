@@ -16,7 +16,7 @@
 			<div class="col-lg-6 col-md-6 form-container">
 				<div class="col-lg-8 col-md-12 col-sm-9 col-xs-12 form-box">
 					<div class="logo mt-5 mb-3 text-center">
-						<img src="{{ asset('image/logo.png') }}" width="150px">
+						<img src="{{ asset('logo.png') }}" width="100px">
 					</div>
 					<div class="reset-form d-block">
 						<form class="reset-password-form" action="{{ url('quenmk') }}" method="post">

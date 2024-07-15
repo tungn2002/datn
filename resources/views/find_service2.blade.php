@@ -6,7 +6,6 @@
 
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-  <meta name="copyright" content="MACode ID, https://macodeid.com/">
 
   <title>Chọn ngày</title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
@@ -20,9 +19,7 @@
 </head>
 <body>
 
-  <!-- Back to top button -->
-  <div class="back-to-top"></div>
-
+  
 
   <header>
     <div class="topbar">
@@ -50,7 +47,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
-      <a class="navbar-brand" href="{{ route('trangchu') }}"><span class="text-primary">Bệnh viện</span></a>
+      <a class="navbar-brand" href="{{ route('trangchu') }}" style="padding:0px;margin:0px;"><img src="{{ asset('logo.png') }}" width="45px" style="margin-bottom:5px;"><span class="text-primary"> Bệnh viện</span></a>
 
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupport" aria-controls="navbarSupport" aria-expanded="false" aria-label="Toggle navigation">
@@ -120,7 +117,7 @@
 
   <div class="page-section">
     <div class="container">
-    <div class="card mb-3" style="height: auto; overflow: hidden; border:2px solid green">
+    <div class="card mb-3" style="height: auto; overflow: hidden; border: 2px solid #049371; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
       
     <div class="row no-gutters">
         <div class="col-md-4">
@@ -138,10 +135,10 @@
     </div>
 </div>
 
-<div class="card mb-3" style="height: 150px; overflow-x: auto;border:2px solid #049371">
+<div class="card mb-3" style="height: 150px; overflow-x: auto;border: 2px solid #049371; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
   <div style="padding:10px;">
     @if (count($uniqueDates))
-        <h4 ><b> Chọn ngày:</b></h4>
+        <h4 style="color: #049371;"><b> Chọn ngày:</b></h4>
         <div class="btn-group d-flex" style="width: fit-content; max-width: 100%; margin-top: 10px; white-space: nowrap; overflow-x: auto;">
             @foreach ($uniqueDates as $date)
                 <a href="{{ route('servicefff', ['id' => $clinic1->id_clinic, 'day' => $date]) }}" class="btn btn-primary mb-2 mr-2">{{ $date }}</a>
@@ -155,11 +152,12 @@
 
 
 
-            <div class="card mb-3 " style="height: 300px;border:2px solid #049371">
-              <h4 style="padding-top:10px; padding-left: 10px"> <b>Chi tiết dịch vụ: </b> </h4>
-              <p style="margin-left: 3em;margin-top: 1em; font-size: 1em;">{!! nl2br($service->detail) !!}</p>
-            
-            </div>
+<div class="card mb-3" style="border: 2px solid #049371; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+  <h4 style="padding: 10px 10px 0; color: #049371;"><b>Chi tiết dịch vụ:</b></h4>
+  <p style="margin: 1em 3em; font-size: 1em; line-height: 1.5; color: #333;">{!! nl2br($service->detail) !!}</p>
+</div>
+
+
     </div> <!-- .container -->
     
   </div> <!-- .page-section -->

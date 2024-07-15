@@ -40,6 +40,8 @@ Route::get('/get-password/{user}/{token}', [UserController::class, 'getPass'])->
 Route::post('/get-password/{user}/{token}', [UserController::class, 'postGetPass']);//update mk mới
 
 //Trang chủ
+Route::get('/', [UserController::class, 'trangchu']);
+
 Route::get('/trangchu', [UserController::class, 'trangchu'])->name('trangchu');
 
 //đăng xuất
