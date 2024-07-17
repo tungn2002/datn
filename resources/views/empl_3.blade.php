@@ -85,7 +85,7 @@
 
             <!-- Blank Start -->
             <div class="container-fluid pt-4 px-4 ">
-            <h1>Các đơn đang chờ thanh toán</h1>
+            <h4>Các đơn đang chờ thanh toán</h4>
             <a href="{{ route('empl_choduyet') }}" class="btn btn-primary" style="border-radius: 2rem ;">Chờ duyệt</a>
   <a href="{{ route('empl_chothanhtoan') }}" type="button" class="btn btn-primary"  style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Thanh toán</a>
   <a href="{{ route('empl_dathanhtoan') }}" type="button" class="btn btn-primary"  style="border-radius: 2rem ;">Đã thanh toán</a>  <table class="table table-striped custab mt-4 table-bordered">

@@ -103,9 +103,9 @@
             <h4>Thông tin người quản trị:</h4>
             
             <div class="col-sm-12 col-xl-6" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;width: 50em">
-                    <p><i class="fas fa-user"></i> Tên: {{ Auth::user()->name }}</p>
-                    <p><i class="fas fa-envelope"></i> Email: {{ Auth::user()->email }}</p>
-                    <p><i class="fas fa-phone-alt"></i> Số điện thoại: {{ Auth::user()->phonenumber }}</p>
+                    <p><i class="fas fa-user"></i> Tên: <b style="color: #003553">{{ Auth::user()->name }}</b></p>
+                    <p><i class="fas fa-envelope"></i> Email: <b style="color: #003553">{{ Auth::user()->email }}</b></p>
+                    <p><i class="fas fa-phone-alt"></i> Số điện thoại: <b style="color: #003553">{{ Auth::user()->phonenumber }}</b></p>
                   
                </div>
                </div>

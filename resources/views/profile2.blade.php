@@ -154,9 +154,10 @@
     </div> <!-- .banner-section -->
   </div> <!-- .page-banner -->
 
-  <div class="page-section pb-7">
+  <div class="page-section">
+  <h2 style="margin-bottom:20px;" class="text-center wow fadeInUp"><b>Thông tin tài khoản</b></h2>
+
     <div class="container">
-      <h1 class="text-center wow fadeInUp">Thông tin tài khoản</h1>
 
 
       @if ($errors->any())
@@ -171,31 +172,23 @@
 
 
 
-
-
-
-
-
-
-
-
       <div class="container">
   <div class="row">
     <div class="col-md-3 mb-3 " style="border-right: 2px solid black;">
         <ul class="nav nav-pills flex-column" id="myTab" role="tablist" >
   
-   <li class="nav-item">
-    <a class="nav-link active" href="{{ route('themhoso') }}"   style="background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%); color: #fff"><i class="fas fa-user-plus"></i> <b>Thêm hồ sơ</b></a>
+   <li class="nav-item" style="margin-bottom: 4px;">
+    <a class="nav-link active" href="{{ route('themhoso') }}" style="background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%); color: #fff"><i class="fas fa-user-plus"></i> <b>Thêm hồ sơ</b></a>
   </li>
-  <li class="nav-item" >
+  <li class="nav-item" style="margin-bottom: 4px;">
     <a class="nav-link"href="{{ route('profile2') }}" role="tab" aria-controls="home" aria-selected="false"  style="    color: #07be94;
     background-color: #fff;
     border: 2px solid #4CF5BC;"><i class="far fa-id-badge"></i> <b>Hồ sơ bệnh nhân</b></a>
   </li>
-  <li class="nav-item" >
+  <li class="nav-item" style="margin-bottom: 4px;">
     <a class="nav-link" href="{{ route('profile') }}" role="tab" aria-controls="profile" aria-selected="false"><i class="fas fa-user-circle"></i> <b>Thông tin cá nhân</b></a>
   </li>
-  <li class="nav-item">
+  <li class="nav-item"style="margin-bottom: 4px;">
     <a class="nav-link" href="{{ route('profile3') }}" role="tab" aria-controls="contact" aria-selected="false" style=""><i class="fas fa-file-medical"></i> <b>Đơn khám bệnh</b></a>
   </li>
   <li class="nav-item">
@@ -223,12 +216,7 @@
       <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-  <h2>Danh sách đơn đặt khám</h2>
-  <button type="button" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Chờ duyệt</button>
-  <button type="button" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Thanh toán</button>
-  <button type="button" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Đã khám</button>
-  <button type="button" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Đã hủy</button>
-
+  
 
     <div class="container mt-5">
 
@@ -236,19 +224,17 @@
 
   </div>
   <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-  <h2>Danh sách hồ sơ bệnh nhân</h2> @isset($patientRecords)
+  <h4><b>Danh sách hồ sơ bệnh nhân</b></h4> @isset($patientRecords)
     @foreach ($patientRecords as $record)
-    <div class="container mt-5" >
+    <div class="container mt-3" >
    
-      <div class="card" style="    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);">
+      <div class="card"  style="border: 2px solid #28a745; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); border-radius: 10px;">
           <div class="card-body">
-          <p class="card-text"><i class="fas fa-id-card"></i> Mã số hồ sơ: {{ $record->id_pr }}</p>
-
-              <p class="card-text"><i class="fas fa-user"></i> Tên bệnh nhân: {{ $record->prname }}</p>
-              <p class="card-text"><i class="fas fa-birthday-cake"></i> Ngày sinh: {{ $record->birthday }}</p>
-              <p class="card-text"><i class="fas fa-phone-alt"></i> Số điện thoại: {{ $record->phonenumber }}</p>
-              <p class="card-text"><i class="fas fa-venus-mars"></i> Giới tính: {{ $record->gender == 'male' ? 'Nam' : ($record->gender == 'female' ? 'Nữ' : 'Khác') }}</p>
-              <p class="card-text"><i class="fas fa-map-marked-alt"></i> Địa chỉ: {{ $record->address }}</p>
+              <p class="card-text"><i class="fas fa-user"></i> Tên bệnh nhân: <span style="color: #02c697 "><b>{{ $record->prname }}</b></span></p>
+              <p class="card-text"><i class="fas fa-birthday-cake"></i> Ngày sinh: <b style="color: #005328"> {{ $record->birthday }} </b></p>
+              <p class="card-text"><i class="fas fa-phone-alt"></i> Số điện thoại: <b style="color: #005328">{{ $record->phonenumber }}</b> </p>
+              <p class="card-text"><i class="fas fa-venus-mars"></i> Giới tính: <b style="color: #005328">{{ $record->gender == 'male' ? 'Nam' : ($record->gender == 'female' ? 'Nữ' : 'Khác') }} </b></p>
+              <p class="card-text"><i class="fas fa-map-marked-alt"></i> Địa chỉ: <b style="color: #005328">{{ $record->address }} </b></p>
               <hr>
               <div class="d-flex justify-content-end">
               <button type="button" class="btn btn-primary mr-2 btn-edit" data-id="{{ $record->id_pr }}" data-name="{{ $record->prname }}" data-birthday="{{ $record->birthday }}" data-phone="{{ $record->phonenumber }}" data-gender="{{ $record->gender }}" data-address="{{ $record->address }}"><i class="fas fa-edit"></i> Sửa hồ sơ</button>

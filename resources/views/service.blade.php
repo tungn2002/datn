@@ -136,10 +136,16 @@
                                     </div>
                                 </div>
                                 
-                                <div class="mb-3">
+                                <div class="row mb-3">
+                                <div class="col-md-2">
+                                
                                     <label for="time" class="form-label">Thời gian khám 1 đơn:</label>
-                                    <input type="text" class="form-control" name="time" id="time" placeholder="Giờ:phút" required>
-                            </div>
+                                   </div>
+                                   <div class="col-md-10">
+ 
+                                   <input type="text" class="form-control" name="time" id="time" placeholder="Giờ:phút" required>
+                                        </div>
+                                </div>
                             
                                 <button type="submit" class="btn btn-primary">Thêm</button>
                             </form>

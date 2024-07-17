@@ -88,21 +88,28 @@
             <h4>Thông tin bác sĩ:</h4>
             
             <div class="col-sm-12 col-xl-6" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;width: 50em">
-                    <p><i class="fas fa-user"></i> Tên: {{ Auth::user()->name }}</p>
-                    <p><i class="fas fa-envelope"></i> Email: {{ Auth::user()->email }}</p>
-                    <p><i class="fas fa-phone-alt"></i> Số điện thoại: {{ Auth::user()->phonenumber }}</p>
-                    <p><i class="fas fa-stethoscope"></i> Mã chuyên khoa: {{ Auth::user()->id_specialist }}</p>
+                    <p><i class="fas fa-user"></i> Tên: <b style="color: #003553">{{ Auth::user()->name }}</b></p>
+                    <p><i class="fas fa-envelope"></i> Email: <b style="color: #003553">{{ Auth::user()->email }}</b></p>
+                    <p><i class="fas fa-phone-alt"></i> Số điện thoại: <b style="color: #003553">{{ Auth::user()->phonenumber }}</b></p>
+                    <p><i class="fas fa-stethoscope"></i> Chuyên khoa: <b>{{$sp->spname}}</b></p>
                     <p><i class="far fa-image"></i> Ảnh đại diện và chữ ký:</p>
                     <div class="image-container">
                     <img style="height: 150px;width: 150px" src="{{ asset('image/' . Auth::user()->avatar) }}" alt="Left Image" class="left-image">
                     <img style="height: 100px;width: 100px" src="{{ asset('image/' . Auth::user()->signature) }}" alt="Right Image" class="right-image">
                     </div>
-                    <p><i class="far fa-calendar-check"></i> Thời gian khung giờ làm việc:</p>
+                    <hr style="  border-top: 1px dashed black">
+                    @isset($clinic)
+                    <p><i class="fas fa-clinic-medical"></i> Phòng làm việc: <b style="color: #003553">{{ $clinic->clinicname }}</b></p>
+                    <p><i class="fas fa-briefcase"></i> Dịch vụ khám: <b style="color: #003553">{{ $clinic->servicename }}</b></p>
+
+                    @endisset
+
+                    <p><i class="far fa-calendar-check"></i> Khung giờ làm việc:</p>
                     <p>{!! nl2br(Auth::user()->working_hours) !!}</p>
             </div>
 
             <div class="col-sm-12 col-xl-6 mt-4" style=" box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;width: 50em">
-                <p>Cập nhật khung giờ làm việc </p>  
+                <h4 style="color: #33CCFF	;">Cập nhật khung giờ làm việc</h4>  
                 <form id="editForm" action="{{ route('updatewh') }}"  method="POST" >
                 @csrf
                 
@@ -110,7 +117,10 @@
                         <label for="hospitalname" class="form-label">Khung giờ làm việc:</label>
                         <textarea class="form-control"  id="detailz" name="wh" rows="3"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Cập nhật khung giờ</button>
+                    <div class="d-flex justify-content-end">
+
+                    <button type="submit" class="btn btn-primary"><i class="far fa-edit"></i> Cập nhật</button>
+                    </div>
                 </form> 
                 
                 

@@ -113,13 +113,19 @@
                                         <input type="text" class="form-control" name="clinicname" id="inputEmail3" required>
                                     </div>
                                 </div>
-                                <div class="mb-3">
+                                <div class="row mb-3">
+                                    <div class="col-md-2">
+
                                     <label for="id_user" class="form-label">Bác sĩ:</label>
+                                    </div>
+                                    <div class="col-md-10">
+
                                     <select class="form-select" name="id_user" id="id_user" required>
                                         @foreach ($users as $user)
-                                            <option value="{{ $user->id_user }}">{{ $user->name }}</option>
+                                            <option value="{{ $user->id_user }}">{{ $user->name }} - {{ $user->spname }}</option>
                                         @endforeach
                                     </select>
+                                    </div>
                                 </div>
                                 
 
@@ -179,9 +185,9 @@
     <thead>
         <tr>
             <th>ID</th>
-            <th>Tên</th>
-            <th>Dịch vụ</th>
-            <th>Bác sĩ</th>
+            <th>Tên phòng</th>
+            <th>Mã dịch vụ</th>
+            <th>Mã bác sĩ</th>
 
             <th class="text-center">Tùy chọn</th>
         </tr>
@@ -256,8 +262,6 @@
                         <label for="hospitalname" class="form-label">Tên phòng:</label>
                         <input type="text" class="form-control" id="hospitalname" name="clinicname"required>
                     </div>
-
-
                                     <div class="row mb-3">
                                 <label for="inputEmail3" class="col-sm-2 col-form-label">Dịch vụ: </label>
                                 <div class="col-sm-10">
@@ -279,7 +283,7 @@
                         <option value=""></option>
 
                             @foreach ($users as $user)
-                                <option value="{{ $user->id_user }}">{{ $user->name }}</option>
+                                <option value="{{ $user->id_user }}">{{ $user->name }}-{{ $user->spname }}</option>
                             @endforeach
                         </select>
                     </div>

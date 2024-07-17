@@ -86,7 +86,7 @@
 
             <!-- Blank Start -->
             <div class="container-fluid pt-4 px-4 ">
-            <h1>Các đơn đã thanh toán và khám</h1>
+            <h4>Các đơn đã thanh toán và khám bệnh</h4>
             <a href="{{ route('empl_choduyet') }}" class="btn btn-primary" style="border-radius: 2rem ;">Chờ duyệt</a>
   <a href="{{ route('empl_chothanhtoan') }}" type="button" class="btn btn-primary" style="border-radius: 2rem ;">Thanh toán</a>
   <a href="{{ route('empl_dathanhtoan') }}" type="button" class="btn btn-primary"  style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);">Đã thanh toán</a>
@@ -111,9 +111,9 @@
                 <td>{{ $item->day }}</td>
                 <td>{{ substr($item->time, 0, 5) }}</td>
                 <td>{{ substr($item->finishtime, 0, 5) }}</td>
-                <th>{{$item->prname }}</th>
-                <th>{{$item->phonenumber }}</th>
-                <th>{{$item->status }}</th>
+                <td>{{$item->prname }}</td>
+                <td>{{$item->phonenumber }}</td>
+                <td>{{$item->status }}</td>
 
 
             </tr>

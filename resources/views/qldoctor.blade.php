@@ -241,8 +241,8 @@
                                 <td>{{$item->price}}</td>
                                 <td>{{$item->id_specialist}}</td>
                                 <td>
-                                @if(mb_strlen($item->working_hours) > 20)
-                                    {{ mb_substr($item->working_hours, 0, 20) . '...' }}
+                                @if(mb_strlen($item->working_hours) > 15)
+                                    {{ mb_substr($item->working_hours, 0, 15) . '...' }}
                                 @else
                                     {{ $item->working_hours }}
                                 @endif

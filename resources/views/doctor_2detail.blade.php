@@ -65,7 +65,7 @@
                 <div class="navbar-nav w-100" >
                     <a href="{{ route('doctor') }}" class="nav-item nav-link"><i class="far fa-id-card"></i>Thông tin cá nhân</a>
                     <a href="{{ route('lichlamviec') }}" class="nav-item nav-link active"><i class="fas fa-calendar-alt"></i>Lịch làm việc</a>
-                    <a href="{{ route('trochuyendoctor') }}" class="nav-item nav-link "><i class="fas fa-comment-dots"></i>Trò chuyên</a>
+                    <a href="{{ route('trochuyendoctor') }}" class="nav-item nav-link "><i class="fas fa-comment-dots"></i>Trò chuyện</a>
                 
 
                   
@@ -108,27 +108,30 @@
 
             <div class="container mt-5">
             <div class="custom-div" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;">
-            <p><h3 style="color: #33CCFF	;"><i class="fas fa-user"></i> Tên bệnh nhân: {{$patientRecords->prname}}</h3></p>
-    <p><i class="fas fa-birthday-cake"></i> Ngày sinh: {{$patientRecords->birthday}}</p>
-    <p><i class="fas fa-phone-alt"></i> Số điện thoại: {{$patientRecords->phonenumber}}</p>
-    <p><i class="fas fa-venus-mars"></i> Giới tính: {{ $patientRecords->gender == 'male' ? 'Nam' : ($patientRecords->gender == 'female' ? 'Nữ' : 'Khác') }}</p>
-    <p><i class="fas fa-map-marked-alt"></i> Địa chỉ: {{$patientRecords->address}}</p>
+            <p><h4 style="color: #33CCFF	;"><i class="fas fa-user"></i> Bệnh nhân: {{$patientRecords->prname}}</h4></p>
+    <p><i class="fas fa-birthday-cake"></i> Ngày sinh: <b style="color: #003553">{{$patientRecords->birthday}}</b></p>
+    <p><i class="fas fa-phone-alt"></i> Số điện thoại: <b style="color: #003553">{{$patientRecords->phonenumber}}</b></p>
+    <p><i class="fas fa-venus-mars"></i> Giới tính: <b style="color: #003553">{{ $patientRecords->gender == 'male' ? 'Nam' : ($patientRecords->gender == 'female' ? 'Nữ' : 'Khác') }}</b></p>
+    <p><i class="fas fa-map-marked-alt"></i> Địa chỉ: <b style="color: #003553">{{$patientRecords->address}}</b></p>
+    <hr style=" border-top: 1px dashed black">
+
     <p><i class="fas fa-comment-medical"></i> Lý do khám: {{$patientRecords->reason}}</p>
 </div>
 
 
 @isset($updatekq)
 <div class="custom-div mt-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;">
-<h3 style="color: #33CCFF	;">Kết quả: </h3>
+<h4 style="color: #33CCFF	;">Kết quả: </h4>
 <p>{{$updatekq->detail}}</p>
 @if($updatekq->image != null)
 
-<img style="width: 40px; height: 40px"class="" src="{{ asset('image/' . $updatekq->image) }}" >
+<img class="img-fluid" style="border:2px solid #33CCFF; width: 400px; height: auto;"  src="{{ asset('image/' . $updatekq->image) }}" alt="">
+
 @else
 @endif
 </div>
 <div class="custom-div mt-4" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;">
-<h3 style="color: #33CCFF	;">Viết kết quả:</h3>
+<h4 style="color: #33CCFF	;">Viết kết quả:</h4>
 <form  action="{{ url('capnhatkq/'.$updatekq->id_result) }}" method="post" enctype="multipart/form-data">
         @csrf
     <div class="row mb-3">
@@ -143,8 +146,14 @@
             <input type="file" name="image" id="image">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Cập nhật</button>
+        <div class="d-flex justify-content-end">
 
+        <button type="submit" style="margin-right:20px;" class="btn btn-primary"><i class="far fa-edit"></i> Cập nhật</button>
+        @isset($dk)
+<a href="{{ route('themdonthuoc', ['id' => $dk]) }}" class="btn btn-primary"><i class="fas fa-first-aid"></i> Đơn thuốc </a>
+
+@endisset
+        </div>
 </div>
 @endisset
 @if (\Session::has('message'))
@@ -161,10 +170,8 @@
         </ul>
     </div>
 @endif
-@isset($dk)
-<a href="{{ route('themdonthuoc', ['id' => $dk]) }}" class="btn btn-primary"> Đơn thuốc </a>
 
-@endisset
+<div style="height: 100px;"></div>
 </div>
                     
             </div>

@@ -21,8 +21,9 @@ class ClinicController extends Controller
         //không lấy bác sĩ đã có phòng
         $users = User::where('id_role', 3)
         ->whereNotIn('id_user', $clinicUserIds)
+        ->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
+    ->select('users.*', 'specialists.*') 
         ->get();
-
         $services= DB::select('SELECT * from services');
 
         $clinic = Clinic::paginate(5); 

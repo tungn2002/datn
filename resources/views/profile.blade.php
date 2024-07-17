@@ -138,9 +138,9 @@
     </div> <!-- .banner-section -->
   </div> <!-- .page-banner -->
 
-  <div class="page-section pb-7" >
+  <div class="page-section" >
     <div class="container">
-      <h1 class="text-center wow fadeInUp">Thông tin tài khoản</h1>
+      <h2 style="margin-bottom:20px;" class="text-center wow fadeInUp"><b>Thông tin tài khoản</b></h2>
 
 
       @if ($errors->any())
@@ -168,21 +168,21 @@
   <div class="row">
     <div class="col-md-3 mb-3 " style="border-right: 2px solid black;">
         <ul class="nav nav-pills flex-column" id="myTab" role="tablist" >
-    <li class="nav-item">
+    <li class="nav-item" style="margin-bottom: 4px;">
     <a class="nav-link active" href="{{ route('themhoso') }}"   style="background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%); color: #fff"><i class="fas fa-user-plus"></i> <b>Thêm hồ sơ</b></a>
   </li>
-  <li class="nav-item" >
+  <li class="nav-item" style="margin-bottom: 4px;">
     <a class="nav-link"href="{{ route('profile2') }}" role="tab" aria-controls="home" aria-selected="false"><i class="far fa-id-badge"></i> <b>Hồ sơ bệnh nhân</b></a>
   </li>
-  <li class="nav-item" >
+  <li class="nav-item" style="margin-bottom: 4px;">
     <a class="nav-link" href="{{ route('profile') }}" role="tab" aria-controls="profile" aria-selected="false" style="    color: #07be94;
     background-color: #fff;
     border: 2px solid #4CF5BC;"><i class="fas fa-user-circle"></i> <b>Thông tin cá nhân</b></a>
   </li>
-  <li class="nav-item">
+  <li class="nav-item" style="margin-bottom: 4px;">
     <a class="nav-link" href="{{ route('profile3') }}" role="tab" aria-controls="contact" aria-selected="false" style=""><i class="fas fa-file-medical"></i> <b>Đơn khám bệnh</b></a>
   </li>
-  <li class="nav-item">
+  <li class="nav-item" style="margin-bottom: 4px;">
     <a class="nav-link active" href="{{ route('trochuyenuser') }}" role="tab" aria-controls="home" aria-selected="true" style="color: #fff;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);"><i class="fas fa-comments"></i> <b>Trò chuyện</b></a>
   </li>
 </ul>
@@ -213,10 +213,10 @@
   </div>
   <div class="tab-pane fades show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
   <div class="container mt-5">
-    <div class="custom-div">
-        <p><i class="fas fa-user"></i> Tên: {{$user->name}}</p>
-        <p><i class="fas fa-envelope"></i> Email: {{$user->email}}</p>
-        <p><i class="fas fa-phone-alt"></i> Số điện thoại: {{$user->phonenumber}}</p>
+    <div class="custom-div" style="border: 2px solid #28a745; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); border-radius: 10px;">
+        <p><i class="fas fa-user"></i> Tên:  <span style="color: #02c697 "><b>{{$user->name}}</b></span></p>
+        <p><i class="fas fa-envelope"></i> Email: <b style="color: #005328">{{$user->email}}</b></p>
+        <p><i class="fas fa-phone-alt"></i> Số điện thoại: <b style="color: #005328">{{$user->phonenumber}}</b></p>
         <hr>
         <div class=" d-flex justify-content-end">
 

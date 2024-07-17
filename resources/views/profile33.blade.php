@@ -156,7 +156,7 @@
 
   <div class="page-section">
     <div class="container">
-      <h1 class="text-center wow fadeInUp">Thông tin tài khoản</h1>
+    <h2 style="margin-bottom:20px;" class="text-center wow fadeInUp"><b>Thông tin tài khoản</b></h2>
 
 
       @if ($errors->any())
@@ -182,21 +182,21 @@
     <div class="col-md-3  mb-3 " style="border-right: 2px solid black;">
         <ul class="nav nav-pills flex-column" id="myTab" role="tablist" >
     
-   <li class="nav-item">
+   <li class="nav-item" style="margin-bottom: 4px;">
     <a class="nav-link active" href="{{ route('themhoso') }}"   style="background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%); color: #fff"><i class="fas fa-user-plus"></i> <b>Thêm hồ sơ</b></a>
   </li>
-  <li class="nav-item" >
+  <li class="nav-item"  style="margin-bottom: 4px;">
     <a class="nav-link"href="{{ route('profile2') }}" role="tab" aria-controls="home" aria-selected="false" ><i class="far fa-id-badge"></i> <b>Hồ sơ bệnh nhân</b></a>
   </li>
-  <li class="nav-item" >
+  <li class="nav-item"  style="margin-bottom: 4px;">
     <a class="nav-link" href="{{ route('profile') }}" role="tab" aria-controls="profile" aria-selected="false"><i class="fas fa-user-circle"></i> <b>Thông tin cá nhân</b></a>
   </li>
-  <li class="nav-item">
+  <li class="nav-item"  style="margin-bottom: 4px;">
     <a class="nav-link" href="{{ route('profile3') }}" role="tab" aria-controls="contact" aria-selected="false"  style="    color: #07be94;
     background-color: #fff;
     border: 2px solid #4CF5BC;"><i class="fas fa-file-medical"></i> <b>Đơn khám bệnh</b></a>
   </li>
-  <li class="nav-item">
+  <li class="nav-item"  style="margin-bottom: 4px;">
     <a class="nav-link active" href="{{ route('trochuyenuser') }}" role="tab" aria-controls="home" aria-selected="true" style="color: #fff;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590 100%);"><i class="fas fa-comments"></i> <b>Trò chuyện</b></a>
   </li>
 </ul>
@@ -214,7 +214,7 @@
       <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-  <h2>Danh sách đơn đặt khám</h2>
+  <h4><b>Danh sách đơn đặt khám</b></h4>
  
   <a href=" {{ route('profile3') }}" class="btn btn-primary"style="color: #000000;border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #00FFFF 0%, #00FFFF 100%);">Chờ duyệt</a>
   <a href=" {{ route('profile32') }}" class="btn btn-primary" style="color: #000000; border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #00FFFF 0%, #00FFFF 100%);">Chưa thanh toán</a>
@@ -224,21 +224,29 @@
     <div class="container mt-5">
     @isset($results)
     @foreach ($results as $record)
-      <div class="card"  style="    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);">
+      <div class="card" style="margin-bottom: 5px; border: 2px solid #28a745; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); border-radius: 10px;">
           <div class="card-body">
-          <p class="card-text" style="font-size: 21px; color: #00D9A5"> Tên bệnh nhân: {{ $record->prname }}</p>
-          <p class="card-text"><i class="far fa-id-card"></i> Mã số đơn: {{ $record->id_result }}</p>
-              <p class="card-text"><i class="far fa-hospital"></i> Phòng khám: {{ $record->clinicname }}</p>
+          <p class="card-text" style="font-size: 21px;"> Tên bệnh nhân: <span style="color: #02c697 "><b>{{ $record->prname }}</b></span></p>
+          <p class="card-text"><i class="far fa-id-card"></i> Mã số đơn: <b style="color: #005328"> {{ $record->id_result }}</b></p>
+              <p class="card-text"><i class="far fa-hospital"></i> Phòng khám: <b style="color: #005328"> {{ $record->clinicname }}</b></p>
+
+              <p class="card-text"><i class="fas fa-calendar-alt"></i> Ngày khám: <b style="color: #005328"> {{ $record->day }}</b></p>
+              <p class="card-text"><i class="far fa-clock"></i> Giờ khám: <b style="color: #005328"> {{ substr($record->time, 0, 5) }}</b></p>
+              <p class="card-text"><i class="fas fa-clipboard-list"></i> Trạng thái: <b style="color: #005328">{{ $record->status }}</b></p>
+
+              <hr style="  border-top: 1px dashed black">
+              <p class="card-text"><i class="fas fa-stopwatch"></i> Giờ kết thúc: {{ substr($record->finishtime, 0, 5) }}</p>
               <p class="card-text"><i class="far fa-calendar-check"></i> Ngày đặt: {{ $record->booking_date }}</p>
-              <p class="card-text"><i class="fas fa-calendar-alt"></i> Ngày khám: {{ $record->day }}</p>
-              <p class="card-text"><i class="fas fa-stethoscope"></i> Dịch vụ: {{ $record->servicename }}</p>
-              <p class="card-text"><i class="far fa-calendar-check"></i> Trạng thái: {{ $record->status }}</p>
-              <hr>
+
+              <p class="card-text"><i class="fas fa-stethoscope"></i> Dịch vụ: {{ $record->servicename }}</p>   
+              <hr style="  border-top: 1px dashed black">
+
               @if ($record->status === 'đã khám')
               <p class="card-text"><i class="fas fa-poll"></i> Kết quả: {{ $record->detail }}</p>
               @if($record->image != null)
-              <p class="card-text">Ảnh: 
-    <img class="img-fluid" style="width: 400px; height: auto;" src="{{ asset('image/' . $record->image) }}" alt="">
+              Ảnh: 
+              <p class="card-text">
+    <img class="img-fluid" style="border:2px solid green; width: 400px; height: auto;" src="{{ asset('image/' . $record->image) }}" alt="">
 </p>              @else
               @endif
                 <a href="{{ route('pdff', ['id' => $record->id_result]) }}" class="btn btn-primary float-right">Đơn thuốc</a>

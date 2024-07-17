@@ -149,12 +149,25 @@
                 <td>{{ $item->id_result }}</td>
                 <td>{{ $item->status }}</td>
                 <td>{{ substr($item->reason, 0, 25) }}...</td>
-                <td>{{ substr($item->detail, 0, 25) }}...</td>
+                <td>
+                    @if ($item->detail!='.')                  
+                    {{ substr($item->detail, 0, 25) }}...
+            @else
+            @endif
+                </td>
                 <td>{{ $item->booking_date }}</td>
                 <td>{{ $item->id_mr }}</td>
                 <td>{{ $item->id_sch }}</td>
                 <td>{{ $item->id_prescription }}</td>
-                <td><img style="width: 40px; height: 40px"class="" src="{{ asset('image/' . $item->image) }}" ></td>
+                <td>
+                @if (!empty($item->image))                  
+                 <img style="width: 40px; height: 40px"class="" src="{{ asset('image/' . $item->image) }}" >
+
+            @else
+            @endif
+                
+            
+            </td>
 
                 <td class="text-center">
                     <button class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{ $item->id_result }}">Xóa</button>

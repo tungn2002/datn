@@ -472,8 +472,14 @@ public function dathanhtoan_empl()
 
 public function doctor(){
     $medicine = Medicine::paginate(5); 
-
-    return view('doctor',['medicine' => $medicine]);
+    $sp = Specialist::where('id_specialist',Auth::user()->id_specialist)->first();
+    //phong va dichvu
+    $clinic= Clinic::join('services', 'clinics.id_service', '=', 'services.id_service')
+    ->where('clinics.id_user',Auth::user()->id_user)
+    ->select('clinics.*', 'services.*')
+    ->first();
+    //
+    return view('doctor',['medicine' => $medicine,'sp'=>$sp,'clinic'=>$clinic]);
 }
 public function findthuoc(Request $request){
 
