@@ -627,12 +627,12 @@ public function capnhatkq(Request $request,$id)
 }
 public function themdonthuoc($id)
 {
-//chi co 1 don
+//Lấy thuốc đã có
     $mr=DB::table('prescriptions')
     ->join('medicalresults', 'prescriptions.id_pre', '=', 'medicalresults.id_prescription')
     ->where('medicalresults.id_result', $id)
     ->first();
-
+//Lấy thuốc trừ các thuốc đã có
     $medi= DB::table('medicines')
     ->whereNotIn('id_medicine', function($query) use ($mr) {
         $query->select('id_medicine')
@@ -640,8 +640,9 @@ public function themdonthuoc($id)
               ->where('id_prescription', $mr->id_prescription);
     })
     ->get();
-
+//Trả về thông tin
     $pm=DB::table('prescription_medicines')
+    ->join('medicines', 'prescription_medicines.id_medicine', '=', 'medicines.id_medicine')
     ->where('prescription_medicines.id_prescription', $mr->id_prescription)
     ->get();
     return view('doctor_2donthuoc', [

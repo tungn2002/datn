@@ -8,19 +8,11 @@
 
 
     <!-- Favicon -->
+    <link rel="shortcut icon" type="x-icon" href="{{ asset('ad/img/user.jpg') }}">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -42,7 +34,7 @@
                
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="{{ route('admin1') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt"></i>Thông tin cá nhân</a>
+                    <a href="{{ route('admin1') }}" class="nav-item nav-link "><i class="fa fa-tachometer-alt"></i>Thông tin cá nhân</a>
                   
                     <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fas fa-hospital"></i>Bệnh viện</a>
                     <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fas fa-brain"></i>Chuyên khoa</a>
@@ -73,8 +65,8 @@
         <div class="content">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
-                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+            <a href="{{ route('admin1') }}" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fas fa-user-cog"></i></h2>
                 </a>
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
@@ -131,8 +123,9 @@
                                         <input type="tel" class="form-control" name="phonenumber" id="inputEmail3" required>
                                     </div>
                                 </div>
-
+                                <div class=" d-flex justify-content-end">
                                 <button type="submit" class="btn btn-primary">Thêm</button>
+                                </div>
                             </form>
                             @if (\Session::has('message'))
                         <div class="alert alert-success">
@@ -166,9 +159,10 @@
 </form>
 </div>
 
-            <table class="table table-striped custab mt-4 table-bordered">
-    <thead>
-        <tr>
+
+<table  class="table table-striped table-bordered table-hover mt-4" style="border:1px solid #d4d4d4 ;border-radius: 12px; overflow: hidden;border-collapse: separate; border-spacing: 0;">
+    <thead class="thead-light" style="background-color: #9beeff; color: #333333;">
+        <tr style="transition: background-color 0.3s, transform 0.3s; cursor: pointer;" onmouseover="this.style.backgroundColor='#f1f1f1';" onmouseout="this.style.backgroundColor='';">
             <th>ID</th>
             <th>Tên</th>
             <th>Email</th>
@@ -186,8 +180,8 @@
                                 <td>{{$item->phonenumber}}</td>
                           
                                 <td class="text-center">       
-                                <button class="btn btn-warning btn-edit" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $item->id_user }}">Sửa</button> 
-                                    <button class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$item->id_user}}">Xóa</button>
+                                <button class="btn btn-warning btn-edit"  style=" border-radius: 6px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); border: none; transition: background-color 0.3s, transform 0.3s;" data-bs-toggle="modal" data-bs-target="#editModal" data-id="{{ $item->id_user }}">Sửa</button> 
+                                    <button class="btn btn-danger btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{$item->id_user}}"  style=" border-radius: 6px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); border: none; transition: background-color 0.3s, transform 0.3s;">Xóa</button>
                                 </td>
                             </tr>
                          
@@ -199,7 +193,7 @@
     </table>
     @isset($user)
     <div class="container-footer-kt">
-            <nav aria-label="Page navigation example" class="ml-5 footer-kt">
+            <nav aria-label="Page navigation example" class="ml-5 footer-kt" style="display: flex; justify-content: center;">
                 {{ $user->withQueryString()->links('pagination::bootstrap-4') }}
             </nav>
         </div>
@@ -275,12 +269,7 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"></script>
-
+   
     <!-- Template Javascript -->
     <script src="{{ asset('ad/main.js') }}"></script>
 <script>
