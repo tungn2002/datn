@@ -29,6 +29,7 @@
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('ad/style.css') }}" rel="stylesheet">
+
 </head>
 
 <body>

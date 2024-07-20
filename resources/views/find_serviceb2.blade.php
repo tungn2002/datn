@@ -113,8 +113,8 @@
 
   <div class="page-section">
     <div class="container">
-    <div class="card mb-3" style="height: 30%; overflow: hidden;">
-  <div class="row no-gutters">
+    <div class="card mb-3" style="height: 30%; overflow: hidden;" >
+  <div class="row no-gutters"  style="height: auto; overflow: hidden; border: 2px solid #049371; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
             <div class="col-md-4" style="height: 15em;">
             <img src="{{ asset('image/' . $doctor->avatar) }}" class="card-img" alt="..." style="height: 15em; object-fit: cover; width:15em;">
             </div>
@@ -128,8 +128,8 @@
                   </div>
       </div>
 </div>
-<div class="card mb-3" style="height: 300px; overflow-y: auto;">
-  <div class="row" style="height: 100%;">
+<div class="card mb-3" style="height: 300px; overflow-y: auto; border: 2px solid #049371; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+  <div class="row" style="height: 100%;" >
 
     @isset($clinic)
     @foreach ($clinic as $item)
@@ -142,9 +142,9 @@
           <img src="{{ asset('image/' . $item->image) }}" style="width: 100%; height: auto; object-fit: cover;" alt="">
         </div>
         <div class="body">
-          <h5 class="post-title"><a href="{{ route('serviceff', ['id' => $item->id_clinic]) }}">{{$item->servicename}}</a></h5>
+          <h5 class="post-title" style="font-size:16px"><a href="{{ route('serviceff', ['id' => $item->id_clinic]) }}"><b>{{$item->servicename}}</b></a></h5>
           <div class="site-info">
-            <div class="site-info">Phòng: {{$item->clinicname}}</div>
+            <div class="site-info" style="font-size:14px">Phòng: {{$item->clinicname}}</div>
           </div>
         </div>
       </div>

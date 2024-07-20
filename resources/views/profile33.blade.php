@@ -216,32 +216,66 @@
 
   <h4><b>Danh sách đơn đặt khám</b></h4>
  
-  <a href=" {{ route('profile3') }}" class="btn btn-primary"style="color: #000000;border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #00FFFF 0%, #00FFFF 100%);">Chờ duyệt</a>
-  <a href=" {{ route('profile32') }}" class="btn btn-primary" style="color: #000000; border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #00FFFF 0%, #00FFFF 100%);">Chưa thanh toán</a>
-  <a href=" {{ route('profile33') }}" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: linear-gradient(to left, #4cf5bc 0%, #07d590  100%);">Đã thanh toán và đã khám</a>
+  <a href=" {{ route('profile3') }}" class="btn btn-primary"style="color: #000000;border-radius: 2rem ; border:3px solid #4cf5bc;background-color: #EEEDEB"><b>Chờ duyệt</b></a>
+  <a href=" {{ route('profile32') }}" class="btn btn-primary" style="color: #000000;border-radius: 2rem ; border:3px solid #4cf5bc;background-color: #EEEDEB"><b>Chưa thanh toán</b></a>
+  <a href=" {{ route('profile33') }}" class="btn btn-primary" style="border-radius: 2rem ; border-width: 0px;background-image: #4cf5bc;"><b>Đã thanh toán và đã khám</b></a>
 
 
     <div class="container mt-5">
     @isset($results)
     @foreach ($results as $record)
-      <div class="card" style="margin-bottom: 5px; border: 2px solid #28a745; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); border-radius: 10px;">
+
+    <div class="card"style="margin-bottom: 5px; border: 2px solid #28a745; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); border-radius: 10px;">
           <div class="card-body">
-          <p class="card-text" style="font-size: 21px;"> Tên bệnh nhân: <span style="color: #02c697 "><b>{{ $record->prname }}</b></span></p>
-          <p class="card-text"><i class="far fa-id-card"></i> Mã số đơn: <b style="color: #005328"> {{ $record->id_result }}</b></p>
-              <p class="card-text"><i class="far fa-hospital"></i> Phòng khám: <b style="color: #005328"> {{ $record->clinicname }}</b></p>
+          <p class="card-text text-center"  style="font-size: 21px;"><b style="color: #005328">Mã đơn khám:  {{ $record->id_result }}</b></p>
+          <p class="card-text" style="display: flex; justify-content: space-between;">
+    <span style="flex: 1;"><i class="far fa-user"></i> Tên bệnh nhân:</span>
+    <span style="flex: 2; font-size: 18px; text-align: right; word-break: break-word; color: #02c697;">
+        <b>{{ $record->prname }}</b>
+    </span>
+</p>
 
-              <p class="card-text"><i class="fas fa-calendar-alt"></i> Ngày khám: <b style="color: #005328"> {{ $record->day }}</b></p>
-              <p class="card-text"><i class="far fa-clock"></i> Giờ khám: <b style="color: #005328"> {{ substr($record->time, 0, 5) }}</b></p>
-              <p class="card-text"><i class="fas fa-clipboard-list"></i> Trạng thái: <b style="color: #005328">{{ $record->status }}</b></p>
+<p class="card-text" style="display: flex; justify-content: space-between;">
+    <span style="flex: 1;"><i class="far fa-hospital"></i> Phòng khám:</span>
+    <span style="flex: 2; text-align: right; word-break: break-word; color: #005328;">
+        <b>{{ $record->clinicname }}</b>
+    </span>
+</p>
 
-              <hr style="  border-top: 1px dashed black">
-              <p class="card-text"><i class="fas fa-stopwatch"></i> Giờ kết thúc: {{ substr($record->finishtime, 0, 5) }}</p>
-              <p class="card-text"><i class="far fa-calendar-check"></i> Ngày đặt: {{ $record->booking_date }}</p>
+<p class="card-text" style="display: flex; justify-content: space-between;">
+    <span style="flex: 1;"><i class="fas fa-calendar-alt"></i> Thời gian khám:</span>
+    <span style="text-align: right; white-space: nowrap; color: #005328;"><b>{{ substr($record->time, 0, 5) }}   {{ \Carbon\Carbon::createFromFormat('Y-m-d', $record->day)->format('d/m/Y') }}</b></span>
+</p>
 
-              <p class="card-text"><i class="fas fa-stethoscope"></i> Dịch vụ: {{ $record->servicename }}</p>   
-              <hr style="  border-top: 1px dashed black">
+<hr style="border-top: 1px dashed black;">
 
-              @if ($record->status === 'đã khám')
+<p class="card-text" style="display: flex; ">
+    <span style="flex: 1;"><i class="far fa-calendar-check"></i> Ngày đặt:</span>
+    <span style=" white-space: nowrap;">  {{ \Carbon\Carbon::createFromFormat('Y-m-d', $record->booking_date)->format('d/m/Y') }}</span>
+</p>
+<p class="card-text" style="display: flex; justify-content: space-between;">
+    <span style="flex: 1;"><i class="fas fa-stethoscope"></i> Dịch vụ:</span>
+    <span style="flex: 2; text-align: right; word-break: break-word; display: inline-block;">
+        {{ $record->servicename }}
+    </span>
+</p>
+
+
+
+<hr style="border-top: 1px dashed black;">
+<p class="card-text" style="display: flex; justify-content: space-between;">
+    <span style="flex: 1;"><i class="far fa-check-square"></i> Trạng thái:</span>
+    <span style="flex: 2; text-align: right; word-break: break-word; color: #005328;">
+        <b>{{ $record->status }}</b>
+    </span>
+</p>
+<p class="card-text" style="display: flex; justify-content: space-between;">
+    <span style="flex: 1;"><i class="fas fa-dollar-sign"></i> Giá dịch vụ:</span>
+    <span style="text-align: right; white-space: nowrap; color: #fc4a5f;"><b>{{ number_format($record->price, 0, '', '.') }}đ</b></span>
+</p>
+<hr style="  border-top: 1px dashed black">
+
+@if ($record->status === 'đã khám')
               <p class="card-text"><i class="fas fa-poll"></i> Kết quả: {{ $record->detail }}</p>
               @if($record->image != null)
               Ảnh: 
@@ -252,7 +286,8 @@
                 <a href="{{ route('pdff', ['id' => $record->id_result]) }}" class="btn btn-primary float-right">Đơn thuốc</a>
             @else
             @endif
-          </div>
+            
+            </div>
       </div>
 
       @endforeach

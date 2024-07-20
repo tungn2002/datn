@@ -101,11 +101,15 @@
                     @isset($clinic)
                     <p><i class="fas fa-clinic-medical"></i> Phòng làm việc: <b style="color: #003553">{{ $clinic->clinicname }}</b></p>
                     <p><i class="fas fa-briefcase"></i> Dịch vụ khám: <b style="color: #003553">{{ $clinic->servicename }}</b></p>
+                    <p><i class="fas fa-info"></i> Chi tiết dịch vụ:</p>
+                    <p style="margin-left: 10px;">{!! nl2br($clinic->detail) !!}</p>
+
+                    <hr style="  border-top: 1px dashed black">
 
                     @endisset
 
                     <p><i class="far fa-calendar-check"></i> Khung giờ làm việc:</p>
-                    <p>{!! nl2br(Auth::user()->working_hours) !!}</p>
+                    <p style="margin-left: 10px;">{!! nl2br(Auth::user()->working_hours) !!}</p>
             </div>
 
             <div class="col-sm-12 col-xl-6 mt-4" style=" box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;width: 50em">

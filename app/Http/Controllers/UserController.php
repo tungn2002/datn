@@ -216,7 +216,8 @@ class UserController extends Controller
                ->join('services', '.clinics.id_service', '=', 'services.id_service')
                ->where('users.id_user', Auth::User()->id_user)
                ->where('medicalresults.status', 'chờ duyệt')
-               ->select('medicalresults.*', 'patientrecords.prname','appointments.day','appointments.time','appointments.finishtime','clinics.clinicname','services.servicename')
+               ->select('medicalresults.*', 'patientrecords.prname','appointments.day','appointments.time','appointments.finishtime','clinics.clinicname','services.servicename','services.price')
+               ->orderBy('medicalresults.id_result', 'desc') 
                ->paginate(2);
                     return view('profile3',['results'=>$results]);
             } else {
@@ -237,7 +238,8 @@ $results = DB::table('medicalresults')
 ->join('services', '.clinics.id_service', '=', 'services.id_service')
 ->where('users.id_user', Auth::User()->id_user)
 ->where('medicalresults.status', 'chưa thanh toán')
-->select('medicalresults.*', 'patientrecords.prname','appointments.day','appointments.time','appointments.finishtime','clinics.clinicname','services.servicename')
+->select('medicalresults.*', 'patientrecords.prname','appointments.day','appointments.time','appointments.finishtime','clinics.clinicname','services.servicename','services.price')
+->orderBy('medicalresults.id_result', 'desc') 
 ->paginate(2);
                     return view('profile32',['results'=>$results]);
             } else {
@@ -259,7 +261,8 @@ $results = DB::table('medicalresults')
                 ->join('services', '.clinics.id_service', '=', 'services.id_service')
                 ->where('users.id_user', Auth::User()->id_user)
                 ->whereIn('medicalresults.status', $statuses)
-                ->select('medicalresults.*', 'patientrecords.prname','appointments.day','appointments.time','appointments.finishtime','clinics.clinicname','services.servicename')
+                ->select('medicalresults.*', 'patientrecords.prname','appointments.day','appointments.time','appointments.finishtime','clinics.clinicname','services.servicename','services.price')
+                ->orderBy('medicalresults.id_result', 'desc') 
                 ->paginate(2);
                     return view('profile33',['results'=>$results]);
             } else {

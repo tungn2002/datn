@@ -16,30 +16,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 
 	<link href="{{ asset('main/theme.css') }}" rel="stylesheet">
-  <style>
-     .card-custom {
-            width: 220px;
-            height: 270px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .card-custom img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        .card-custom .btn {
-            margin-top: auto;
-        }
-  </style>
+  
 </head>
 <body>
 
@@ -172,13 +149,34 @@
           @foreach ($clinic as $item)
           
           <div class="col">
-            <div class="card-custom m-2 d-flex flex-column">
-                <img src="{{ asset('image/' . $item->avatar) }}" alt="Avatar">
-                <h5 class="mt-3" style="font-size:17px">{{$item->name}}</h5>
-                <p>Chuyên khoa: {{$item->spname}}</p>
-                    <a href="{{ route('servicebf', ['id' => $item->id_user]) }}" class="btn btn-primary mt-auto" >Đặt khám</a>
-            </div>
-        </div>
+    <div class="m-2 d-flex flex-column"
+         style="
+            width: 220px;
+            height: 270px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 1px solid #00D9A5;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        ">
+        <img src="{{ asset('image/' . $item->avatar) }}" alt="Avatar"
+             style="
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 1px solid #EEEDEB;
+            ">
+        <h5 class="mt-3" style="font-size:17px"><b>{{$item->name}}</b></h5>
+        <p>Chuyên khoa: {{$item->spname}}</p>
+        <a href="{{ route('servicebf', ['id' => $item->id_user]) }}" class="btn btn-primary mt-auto"
+           style="margin-top: auto;">Đặt khám</a>
+    </div>
+</div>
 
       
             @endforeach
@@ -193,7 +191,7 @@
         </div> 
            @isset($clinic)
     <div class="container-footer-kt">
-            <nav aria-label="Page navigation example" class="ml-5 footer-kt">
+            <nav aria-label="Page navigation example" class="ml-5 footer-kt" style="display: flex; justify-content: flex-end;">
                 {{ $clinic->withQueryString()->links('pagination::bootstrap-4') }}
             </nav>
         </div>

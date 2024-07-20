@@ -129,7 +129,7 @@
           <div class="col-md-8" style="padding-left:2em">
               <div class="card-body">
                   <h5 class="card-title mb-1">Dịch vụ: {{$service->servicename}}</h5>
-                  <p class="card-text mb-1">Giá:<span style="color: #049371;"> {{$service->price}} đồng</span> </p>
+                  <p class="card-text mb-1">Giá:<span style="color: #049371;"> {{ number_format($service->price, 0, '', '.') }} đồng</span> </p>
                   <p class="card-text mb-1">Phòng: {{$clinic1->clinicname}}</p>
               </div>
           </div>

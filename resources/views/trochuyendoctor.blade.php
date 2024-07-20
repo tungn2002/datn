@@ -342,57 +342,7 @@
    
         </div>
         <!-- Content End -->
-        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form method="POST" action="{{ route('xoahos') }}" id="deleteForm"> 
-            @csrf
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Xác nhận xóa</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Bạn có chắc chắn muốn xóa bệnh viện này?
-                    <input type="hidden" name="id_hospital" id="hospitalIdInput">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
-                    <button type="submit" class="btn btn-danger">Có, xóa!</button> </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Sửa Thông Tin Bệnh Viện</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="editForm" action=""  method="POST">
-                @csrf
-
-                    <div class="mb-3">
-                        <label for="hospitalname" class="form-label">Tên Bệnh Viện</label>
-                        <input type="text" class="form-control" id="hospitalname" name="hospitalname">
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Địa Chỉ</label>
-                        <input type="text" class="form-control" id="address" name="address">
-                    </div> 
-                    <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="submit" class="btn btn-primary" id="btnUpdate">Lưu Thay Đổi</button>
-            </div>
-                </form>
-            </div>
-           
-        </div>
-    </div>
-</div>
+       
 
 
     <!-- JavaScript Libraries -->
@@ -406,38 +356,7 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('ad/main.js') }}"></script>
-<script>
-  $(document).ready(function() {
-    $('#deleteModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Nút "Xóa" được click
-        var hospitalId = button.data('id'); // Lấy ID từ data-id của nút
-
-        var modal = $(this);
-        modal.find('#hospitalIdInput').val(hospitalId); // Điền ID vào input
-
-        // Cập nhật action của form
-        var form = modal.find('#deleteForm');
-        form.attr('action', form.attr('action').replace(':hospitalId', hospitalId)); 
-    });
-});
-
-
-$('.btn-edit').click(function() {
-    var hospitalId = $(this).data('id');
-    var row = $(this).closest('tr'); // Lấy hàng chứa nút "Sửa"
-
-    // Lấy dữ liệu từ các ô trong hàng
-    var hospitalName = row.find('td:eq(1)').text(); // Ô thứ 2 chứa tên bệnh viện
-    var address = row.find('td:eq(2)').text(); // Ô thứ 3 chứa địa chỉ
-
-    // Điền dữ liệu vào form
-    $('#editHospitalId').val(hospitalId);
-    $('#hospitalname').val(hospitalName);
-    $('#address').val(address);
-    $('#editForm').attr('action', '{{ url("capnhathos") }}/id=' + hospitalId); 
-
-});
-</script>
+  
 <script>
     setInterval(function() {
         // Gửi yêu cầu AJAX để lấy lại dữ liệu
@@ -455,8 +374,8 @@ $.each(response.results1, function(index, item) {
     html += '<img src="{{ asset("useravatar.png") }}" class="rounded-circle user_img">';
     html += '</div>';
     html += '<div class="user_info">';
-    html += '<span style="font-size: 20px;">' + item.name + '</span>';
-    html += '<p class="text-uppercase text-white">Tin nhắn mới <i style="color: #FF0000	;" class="fas fa-circle"></i></p>';
+    html += '<span style="font-size: 18px;">' + item.name + '</span>';
+    html += '<p class="text-uppercase text-white" style="font-size: 14px;">Tin nhắn mới <i style="color: #FF0000	;" class="fas fa-circle"></i></p>';
     html += '</div>';
     html += '</div>';
     html += '</a>';
@@ -476,8 +395,8 @@ $.each(response.results2, function(index, item) {
     html += '<img src="{{ asset("useravatar.png") }}" class="rounded-circle user_img">';
     html += '</div>';
     html += '<div class="user_info">';
-    html += '<span style="font-size: 15px;">' + item.name + '</span>';
-    html += '<p class="">Đã đọc</p>';
+    html += '<span style="font-size: 18px;">' + item.name + '</span>';
+    html += '<p class="" style="font-size: 14px;">Đã đọc</p>';
     html += '</div>';
     html += '</div>';
     html += '</a>';

@@ -146,7 +146,7 @@
               <div class="card-blog">
                 <div class="header">
                   <div class="post-category">
-                    <a href="#">{{$item->price}} đ</a>
+                    <a href="#">{{ number_format($item->price, 0, '', '.') }} đ</a>
                   </div>
                     <img src=" {{ asset('image/' . $item->image) }}" style=" width: 100%;height: 100%;object-fit: cover;" alt="">
                 </div>
@@ -170,16 +170,19 @@
             @endforeach
                         @endisset
                        
-                        @isset($clinic)
-  
-    <div class="container-footer-kt">
-            <nav aria-label="Page navigation example" class="ml-5 footer-kt">
-                {{ $clinic->withQueryString()->links('pagination::bootstrap-4') }}
-            </nav>
-        </div>
-    @endisset
+          
  
         </div> 
+        @isset($clinic)
+  
+  <div class="container-footer-kt" style="display: flex; justify-content: flex-end;">
+      <nav aria-label="Page navigation example" class="footer-kt">
+          {{ $clinic->withQueryString()->links('pagination::bootstrap-4') }}
+      </nav>
+  </div>
+  
+@endisset
+
         <div class="sidebar-block">
               <h3 class="sidebar-title">Thông tin bệnh viện</h3>
               @isset($clinic)
