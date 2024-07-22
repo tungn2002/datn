@@ -126,7 +126,7 @@
                 <a class="dropdown-item" href="{{ route('profile') }}"><i class="far fa-user"></i> Thông tin tài khoản</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('logout') }}">
-                <i class="fas fa-sign-out-alt"></i>Đăng xuất
+                <i class="fas fa-sign-out-alt"></i> Đăng xuất
                 </a>
               
             </div>

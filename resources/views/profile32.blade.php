@@ -270,7 +270,7 @@
 <p class="card-text" style="display: flex; justify-content: space-between;">
     <span style="flex: 1;"><i class="fas fa-notes-medical"></i> Lưu ý:</span>
     <span style="flex: 2; text-align: right; word-break: break-word; display: block;">
-        Khách hàng có mặt trước 5 phút để thanh toán
+    Giờ khám và giờ kết thúc chỉ mang tính dự kiến, có thể sẽ muộn hơn.
     </span>
 </p>
 

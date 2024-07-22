@@ -121,18 +121,18 @@
                                     
                                 
                                 <div class="row mb-3 mt-4">
-                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Ảnh dich vụ: </label>
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Ảnh dịch vụ: </label>
                                     <div class="col-sm-10">
                                     <input type="file" name="image" id="image" required>
                                     </div>
                                 </div>
                                 
                                 <div class="row mb-3">
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                 
-                                    <label for="time" class="form-label">Thời gian khám 1 đơn:</label>
+                                    <label for="time" class="form-label">Thời gian hoàn thành (dự kiến):</label>
                                    </div>
-                                   <div class="col-md-10">
+                                   <div class="col-md-8">
  
                                    <input type="text" class="form-control" name="time" id="time" placeholder="Giờ:phút" required>
                                         </div>
@@ -182,7 +182,7 @@
             <th>Chi tiết</th>
             <th>Giá</th>
             <th>Ảnh</th>
-            <th>Thời gian khám 1 đơn</th>
+            <th>Thời gian hoàn thành (dự kiến)</th>
 
             <th class="text-center">Tùy chọn</th>
         </tr>
@@ -284,7 +284,7 @@
                         <input type="text" class="form-control" id="price" name="price" required>
                     </div>
                     <div class="mb-3">
-                        <label for="editTime" class="form-label">Thời gian khám 1 đơn:</label>
+                        <label for="editTime" class="form-label">Thời gian hoàn thành (dự kiến):</label>
                         <input type="text" class="form-control" name="time" id="editTime" placeholder="Giờ:phút" required>
                     </div>
                     <div class="row mb-3 mt-4">

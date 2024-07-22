@@ -404,7 +404,7 @@
 
   <div class="page-section">
     <div class="container">
-      <h1 class="text-center wow fadeInUp">Trò chuyện với bác sĩ</h1>
+      <h2 class="text-center wow fadeInUp">Trò chuyện với bác sĩ</h2>
 
 
       @if ($errors->any())
@@ -597,7 +597,7 @@
                         $('#message-container').append(`
                             <div class="d-flex justify-content-start mb-4">
                                 <div class="img_cont_msg">
-                                    <img src="{{ asset('anhnv.png') }}" class="rounded-circle user_img_msg">
+                                    <img src="{{ asset('image/' . $u->avatar) }}" class="rounded-circle user_img_msg">
                                 </div>
                                 <div class="msg_cotainer">
                                     ${item.content}

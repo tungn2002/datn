@@ -125,7 +125,7 @@
               <form action="{{ route('timkiemb') }}" class="search-form" >
           
                 <div class="form-group">
-                  <input type="text" class="form-control" name="dl" placeholder="Nhập thông tin">
+                  <input type="text" class="form-control" name="dl" placeholder="Nhập tên bác sĩ cần tìm...">
                   <button type="submit" class="btn"><i class="fas fa-search"></i></span></button>
                 </div>
               </form>

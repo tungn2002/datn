@@ -747,6 +747,7 @@ $mrz=DB::table('consults') ->where('consults.id_cons', $id)->first();
     ->get();
     //donthuoc
     $pm=DB::table('prescription_medicines')
+    ->join('medicines', 'prescription_medicines.id_medicine', '=', 'medicines.id_medicine')
     ->where('prescription_medicines.id_prescription', $mrz->id_prescription)
     ->get();
     return view('doctor_2donthuoc', [

@@ -291,7 +291,7 @@
     <div class="card-custom m-2 d-flex flex-column">
         <img src="{{ asset('image/' . $item->avatar) }}" alt="Avatar">
         <h5 class="mt-3" style="font-size: 16px;font-weight: bold;">{{$item->name}}</h5>
-        <p>Chuyên khoa: {{$item->spname}}</p>
+        <p>CK: {{$item->spname}}</p>
         <a href="{{ route('chatuser2', ['id' => $item->id_user]) }}" class="btn btn-primary mt-auto">Trò chuyện</a>
     </div>
 </div>
@@ -299,7 +299,10 @@
     @endisset
 </div>
 
-
+<div class="card mb-3" style="margin-top:50px;border: 2px solid #049371; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px;">
+  <h4 style="padding: 10px 10px 0; color: #049371;"><b>Chi tiết:</b></h4>
+  <p style="margin: 1em 3em; font-size: 1em; line-height: 1.5; color: #333;">Nhận được sự tư vấn y tế và đơn thuốc từ các bác sĩ (Các bệnh,triệu chứng nhẹ thường gặp như: cảm cúm, cảm lạnh,...)</p>
+</div>
 </div>
 
 
@@ -311,16 +314,17 @@
   <div class="tab-pane fades show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
 
+
 </div>   
     </div>
-    <!-- /.col-md-8 -->
+    <!-- /.col-md-8 -->  
+
+
   </div>
   
-  
+
   
 </div>
-
-
 
 
 

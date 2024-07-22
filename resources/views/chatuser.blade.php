@@ -399,7 +399,7 @@
 
   <div class="page-section">
     <div class="container">
-      <h1 class="text-center wow fadeInUp">Hỏi đáp nhân viên</h1>
+      <h2 class="text-center wow fadeInUp">Hỏi đáp nhân viên</h2>
 
 
       @if ($errors->any())

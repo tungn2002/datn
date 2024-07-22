@@ -109,8 +109,7 @@
         <tr style="transition: background-color 0.3s, transform 0.3s; cursor: pointer;" onmouseover="this.style.backgroundColor='#f1f1f1';" onmouseout="this.style.backgroundColor='';">
                     <th>Mã lịch</th>
                     <th>Ngày khám</th>
-                    <th>Thời gian khám</th>
-                    <th>Thời gian hoàn thành</th>
+                    <th>Giờ khám (dự kiến)</th>
                     <th class="text-center">Tùy chọn</th>
                 </tr>
             </thead>
@@ -120,8 +119,7 @@
                     <tr>
                         <td>{{ $appointment->id_appointment }}</td>
                         <td>{{ $appointment->day }}</td>
-                        <td>{{ substr($appointment->time, 0, 5) }}</td>
-                        <td>{{ substr($appointment->finishtime, 0, 5) }}</td>
+                        <td>{{ substr($appointment->time, 0, 5) }}-{{ substr($appointment->finishtime, 0, 5) }}</td>
 
                         <td class="text-center">
                             <a class="btn btn-warning btn-edit" style=" border-radius: 6px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); border: none; transition: background-color 0.3s, transform 0.3s;"  href="{{ route('lichlamviecdetail', ['id' => $appointment->id_appointment]) }}">Thông tin bệnh nhân</a>

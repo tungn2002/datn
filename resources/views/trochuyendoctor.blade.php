@@ -328,7 +328,11 @@
                     
             </div>
             <!-- Blank End -->
-
+			<div class="col-sm-12 col-xl-6 mt-4" style=" box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px;width: 50em">
+                <h4 style="color: #33CCFF	;">Chi tiết:</h4>  
+				<p>Tư vấn và kê đơn thuốc cho khách hàng về các bệnh lý cơ bản và triệu chứng nhẹ.
+</p>
+               </div>
 
    
         </div>
