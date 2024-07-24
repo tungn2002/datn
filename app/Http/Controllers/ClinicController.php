@@ -34,7 +34,7 @@ class ClinicController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'clinicname' => 'required',
+            'clinicname' => 'required|unique:clinics,clinicname',
             'id_service' => 'required|exists:services,id_service',
             'id_user' => 'required|exists:users,id_user|unique:clinics,id_user',
             
@@ -46,6 +46,7 @@ class ClinicController extends Controller
             'id_user.required' => 'Không được bỏ trống bác sĩ.',
             'id_user.exists' => 'Bác sĩ không tồn tại.',
             'id_user.unique' => 'Bác sĩ đã có phòng.',
+            'clinicname.unique' => 'Tên này đã tồn tại',
 
         ]);
         // kiểm tra xem có đúng là bác sĩ không
@@ -90,7 +91,7 @@ class ClinicController extends Controller
     public function update(Request $request,$id)
     {
         $request->validate([
-            'clinicname' => 'required',
+            'clinicname' => 'required|unique:clinics,clinicname,' . $id . ',id_clinic',
             'id_service' => 'required|exists:services,id_service',
             'id_user' => 'nullable|exists:users,id_user|unique:clinics,id_user,' . $id . ',id_user',                 
 
@@ -100,6 +101,8 @@ class ClinicController extends Controller
             'id_service.exists' => 'Dịch vụ không tồn tại.',
             'id_user.exists' => 'Bác sĩ không tồn tại.',
             'id_user.unique' => 'Bác sĩ đã có phòng.',
+            'clinicname.unique' => 'Tên này đã tồn tại',
+
         ]);
 if( $request->id_user!=null){
     // kiểm tra xem có đúng là bác sĩ không

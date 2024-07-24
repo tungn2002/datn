@@ -17,7 +17,7 @@ class MedicineController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'medicinename'=>'required',
+            'medicinename'=>'required|unique:medicines,medicinename',
             'detail'=>'required',
             'ingredient'=>'required',
 
@@ -26,6 +26,7 @@ class MedicineController extends Controller
         'medicinname.required'=>'Không được bỏ trống tên',
         'detail.required'=>'Không được bỏ trống thông tin',
         'ingredient.required'=>'Không được bỏ trống thành phần',
+        'medicinename.unique' => 'Tên này đã tồn tại',
 
         ]);
 
@@ -59,7 +60,7 @@ class MedicineController extends Controller
     {
        
         $request->validate([
-            'medicinename'=>'required',
+            'medicinename'=>'required|unique:medicines,medicinename,' . $id . ',id_medicine',
             'detail'=>'required',
             'ingredient'=>'required',
 
@@ -68,6 +69,8 @@ class MedicineController extends Controller
         'medicine.required'=>'Không được bỏ trống tên',
         'detail.required'=>'Không được bỏ trống thông tin',
         'ingredient.required'=>'Không được bỏ trống thành phần',
+        'medicinename.unique' => 'Tên này đã tồn tại',
+
         ]);
         
         if (empty($id)) {

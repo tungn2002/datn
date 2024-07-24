@@ -331,7 +331,33 @@ $results = DB::table('medicalresults')
         
         
         public function admin1(){
-            return view('admin1');
+            $users = User::select(
+                'users.id_user',
+                'users.name',
+                'users.price',
+                DB::raw('COUNT(consults.user2_id) as consult_count'),
+                DB::raw('users.price * COUNT(consults.user2_id) as total_price')
+            )
+            ->leftJoin('consults', 'users.id_user', '=', 'consults.user2_id')
+            ->where('users.id_role', 3)
+            ->groupBy('users.id_user', 'users.name', 'users.price')
+            ->orderByDesc(DB::raw('users.price * COUNT(consults.user2_id)'))
+            ->paginate(5);
+            $results = MedicalResult::select(
+                DB::raw('MONTH(booking_date) as month'),
+                DB::raw('SUM(services.price) as total_amount')
+            )
+            ->join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
+            ->join('clinics', 'appointments.id_clinic', '=', 'clinics.id_clinic')
+            ->join('services', 'clinics.id_service', '=', 'services.id_service')
+            ->whereIn('medicalresults.status', ['đã khám', 'đã thanh toán'])
+            ->whereYear('medicalresults.booking_date', Carbon::now()->year)
+            ->groupBy(DB::raw('MONTH(booking_date)'))
+            ->orderBy(DB::raw('MONTH(booking_date)'))
+            ->get();
+            $months = $results->pluck('month');
+            $totals = $results->pluck('total_amount');
+            return view('admin1',['users'=>$users, 'months'=>$months,'totals'=>$totals, 'currentYear'=>Carbon::now()->year]);
         }
 
 

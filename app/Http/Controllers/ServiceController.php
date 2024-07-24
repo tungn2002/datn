@@ -202,7 +202,7 @@ return view('find_serviceb', ['clinic' => $clinics,'hos'=>  $firstPost]);
     public function store(Request $request)
     {
         $request->validate([
-            'servicename' => 'required',
+            'servicename' => 'required|unique:services,servicename',
     'detail' => 'required',
     'price' => 'required|numeric|min:0',
     'time' => 'required|date_format:H:i',
@@ -218,6 +218,8 @@ return view('find_serviceb', ['clinic' => $clinics,'hos'=>  $firstPost]);
 
             'image.required' => 'Không được bỏ trống tên hình ảnh',
             'image.image' => 'Hình ảnh phải là file ảnh hợp lệ.',
+            'servicename.unique' => 'Tên này đã tồn tại',
+
         ]);
         
 
@@ -252,10 +254,8 @@ return view('find_serviceb', ['clinic' => $clinics,'hos'=>  $firstPost]);
     }
     public function update(Request $request,$id)
     {
-        $request->validate([ 'servicename' => 'required',
+        $request->validate([ 'servicename' => 'required|unique:services,servicename,' . $id . ',id_service',
          'detail' => 'required',      'time' => 'required|date_format:H:i',
-
-
          'price' => 'required|numeric|min:0', 
           'image' => 'nullable|image',        
         ],[ 'servicename.required' => 'Không được bỏ trống tên', 
@@ -265,8 +265,9 @@ return view('find_serviceb', ['clinic' => $clinics,'hos'=>  $firstPost]);
           'price.min' => 'Giá phải lớn hơn 0.', 
           'time.required' => 'Không được bỏ trống thời gian khám',
           'time.date_format' => 'Thời gian khám phải nhập: giờ:phút',
-          'image.image' => 'Hình ảnh phải là file ảnh hợp lệ.', ]);
-        
+          'image.image' => 'Hình ảnh phải là file ảnh hợp lệ.', 'servicename.unique' => 'Tên này đã tồn tại',
+ ]);
+         
         if (empty($id)) {
             return redirect()->back()->with('message', 'ID dịch vụ không hợp lệ.');
         }

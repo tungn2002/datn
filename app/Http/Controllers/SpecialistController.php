@@ -17,10 +17,11 @@ class SpecialistController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'spname'=>'required',
+            'spname'=>'required|unique:specialists,spname',
     
         ],[
-        'spname.required'=>'Không được bỏ trống tên',       
+        'spname.required'=>'Không được bỏ trống tên',
+        'spname.unique' => 'Tên này đã tồn tại',
 
         ]);
         
@@ -50,10 +51,11 @@ class SpecialistController extends Controller
     public function update(Request $request,$id)
     {
         $request->validate([
-            'spname'=>'required',
-    
+            'spname' => 'required|unique:specialists,spname,' . $id . ',id_specialist',
         ],[
         'spname.required'=>'Không được bỏ trống tên',
+        'spname.unique' => 'Tên này đã tồn tại',
+
         ]);
         
         if (empty($id)) {

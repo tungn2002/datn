@@ -11,6 +11,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Template Stylesheet -->
     <link href="{{ asset('ad/style.css') }}" rel="stylesheet">
@@ -30,7 +31,7 @@
                
                 </div>
                 <div class="navbar-nav w-100" >
-                    <a href="{{ route('admin1') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt"></i>Thông tin cá nhân</a>
+                    <a href="{{ route('admin1') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt"></i>Bảng điều khiển</a>
                   
                     <a href="{{ route('hospital-index') }}" class="nav-item nav-link"><i class="fas fa-hospital"></i>Bệnh viện</a>
                     <a href="{{ route('specialist-index') }}" class="nav-item nav-link"><i class="fas fa-brain"></i>Chuyên khoa</a>
@@ -97,7 +98,84 @@
                </div>
                </div>
           
+               <div class="container-fluid pt-4 px-4">
+               <h4>Số đơn tư vấn của bác sĩ:</h4>
+               <table  class="table table-striped table-bordered table-hover mt-4" style="border:1px solid #d4d4d4 ;border-radius: 12px; overflow: hidden;border-collapse: separate; border-spacing: 0;">
+    <thead class="thead-light" style="background-color: #9beeff; color: #333333;">
+        <tr style="transition: background-color 0.3s, transform 0.3s; cursor: pointer;" onmouseover="this.style.backgroundColor='#f1f1f1';" onmouseout="this.style.backgroundColor='';">
+            <th>Mã bác sĩ</th>
+            <th>Bác sĩ</th>
+            <th>Số đơn tư vấn</th>
+            <th>Tổng tiền</th>
+        </tr>
+    </thead>
+    @isset($users)
+                            @foreach ($users as $item)
+                            <tr>
+                                <td>{{$item->id_user}}</td>
+                                <td >{{$item->name}}</td>
+                                <td >{{ $item->consult_count}}</td>
+                                <td>{{$item->total_price}}</td>
 
+                            
+                            </tr>
+                         
+                            @endforeach
+                        @endisset
+
+         
+
+    </table>
+    @isset($users)
+    <div class="container-footer-kt">
+            <nav aria-label="Page navigation example" class="ml-5 footer-kt">
+                {{ $users->links('pagination::bootstrap-4') }}
+            </nav>
+        </div>
+    @endisset
+    </div>
+
+    <div class="container-fluid pt-4 px-4">
+    <h4>Biểu đồ tổng tiền theo tháng trong năm {{ $currentYear }}:</h4>
+
+
+    <canvas id="myChart"></canvas>
+
+<script>
+    // Lấy dữ liệu từ Blade
+    const months = @json($months);
+    const totals = @json($totals);
+
+    // Tạo biểu đồ
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: months.map(month => `Tháng ${month}`), // Đổi thành định dạng tháng
+            datasets: [{
+                label: 'Tổng tiền',
+                data: totals,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+
+
+
+
+
+    </div>
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
