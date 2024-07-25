@@ -11,9 +11,6 @@ class PrescriptionController extends Controller
     
     public function index(){
         $prescription = Prescription::paginate(5); 
-        if (!$prescription) {
-            return view('pre', ['message' => 'No record found.']);
-        }
         return view('pre', ['prescription' => $prescription]);
     }
 /*

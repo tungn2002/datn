@@ -81,14 +81,14 @@ class UserController extends Controller
        
         User::where('id_user', $user->id_user)->update(['token' => $token]);
         $user=User::where('email',$request->email)->first();
-
+//gửi mail 
         Mail::send('check_email_forget',compact('user'), function($email) use($user){
             $email->subject('Đặt lại mật khẩu');
             $email->to($user->email,$user->name); });
             return redirect()->back()->with('message', 'Vui lòng check mail');
        
     }
-    //trang đổi mật khẩu
+    //trang đổi mật khẩu khi ấn trong email
     public function getPass($id, $token){
         $user=User::where('id_user',$id)->first();
         if($user->token===$token){
@@ -131,7 +131,7 @@ class UserController extends Controller
     
     $credentials = $request->only(['email', 'password']);
 
-    if (Auth::attempt($credentials)) {
+    if (Auth::attempt($credentials)) {//kiểm tra thông tin và đăng nhập
         $user = Auth::user();
 
         if( $user->id_role==2){
@@ -154,11 +154,11 @@ class UserController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::logout();//Đăng xuất
 
-        $request->session()->invalidate();
+        $request->session()->invalidate();//vô hiệu hóa phiên
 
-        $request->session()->regenerateToken();
+        $request->session()->regenerateToken(); //tao csrf mới
 
         return redirect()->route('login');
     }
@@ -169,10 +169,9 @@ class UserController extends Controller
         public function trangchu(){
             return view('index');
         }
-
+//thông tin cá nhân khách hàng
         public function profile(){
-            if (Auth::check() && Auth::User()->id_role==2) {
-                     $user=Auth::User();
+                $user=Auth::User();
 //
                $patientRecords = PatientRecord::where('id_user', Auth::User()->id_user)->paginate(2);
                $results = DB::table('medicalresults')
@@ -181,14 +180,10 @@ class UserController extends Controller
                ->where('users.id_user', Auth::User()->id_user)
                ->select('medicalresults.*')
                ->paginate(2);
-                    return view('profile',['user'=>$user,'patientRecords'=>$patientRecords,'results'=>$results]);
-            } else {
-                return redirect()->route('login')->with('message', 'Bạn chưa đăng nhập');
-
-            }
+                return view('profile',['user'=>$user,'patientRecords'=>$patientRecords,'results'=>$results]);
+           
         }
         public function profile2(){
-            if (Auth::check() && Auth::User()->id_role==2) {
                      $user=Auth::User();
 //
                $patientRecords = PatientRecord::where('id_user', Auth::User()->id_user)->paginate(2);
@@ -199,13 +194,9 @@ class UserController extends Controller
                ->select('medicalresults.*')
                ->paginate(2);
                     return view('profile2',['user'=>$user,'patientRecords'=>$patientRecords,'results'=>$results]);
-            } else {
-                return redirect()->route('login')->with('message', 'Bạn chưa đăng nhập');
-
-            }
+         
         }
         public function profile3(){
-            if (Auth::check() && Auth::User()->id_role==2) {
                      $user=Auth::User();
 //
                $results = DB::table('medicalresults')
@@ -220,14 +211,10 @@ class UserController extends Controller
                ->orderBy('medicalresults.id_result', 'desc') 
                ->paginate(2);
                     return view('profile3',['results'=>$results]);
-            } else {
-                return redirect()->route('login')->with('message', 'Bạn chưa đăng nhập');
-
-            }
+           
         }
 
         public function profile32(){
-            if (Auth::check() && Auth::User()->id_role==2) {
                      $user=Auth::User();
 //
 $results = DB::table('medicalresults')
@@ -242,14 +229,9 @@ $results = DB::table('medicalresults')
 ->orderBy('medicalresults.id_result', 'desc') 
 ->paginate(2);
                     return view('profile32',['results'=>$results]);
-            } else {
-                return redirect()->route('login')->with('message', 'Bạn chưa đăng nhập');
-
-            }
         }
 
         public function profile33(){
-            if (Auth::check() && Auth::User()->id_role==2) {
                      $user=Auth::User();
 //
                 $statuses = ['đã khám', 'đã thanh toán'];
@@ -265,13 +247,10 @@ $results = DB::table('medicalresults')
                 ->orderBy('medicalresults.id_result', 'desc') 
                 ->paginate(2);
                     return view('profile33',['results'=>$results]);
-            } else {
-                return redirect()->route('login')->with('message', 'Bạn chưa đăng nhập');
 
-            }
         }
        
-        //
+        //Khách hàng xóa đơn
         public function xoaddk(Request $request)
         {
             $request->validate([
@@ -283,7 +262,7 @@ $results = DB::table('medicalresults')
             return redirect()->back()->with('message', 'Xóa đơn khám bệnh thành công');
         }
     
-
+//Khách hàng sửa thông tin
         public function editprofile(Request $request)
         {
             $request->validate([
@@ -325,12 +304,12 @@ $results = DB::table('medicalresults')
                 $user->update();
             }
             
-            //return redirect()->route('danhsachchucvu');
             return redirect()->back()->with('message', 'Sửa thành công');
         }
         
-        
+        //Trang admin
         public function admin1(){
+            //Thống kê bác sĩ có số đơn tư vấn cao đến thấp
             $users = User::select(
                 'users.id_user',
                 'users.name',
@@ -338,11 +317,12 @@ $results = DB::table('medicalresults')
                 DB::raw('COUNT(consults.user2_id) as consult_count'),
                 DB::raw('users.price * COUNT(consults.user2_id) as total_price')
             )
-            ->leftJoin('consults', 'users.id_user', '=', 'consults.user2_id')
+            ->leftJoin('consults', 'users.id_user', '=', 'consults.user2_id')//hiện cả bác sĩ không có đơn nào
             ->where('users.id_role', 3)
             ->groupBy('users.id_user', 'users.name', 'users.price')
-            ->orderByDesc(DB::raw('users.price * COUNT(consults.user2_id)'))
+            ->orderByDesc(DB::raw('users.price * COUNT(consults.user2_id)'))//giảm dần
             ->paginate(5);
+            //Thống kê theo tháng trong năm hiện tại
             $results = MedicalResult::select(
                 DB::raw('MONTH(booking_date) as month'),
                 DB::raw('SUM(services.price) as total_amount')
@@ -352,8 +332,8 @@ $results = DB::table('medicalresults')
             ->join('services', 'clinics.id_service', '=', 'services.id_service')
             ->whereIn('medicalresults.status', ['đã khám', 'đã thanh toán'])
             ->whereYear('medicalresults.booking_date', Carbon::now()->year)
-            ->groupBy(DB::raw('MONTH(booking_date)'))
-            ->orderBy(DB::raw('MONTH(booking_date)'))
+            ->groupBy(DB::raw('MONTH(booking_date)'))//nhóm dữ liệu để tính tổng theo tháng
+            ->orderBy(DB::raw('MONTH(booking_date)'))//sắp xếp theo tháng
             ->get();
             $months = $results->pluck('month');
             $totals = $results->pluck('total_amount');
@@ -388,7 +368,7 @@ public function choduyet_empl()
     ]);
     
 }
-public function findchoduyet(Request $request)
+public function findchoduyet(Request $request)//tìm kiếm đơn chờ duyệt
 {
     
     $medicalResults = MedicalResult::join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
@@ -403,6 +383,7 @@ public function findchoduyet(Request $request)
     ]);
     
 }
+//xác nhận duyệt đơn
 public function xacnhanduyet($id)
 {
   
@@ -424,7 +405,7 @@ public function xacnhanduyet($id)
     return redirect()->back()->with('message', 'Duyệt thành công');
 }
 
-
+//trang đơn chưa thanh toán
 public function chothanhtoan_empl()
 {
     $medicalResults = MedicalResult::join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
@@ -440,7 +421,7 @@ public function chothanhtoan_empl()
     ]);
     
 }
-
+//tìm kiếm đơn chưa thanh toán
 public function findchothanhtoan(Request $request)
 {
     $medicalResults = MedicalResult::join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
@@ -457,6 +438,7 @@ public function findchothanhtoan(Request $request)
     ]);
     
 }
+//Xác nhận thanh toán
 public function xacnhanthanhtoan($id)
 {
   
@@ -478,7 +460,7 @@ public function xacnhanthanhtoan($id)
     return redirect()->back()->with('message', 'Thanh toán thành công');
 }
 
-
+//Trang hiện đơn đã thanh toán và đã khám
 public function dathanhtoan_empl()
 {
     $statuses = ['đã khám', 'đã thanh toán'];
@@ -498,7 +480,7 @@ public function dathanhtoan_empl()
     
 }
 
-
+//trang thông tin bác sĩ
 public function doctor(){
     $medicine = Medicine::paginate(5); 
     $sp = Specialist::where('id_specialist',Auth::user()->id_specialist)->first();
@@ -510,16 +492,16 @@ public function doctor(){
     //
     return view('doctor',['medicine' => $medicine,'sp'=>$sp,'clinic'=>$clinic]);
 }
+//tìm kiếm thuốc
 public function findthuoc(Request $request){
 
-$medicine = Medicine::where('medicinename','like', '%'.$request->dl.'%')->paginate(3);
+$medicine = Medicine::where('medicinename','like', '%'.$request->dl.'%')->paginate(5);
 
     return view('doctor',['medicine' => $medicine]);
 }
-
+//xem lịch làm việc
 public function lichlamviec()
-{
-
+{//hiện lịch đã được duyệt
     $userId = Auth::user()->id_user;
 
     $statuses = ['chưa thanh toán', 'đã thanh toán','đã khám'];
@@ -542,13 +524,13 @@ public function lichlamviec()
 }
 
 
-public function lichlamviecf($date)
+public function lichlamviecf($date)//hiện lịch theo ngày đã chọn
 {
 
 
     $userId = Auth::user()->id_user;
   
-  
+  //lấy các ngày có lịch
     $statuses = ['chưa thanh toán', 'đã thanh toán', 'đã khám'];
 
     $mrRecords = DB::table('appointments')
@@ -563,7 +545,7 @@ public function lichlamviecf($date)
     $markedDates = $mrRecords->pluck('day')->toArray();
     //
     $clinic = Clinic::where('id_user', $userId)->firstOrFail();
-
+//lấy ra danh sách ca khám
     $results = DB::table('medicalresults')
     ->join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
     ->where(function($query) {
@@ -582,7 +564,7 @@ public function lichlamviecf($date)
     
 
 }
-
+//thông tin bệnh nhân
 public function lichlamviecdetail($id)
 {
     $patientRecords = DB::table('patientrecords')
@@ -590,7 +572,7 @@ public function lichlamviecdetail($id)
     ->select('patientrecords.*', 'medicalresults.reason')
     ->where('medicalresults.id_sch', $id)
     ->first();
-
+//đã thanh toán, khám thì mới hiện chỗ cập nhật
     $updatekq=DB::table('medicalresults')
     ->where('medicalresults.id_sch', $id)
     ->where('medicalresults.id_mr',   $patientRecords->id_pr)
@@ -598,6 +580,7 @@ public function lichlamviecdetail($id)
     ->first();
 $dk=null;
 
+//đã khám thì mới hiện kq
     if($updatekq){
         if($updatekq->status=='đã khám'){
                     $dk=$updatekq->id_result;
@@ -651,6 +634,7 @@ public function capnhatkq(Request $request,$id)
    
     return redirect()->back()->with('message', 'Cập nhật kết quả khám bệnh thành công');
 }
+//thêm đơn thuốc
 public function themdonthuoc($id)
 {
 //Lấy thuốc đã có
@@ -658,7 +642,7 @@ public function themdonthuoc($id)
     ->join('medicalresults', 'prescriptions.id_pre', '=', 'medicalresults.id_prescription')
     ->where('medicalresults.id_result', $id)
     ->first();
-//Lấy thuốc trừ các thuốc đã có
+//Lấy thuốc ngoại trừ các thuốc đã kê trong ds
     $medi= DB::table('medicines')
     ->whereNotIn('id_medicine', function($query) use ($mr) {
         $query->select('id_medicine')
@@ -937,7 +921,7 @@ $imageName = time() . '.' . $request->avatar->extension();
         $user->update();
         return redirect()->back()->with('message', 'Sửa thành công');
     }
-       //bác sĩ cập nhật khung giừo
+       //bác sĩ cập nhật khung giờ
     public function updatewh(Request $request)
     {
         $request->validate([
@@ -952,7 +936,7 @@ $imageName = time() . '.' . $request->avatar->extension();
         return redirect()->back()->with('message', 'Cập nhật thành công');
     }
        
-
+//trang quản lý kh
     public function qlkhachhang(){
         $user = DB::table('users')
         ->where('users.id_role', 2)
@@ -1055,7 +1039,7 @@ $imageName = time() . '.' . $request->avatar->extension();
             return redirect()->back()->with('message', 'Sửa thành công');
         }
         
-         
+    //trang quản lý nhân viên
     public function qlnhanvien(){
         $user = DB::table('users')
         ->where('users.id_role', 4)

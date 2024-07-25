@@ -54,7 +54,7 @@ class PatientRecordController extends Controller
         )->count;
     
         if ($userCount == 0) {
-            return redirect()->back()->with('message', 'Người dùng này không có quyền sửa hồ sơ bệnh nhân.');
+            return redirect()->back()->with('message', 'Người dùng này không có quyền thêm hồ sơ bệnh nhân.');//nhầm id sang bs,nv
         }
     
         PatientRecord::create($request->all());

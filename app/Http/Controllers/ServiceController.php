@@ -67,7 +67,7 @@ class ServiceController extends Controller
         $service =  Service::find($clinic1->id_service);
         $currentDate = Carbon::now(); // Lấy ngày hiện tại
         $nextDay = $currentDate->addDays(1);
-        $clinics = Appointment::where('id_clinic',$id)
+        $clinics = Appointment::where('id_clinic',$id)//
         ->whereDate('day', '>', $nextDay ->toDateString())
         ->get();
 
@@ -75,11 +75,9 @@ class ServiceController extends Controller
             return redirect()->route('servicef')->with('message', 'không có dịch vụ nào');
         
         }
-
-            // Extract unique dates from appointments
+//lấy ds ngày và sắp xếp
         $uniqueDates = $clinics->unique('day')->pluck('day');
 
-        // Sort dates in ascending order (optional)
         $uniqueDates = $uniqueDates->sort();
 
         return view('find_service2', ['clinic1'=>$clinic1,'app' => $clinics,'service'=>$service,'uniqueDates'=>$uniqueDates]);
@@ -92,7 +90,7 @@ class ServiceController extends Controller
         
         $clinic1 = Clinic::find($id);
         $service =  Service::find($clinic1->id_service);
-        $app = Appointment::where('id_clinic', $id)
+        $app = Appointment::where('id_clinic', $id)//left lấy ra toàn bộ cả app ko có trong mr. bảng có null sẽ là chưa có ai đặt
         ->where('day', $day)
         ->leftJoin('medicalresults', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
         ->whereNull('medicalresults.id_sch')
@@ -122,7 +120,7 @@ class ServiceController extends Controller
             return redirect()->route('servicef')->with('message', 'không có dịch vụ nào');
 
         }
-        return view('find_service4', ['idapp'=>$id,'pr'=>$pr]);
+        return view('find_service4', ['idapp'=>$id,'pr'=>$pr]);//id lịch và hồ sơ
     }
 
     //lưu đơn

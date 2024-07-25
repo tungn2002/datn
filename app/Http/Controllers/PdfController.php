@@ -23,9 +23,8 @@ use App\Models\PrescriptionMedicine;
 class PdfController extends Controller
 {
     public function pdf($id){
-        $pdf = \App::make('dompdf.wrapper');
+        $pdf = \App::make('dompdf.wrapper');//tạo pdf
         
-
         //thong tin bv
         $h = Hospital::first();
         //thong tin bacsi
@@ -96,7 +95,7 @@ class PdfController extends Controller
              <p style="text-align: right; margin-right: 50px; margin-top: 100px; ">'.$user->name.'</p>
 
         ');
-        return $pdf->stream();
+        return $pdf->stream();//hiển thị pdf
     }
 
     //user

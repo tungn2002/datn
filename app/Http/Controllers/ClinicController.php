@@ -16,7 +16,7 @@ class ClinicController extends Controller
   
     public function index(){
 
-        $clinicUserIds = Clinic::select('id_user')->get()->pluck('id_user');
+        $clinicUserIds = Clinic::select('id_user')->get()->pluck('id_user');//trả về mảng chỉ chứa các giá trị id_user
 
         //không lấy bác sĩ đã có phòng
         $users = User::where('id_role', 3)

@@ -33,20 +33,21 @@ public function execPostRequest($url, $data)// tra ve json
 }
 
     public function online_checkout(Request $request){
-        $user=User::where('id_user',$request->id)->first();
+        $user=User::where('id_user',$request->id)->first();//lấy thông tin bác sĩ
   
 
         
-        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
+        $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";//mở ra trang thanh toán
 
-
+//mã đăng ký ms dc cung cấp: mã test
         $partnerCode = 'MOMOBKUN20180529';
         $accessKey = 'klm05TvNBzhg7h7j';
         $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+
         $orderInfo = "Thanh toán qua MoMo";
-        $amount = $user->price;
+        $amount = $user->price;//giá tư vấn
         $orderId = time() ."";
-        $redirectUrl = "http://127.0.0.1:8000/xacnhanchat?id=".$user->id_user;
+        $redirectUrl = "http://127.0.0.1:8000/xacnhanchat?id=".$user->id_user;//sau khi thành công
         $ipnUrl = "http://127.0.0.1:8000/xacnhanchat?id=".$user->id_user;
 
         $extraData = "";
@@ -54,14 +55,11 @@ public function execPostRequest($url, $data)// tra ve json
         
             
             $requestId = time() . "";
-            //$requestType = "payWithATM";
-            $requestType = "captureWallet";
+            $requestType = "captureWallet";//QR
 
-            //$extraData = ($_POST["extraData"] ? $_POST["extraData"] : "");
-            //before sign HMAC SHA256 signature
+        
             $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId . "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
-            $signature = hash_hmac("sha256", $rawHash, $secretKey);
-            //dd($signature);
+            $signature = hash_hmac("sha256", $rawHash, $secretKey);//mã hóa chữ ký
             $data = array('partnerCode' => $partnerCode,
                 'partnerName' => "Test",
                 "storeId" => "MomoTestStore",
@@ -76,11 +74,9 @@ public function execPostRequest($url, $data)// tra ve json
                 'requestType' => $requestType,
                 'signature' => $signature);
             $result = $this->execPostRequest($endpoint, json_encode($data));
-            $jsonResult = json_decode($result, true);  // decode json
+            $jsonResult = json_decode($result, true);  // thongtinchitietdonhang
         
-            //Just a example, please check more in there
             return redirect()->to($jsonResult['payUrl']);
-            //header('Location: ' . $jsonResult['payUrl']);
 
 }
        

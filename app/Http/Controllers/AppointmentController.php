@@ -15,8 +15,8 @@ use DB;
 class AppointmentController extends Controller
 {
   
-    public function index2($id)
-    {
+    public function index2($id)//lấy ds ngày theo phòng
+    {//asc tăng dần
         $clinics = Clinic::where('id_clinic', $id)->first();
         $user= User::where('id_user', $clinics->id_user)->first();
         $service= Service::where('id_service', $clinics->id_service)->first();
@@ -44,25 +44,25 @@ class AppointmentController extends Controller
         ]);
 
 
-        //tính time hoàn thành
+        //tính time hoàn thành: 
         $clinic = Clinic::where('id_clinic', $request->id_clinic)->first();
         $sv =Service::where('id_service', $clinic->id_service)->first();
 
-        $seconds1 = strtotime($request->time) - strtotime('TODAY');
+        $seconds1 = strtotime($request->time) - strtotime('TODAY');//tính số giây từ đầu ngày đến ... +
         $seconds2 = strtotime($sv->time) - strtotime('TODAY');
         $totalSeconds = $seconds1 + $seconds2;
-        $totalTime = gmdate('H:i', $totalSeconds);
+        $totalTime = gmdate('H:i', $totalSeconds);//đổi định dạng giờ
 
         //
 // Kiểm tra xem có xung đọt giờ khi cùng ngày cùng phòng  không
 $existingAppointment = Appointment::where('day', $request->day)
-->where('id_clinic', $request->id_clinic)
+->where('id_clinic', $request->id_clinic)//lấy ngày và phòng trùng
 ->where(function ($query) use ($request, $totalTime) {
     $query->where(function ($query) use ($request, $totalTime) {
-        $query->whereBetween('time', [$request->time, $totalTime])
+        $query->whereBetween('time', [$request->time, $totalTime])//time trong csdl có trùng k
               ->orWhereBetween('finishtime', [$request->time, $totalTime]);
     })
-    ->where(function ($query) use ($request, $totalTime) {
+    ->where(function ($query) use ($request, $totalTime) {//cho phép =
         $query->where('finishtime', '!=', $request->time)
               ->where('time', '!=', $totalTime);
     });
