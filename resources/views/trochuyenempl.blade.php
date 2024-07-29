@@ -371,7 +371,7 @@
     <!-- Template Javascript -->
     <script src="{{ asset('ad/main.js') }}"></script>
 
-<script>
+<script>//tự load lại hiện ds chưa xem và đã xem
     setInterval(function() {
         // Gửi yêu cầu AJAX để lấy lại dữ liệu
         $.ajax({

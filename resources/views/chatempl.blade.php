@@ -488,7 +488,7 @@ $('.btn-edit').click(function() {
 });
 </script>
 
-<script>
+<script>//load tin nhắn mỗi 3 giây
 	var k=@json($idcon);
 	var isFirstLoad = true;
 	function reloadData() {
@@ -497,13 +497,13 @@ $('.btn-edit').click(function() {
 
 		url: `/messages2/`+k,
 		type: 'GET',
-		dataType:'json',
+		dataType:'json',//định dạng trao đổi dl
 		success(response) {
 
-			// Clear existing messages
+			// Xóa dl trước khi hiện lại
 			$('#message-container').empty();
- // Append new messages
- response.forEach(function (item) {
+ // hiện tin mới
+ response.forEach(function (item) {//nếu là người đang dùng thì hiện tin bên phải 
                     if (item.sender_id != {{ Auth::user()->id_user }}) {
                         $('#message-container').append(`
                             <div class="d-flex justify-content-start mb-4">
@@ -529,9 +529,9 @@ $('.btn-edit').click(function() {
                 });
                 if (isFirstLoad) {
     $('#sc')[0].scrollTop = 999;
-    isFirstLoad = false; // Đánh dấu đã tải trang lần đầu
+    isFirstLoad = false; // Đánh dấu đã tải trang lần đầu đưa xuống tin cuối
 }
-			setTimeout(reloadData, 3000);
+			setTimeout(reloadData, 3000);//sau 3 giây
 		}
 	});
 }
@@ -542,7 +542,7 @@ reloadData();
 </script>
 
 
-<script>
+<script>//gửi tin không load trang-chuỗi gửi dl qua form
 	$(document).ready(function(){
 			$('#addpost').on('submit',function(event)
 		
