@@ -12,23 +12,25 @@ use App\Models\Appointment;
 use App\Models\Clinic;
 use App\Models\User;
 use App\Models\Consult;
+use Illuminate\Support\Facades\App;
 
 
 use Auth;
 use DB;
 
 use App\Models\PrescriptionMedicine;
-
+use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class PdfController extends Controller
 {
     public function pdf($id){
-        $pdf = \App::make('dompdf.wrapper');//tạo pdf
+        $pdf = App::make('dompdf.wrapper');//tạo pdf
         
         //thong tin bv
         $h = Hospital::first();
         //thong tin bacsi
-        $user = Auth::user();
+        $user = FacadesAuth::user();
 
         // thong tin don thuoc
         $p = Prescription::where('id_pre', $id)->first();
@@ -44,7 +46,7 @@ class PdfController extends Controller
         $donthuoc='Không có';
         $stt=1;
 
-        $pm = DB::table('prescription_medicines')
+        $pm = FacadesDB::table('prescription_medicines')
         ->join('medicines', 'prescription_medicines.id_medicine', '=', 'medicines.id_medicine')
         ->where('prescription_medicines.id_prescription', $id)
         ->select('prescription_medicines.*', 'medicines.*')
@@ -100,13 +102,13 @@ class PdfController extends Controller
 
     //user
     public function pdff($id){
-     $pdf = \App::make('dompdf.wrapper');
+     $pdf = App::make('dompdf.wrapper');
       
 
       //thong tin bv
       $h = Hospital::first();
       //thong tin bác sĩ
-      $user = Auth::user();
+      $user = FacadesAuth::user();
       $ps = MedicalResult::where('id_result', $id)->first();
       $pss = Appointment::where('id_appointment',$ps->id_sch )->first();
 
@@ -127,7 +129,7 @@ class PdfController extends Controller
       $donthuoc='Không có';
       $stt=1;
 
-      $pm = DB::table('prescription_medicines')
+      $pm = FacadesDB::table('prescription_medicines')
       ->join('medicines', 'prescription_medicines.id_medicine', '=', 'medicines.id_medicine')
       ->where('prescription_medicines.id_prescription', $ps->id_prescription)
       ->select('prescription_medicines.*', 'medicines.*')
@@ -182,7 +184,7 @@ class PdfController extends Controller
   }
 
   public function pdff2($id){
-    $pdf = \App::make('dompdf.wrapper');
+    $pdf = App::make('dompdf.wrapper');
      
      $ps = Consult::where('id_cons', $id)->first();
 
@@ -207,7 +209,7 @@ class PdfController extends Controller
      $donthuoc='Không có';
      $stt=1;
 
-     $pm = DB::table('prescription_medicines')
+     $pm = FacadesDB::table('prescription_medicines')
      ->join('medicines', 'prescription_medicines.id_medicine', '=', 'medicines.id_medicine')
      ->where('prescription_medicines.id_prescription', $ps->id_prescription)
      ->select('prescription_medicines.*', 'medicines.*')

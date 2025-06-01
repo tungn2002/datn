@@ -7,6 +7,8 @@ use App\Models\PatientRecord;
 use App\Models\User;
 use DB;
 use Auth;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class PatientRecordController extends Controller
 {
@@ -48,7 +50,7 @@ class PatientRecordController extends Controller
             'id_user.required' => 'Người dùng liên kết là bắt buộc.',
             'id_user.exists' => 'Người dùng liên kết không tồn tại.',
         ]);
-        $userCount = DB::selectOne(
+        $userCount = FacadesDB::selectOne(
             'SELECT COUNT(id_user) as count FROM users WHERE id_user = :id_user AND id_role = 2',
             ['id_user' => $request->id_user]
         )->count;
@@ -105,7 +107,7 @@ class PatientRecordController extends Controller
             'id_user.exists' => 'Người dùng liên kết không tồn tại.',
         ]);
 
-        $userCount = DB::selectOne(
+        $userCount = FacadesDB::selectOne(
             'SELECT COUNT(*) as count FROM users WHERE id_user = :id_user AND id_role = 2',
             ['id_user' => $request->id_user]
         )->count;
@@ -167,7 +169,7 @@ class PatientRecordController extends Controller
         $pr->phonenumber=$request->phonenumber;
         $pr->gender=$request->gender;
         $pr->address=$request->address;
-        $user = Auth::user();
+        $user = FacadesAuth::user();
         $id = $user->id_user;
         $pr->id_user=$id;
 
@@ -212,7 +214,7 @@ class PatientRecordController extends Controller
             $pr->phonenumber=$request->phonenumber;
             $pr->gender=$request->gender;
             $pr->address=$request->address;
-            $user = Auth::user();
+            $user = FacadesAuth::user();
             $id = $user->id_user;
             $pr->id_user=$id;        
             $pr->update();

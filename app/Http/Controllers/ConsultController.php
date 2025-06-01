@@ -11,6 +11,8 @@ use DB;
 use Auth;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class ConsultController extends Controller
 {
@@ -20,10 +22,10 @@ class ConsultController extends Controller
 
         //nguoi chua tro chuyen
 //lay ds id đã trò chuyện
-        $u1 = DB::table('consults')
+        $u1 = FacadesDB::table('consults')
         ->select('consults.user2_id')
         ->join('users', 'consults.user2_id', '=', 'users.id_user')
-        ->where('consults.user1_id', Auth::User()->id_user)
+        ->where('consults.user1_id', FacadesAuth::User()->id_user)
         ->where('users.id_role', 3)
         ->distinct()
         ->pluck('consult.user2_id')
@@ -49,10 +51,10 @@ class ConsultController extends Controller
 
         //nguoi chua tro chuyen
 
-        $u1 = DB::table('consults')
+        $u1 = FacadesDB::table('consults')
         ->select('consults.user2_id')
         ->join('users', 'consults.user2_id', '=', 'users.id_user')
-        ->where('consults.user1_id', Auth::User()->id_user)
+        ->where('consults.user1_id', FacadesAuth::User()->id_user)
         ->where('users.id_role', 3)
         ->distinct()
         ->pluck('consult.user2_id')
@@ -75,7 +77,7 @@ class ConsultController extends Controller
     }
 
     public function xacnhanchat(Request $request){//sau khi thanh toan
-        $user=Auth::User();
+        $user=FacadesAuth::User();
 
 
         //
@@ -96,17 +98,17 @@ class ConsultController extends Controller
     public function chatuser($id){//chat vs nhân viên
 
 //chua có phòng thì tạo phòng
-        $consult = Consult::where('user1_id', Auth::User()->id_user)->where('user2_id', $id)->first();
+        $consult = Consult::where('user1_id', FacadesAuth::User()->id_user)->where('user2_id', $id)->first();
 
         if(!$consult){
             $c=new Consult;
-            $c->user1_id= Auth::User()->id_user;
+            $c->user1_id= FacadesAuth::User()->id_user;
             $c->user2_id=$id;
             $c->save();
         }
 //có phòng thì load tin nhắn
 
-        $con=Consult::where('user1_id', Auth::User()->id_user)->where('user2_id', $id)->first();
+        $con=Consult::where('user1_id', FacadesAuth::User()->id_user)->where('user2_id', $id)->first();
         
         $message = Message::where('id_cons', $con->id_cons)->get();
 //thong tin người muốn chat
@@ -128,7 +130,7 @@ class ConsultController extends Controller
       
         $m=new Message;
         $m->content=$request->message;
-        $m->sender_id=Auth::User()->id_user;
+        $m->sender_id=FacadesAuth::User()->id_user;
         $m->id_cons=$request->idcon;
         $m->status='chưa xem';
         $m->save();
@@ -139,7 +141,7 @@ class ConsultController extends Controller
      
 
        // Lấy danh sách các id_consult có tin chưa xem
-       $idConsults = DB::table('messages')
+       $idConsults = FacadesDB::table('messages')
        ->select('id_cons')
        ->distinct()
        ->where('status', 'chưa xem')
@@ -147,7 +149,7 @@ class ConsultController extends Controller
        ->toArray();
 
 // Lấy danh sách các id_consult có tin đã xem
-$otherIdConsults = DB::table('messages')
+$otherIdConsults = FacadesDB::table('messages')
            ->select('id_cons')
            ->distinct()
            ->whereNotIn('id_cons', $idConsults)
@@ -157,13 +159,13 @@ $otherIdConsults = DB::table('messages')
            //ds người chưa đọc 
            $results1 = Consult::select('consults.*', 'users.name as name')
            ->join('users', 'consults.user1_id', '=', 'users.id_user')
-           ->where('consults.user2_id',Auth::User()->id_user )
+           ->where('consults.user2_id',FacadesAuth::User()->id_user )
            ->whereIn('consults.id_cons',$idConsults )
             ->get();
                 //ds người đã đọc
            $results2 = Consult::select('consults.*', 'users.name as name')
            ->join('users', 'consults.user1_id', '=', 'users.id_user')
-           ->where('consults.user2_id',Auth::User()->id_user )
+           ->where('consults.user2_id',FacadesAuth::User()->id_user )
            ->whereIn('consults.id_cons',$otherIdConsults )
             ->get();
 /*  
@@ -175,7 +177,7 @@ $otherIdConsults = DB::table('messages')
 
     public function trochuyenemplAjax() {//tự load lại ds khách hàng
           // Lấy danh sách các id_consult chưa xem
-          $idConsults = DB::table('messages')
+          $idConsults = FacadesDB::table('messages')
           ->select('id_cons')
           ->distinct()
           ->where('status', 'chưa xem')
@@ -183,7 +185,7 @@ $otherIdConsults = DB::table('messages')
           ->toArray();
    
    // Lấy danh sách các id_consult đã xem
-   $otherIdConsults = DB::table('messages')
+   $otherIdConsults = FacadesDB::table('messages')
               ->select('id_cons')
               ->distinct()
               ->whereNotIn('id_cons', $idConsults)
@@ -193,13 +195,13 @@ $otherIdConsults = DB::table('messages')
               //người chưa đọc
               $results1 = Consult::select('consults.*', 'users.name as name')
               ->join('users', 'consults.user1_id', '=', 'users.id_user')
-              ->where('consults.user2_id',Auth::User()->id_user )
+              ->where('consults.user2_id',FacadesAuth::User()->id_user )
               ->whereIn('consults.id_cons',$idConsults )
                ->get();
                    //người đã đọc
               $results2 = Consult::select('consults.*', 'users.name as name')
               ->join('users', 'consults.user1_id', '=', 'users.id_user')
-              ->where('consults.user2_id',Auth::User()->id_user )
+              ->where('consults.user2_id',FacadesAuth::User()->id_user )
               ->whereIn('consults.id_cons',$otherIdConsults )
                ->get();
         // Trả về JSON chứa dữ liệu của hai biến
@@ -223,7 +225,7 @@ $otherIdConsults = DB::table('messages')
     {
         $messages = Message::where('id_cons', $conversation_id)->get();
 
-        $affected = DB::table('messages')
+        $affected = FacadesDB::table('messages')
         ->where('id_cons', $conversation_id)
         ->update(['status' => 'đã xem']);
 
@@ -235,7 +237,7 @@ $otherIdConsults = DB::table('messages')
       
         $m=new Message;
         $m->content=$request->message;
-        $m->sender_id=Auth::User()->id_user;
+        $m->sender_id=FacadesAuth::User()->id_user;
         $m->id_cons=$request->idcon;
         $m->status='đã xem';
         $m->save();
@@ -245,7 +247,7 @@ $otherIdConsults = DB::table('messages')
     //bacsi
     public function chatuser2($id){//nhân viên trò chuyện với bác sĩ
       
-                $con=Consult::where('user1_id', Auth::User()->id_user)->where('user2_id', $id)->first();
+                $con=Consult::where('user1_id', FacadesAuth::User()->id_user)->where('user2_id', $id)->first();
                 
                 $message = Message::where('id_cons', $con->id_cons)->get();
         //thong tin người muốn chat
@@ -259,7 +261,7 @@ $otherIdConsults = DB::table('messages')
      
 
                 // Lấy danh sách các id_consult chưa xem
-                $idConsults = DB::table('messages')
+                $idConsults = FacadesDB::table('messages')
                 ->select('id_cons')
                 ->distinct()
                 ->where('status', 'chưa xem')
@@ -267,7 +269,7 @@ $otherIdConsults = DB::table('messages')
                 ->toArray();
          
          // Lấy danh sách các id_consult đã xem
-         $otherIdConsults = DB::table('messages')
+         $otherIdConsults = FacadesDB::table('messages')
                     ->select('id_cons')
                     ->distinct()
                     ->whereNotIn('id_cons', $idConsults)
@@ -277,13 +279,13 @@ $otherIdConsults = DB::table('messages')
                     //người chưa đọc
                     $results1 = Consult::select('consults.*', 'users.name as name')
                     ->join('users', 'consults.user1_id', '=', 'users.id_user')
-                    ->where('consults.user2_id',Auth::User()->id_user )
+                    ->where('consults.user2_id',FacadesAuth::User()->id_user )
                     ->whereIn('consults.id_cons',$idConsults )
                      ->get();
                          //người đã đọc
                     $results2 = Consult::select('consults.*', 'users.name as name')
                     ->join('users', 'consults.user1_id', '=', 'users.id_user')
-                    ->where('consults.user2_id',Auth::User()->id_user )
+                    ->where('consults.user2_id',FacadesAuth::User()->id_user )
                     ->whereIn('consults.id_cons',$otherIdConsults )
                      ->get();
          /*  

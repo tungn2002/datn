@@ -10,6 +10,7 @@ use App\Models\Hospital;
 use App\Models\Service;
 
 use DB;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class ClinicController extends Controller
 {
@@ -24,7 +25,7 @@ class ClinicController extends Controller
         ->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
     ->select('users.*', 'specialists.*') 
         ->get();
-        $services= DB::select('SELECT * from services');
+        $services= FacadesDB::select('SELECT * from services');
 
         $clinic = Clinic::paginate(5); 
 
@@ -148,7 +149,7 @@ $hos=Hospital::all()->first();
     public function findcli(Request $request){
         $users = User::where('id_role', 3)->get(); // Lấy danh sách bác sĩ (id_role = 3)
 
-        $services= DB::select('SELECT * from services');
+        $services= FacadesDB::select('SELECT * from services');
 
         $clinic = Clinic::where('clinicname', 'like', '%'.$request->dl.'%')
         ->paginate(5); 

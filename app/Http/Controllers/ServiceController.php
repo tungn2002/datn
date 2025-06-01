@@ -17,13 +17,15 @@ use Auth;
 
 
 use DB;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class ServiceController extends Controller
 {
     //Tìm dịch vụ
     public function servicef(){
        
-        $clinics = DB::table('clinics')
+        $clinics = FacadesDB::table('clinics')
         ->join('services', 'clinics.id_service', '=', 'services.id_service')
         ->select('clinics.id_clinic', 'clinics.clinicname', 'services.servicename', 'services.price', 'services.image')
         ->paginate(6);
@@ -34,7 +36,7 @@ class ServiceController extends Controller
     //tìm bác sĩ
     public function serviceb(){
       
-        $clinics = DB::table('users')
+        $clinics = FacadesDB::table('users')
         ->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
         ->where('id_role',3)
         ->select('specialists.spname','users.name', 'users.avatar','users.id_user')
@@ -47,13 +49,13 @@ class ServiceController extends Controller
     //thông tin bác sĩ
     public function servicebf($id){
       
-        $doctor = DB::table('users')
+        $doctor = FacadesDB::table('users')
         ->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
         ->where('id_user',$id)
         ->select('specialists.spname','users.name', 'users.avatar')
         ->first();
 
-        $clinics = DB::table('clinics')
+        $clinics = FacadesDB::table('clinics')
         ->join('services', 'clinics.id_service', '=', 'services.id_service')
         ->where('clinics.id_user',$id)
         ->select('clinics.id_clinic', 'clinics.clinicname', 'services.servicename', 'services.price', 'services.image')
@@ -112,7 +114,7 @@ class ServiceController extends Controller
 
             }
         
-        $pr = PatientRecord::where('id_user',Auth::user()->id_user)->get();
+        $pr = PatientRecord::where('id_user',FacadesAuth::user()->id_user)->get();
 
         //$pr = PatientRecord::find();
        
@@ -160,7 +162,7 @@ class ServiceController extends Controller
   //tìm kiếm dịch vụ
   public function timkiemsv(Request $request){
     
-    $clinics = DB::table('clinics')
+    $clinics = FacadesDB::table('clinics')
     ->join('services', 'clinics.id_service', '=', 'services.id_service')
     ->where('services.servicename', 'like','%'. $request->dl.'%')
     ->select('clinics.id_clinic', 'clinics.clinicname', 'services.servicename', 'services.price', 'services.image')
@@ -176,7 +178,7 @@ return view('find_service', ['clinic' => $clinics,'hos'=>  $firstPost]);
 }
 public function timkiemb(Request $request){
 
-$clinics = DB::table('users')
+$clinics = FacadesDB::table('users')
 ->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
 ->where('id_role',3)
 ->where('users.name', 'like','%'. $request->dl.'%')

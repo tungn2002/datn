@@ -13,33 +13,7 @@ class PrescriptionController extends Controller
         $prescription = Prescription::paginate(5); 
         return view('pre', ['prescription' => $prescription]);
     }
-/*
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name'=>'required',
-            'diagnostic'=>'required',
-            'day'=>'required|date',
-    
-        ],[
-        'name.required'=>'Không được bỏ trống tên',
-        'diagnostic.required'=>'Không được bỏ trống chuẩn đoán',
-        'day.required'=>'Không được bỏ trống ngày',
-        'day.date'=>'Ngày không hợp lệ',
 
-
-        ]);
-        
-     
-                $pre=new Prescription;
-            $pre->name=$request->name;
-            $pre->diagnostic=$request->diagnostic;
-            $pre->day=$request->day;
-            $pre->save();
-            return redirect()->back()->with('message', 'Thêm thành công');
-    
-    }
-            */
     public function destroy(Request $request)
     {
         $request->validate([

@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 use DB;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class UserController extends Controller
 {
@@ -131,8 +133,8 @@ class UserController extends Controller
     
     $credentials = $request->only(['email', 'password']);
 
-    if (Auth::attempt($credentials)) {//kiểm tra thông tin và đăng nhập
-        $user = Auth::user();
+    if (FacadesAuth::attempt($credentials)) {//kiểm tra thông tin và đăng nhập
+        $user = FacadesAuth::user();
 
         if( $user->id_role==2){
             $request->session()->regenerate();
@@ -154,7 +156,7 @@ class UserController extends Controller
 
     public function logout(Request $request)
     {
-        Auth::logout();//Đăng xuất
+        FacadesAuth::logout();//Đăng xuất
 
         $request->session()->invalidate();//vô hiệu hóa phiên
 
@@ -167,45 +169,54 @@ class UserController extends Controller
 
 
         public function trangchu(){
-            return view('index');
+             $services = FacadesDB::table('clinics')
+            ->join('services', 'clinics.id_service', '=', 'services.id_service')
+            ->select('clinics.id_clinic', 'clinics.clinicname', 'services.servicename', 'services.price', 'services.image')
+            ->get();
+              $docter = FacadesDB::table('users')
+            ->join('specialists', 'users.id_specialist', '=', 'specialists.id_specialist')
+            ->where('id_role',3)
+            ->select('specialists.spname','users.name', 'users.avatar','users.id_user')
+            ->paginate(4);
+            return view('index', ['service' => $services,'docter' => $docter]);
         }
 //thông tin cá nhân khách hàng
         public function profile(){
-                $user=Auth::User();
+                $user=FacadesAuth::User();
 //
-               $patientRecords = PatientRecord::where('id_user', Auth::User()->id_user)->paginate(2);
-               $results = DB::table('medicalresults')
+               $patientRecords = PatientRecord::where('id_user', FacadesAuth::User()->id_user)->paginate(2);
+               $results = FacadesDB::table('medicalresults')
                ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
                ->join('users', 'patientrecords.id_user', '=', 'users.id_user')
-               ->where('users.id_user', Auth::User()->id_user)
+               ->where('users.id_user', FacadesAuth::User()->id_user)
                ->select('medicalresults.*')
                ->paginate(2);
                 return view('profile',['user'=>$user,'patientRecords'=>$patientRecords,'results'=>$results]);
            
         }
         public function profile2(){
-                     $user=Auth::User();
+                     $user=FacadesAuth::User();
 //
-               $patientRecords = PatientRecord::where('id_user', Auth::User()->id_user)->paginate(2);
-               $results = DB::table('medicalresults')
+               $patientRecords = PatientRecord::where('id_user', FacadesAuth::User()->id_user)->paginate(2);
+               $results = FacadesDB::table('medicalresults')
                ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
                ->join('users', 'patientrecords.id_user', '=', 'users.id_user')
-               ->where('users.id_user', Auth::User()->id_user)
+               ->where('users.id_user', FacadesAuth::User()->id_user)
                ->select('medicalresults.*')
                ->paginate(2);
                     return view('profile2',['user'=>$user,'patientRecords'=>$patientRecords,'results'=>$results]);
          
         }
         public function profile3(){
-                     $user=Auth::User();
+                     $user=FacadesAuth::User();
 //
-               $results = DB::table('medicalresults')
+               $results = FacadesDB::table('medicalresults')
                ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
                ->join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
                ->join('users', 'patientrecords.id_user', '=', 'users.id_user')
                ->join('clinics', 'appointments.id_clinic', '=', 'clinics.id_clinic')
-               ->join('services', '.clinics.id_service', '=', 'services.id_service')
-               ->where('users.id_user', Auth::User()->id_user)
+               ->join('services', 'clinics.id_service', '=', 'services.id_service')
+               ->where('users.id_user', FacadesAuth::User()->id_user)
                ->where('medicalresults.status', 'chờ duyệt')
                ->select('medicalresults.*', 'patientrecords.prname','appointments.day','appointments.time','appointments.finishtime','clinics.clinicname','services.servicename','services.price')
                ->orderBy('medicalresults.id_result', 'desc') 
@@ -215,15 +226,15 @@ class UserController extends Controller
         }
 
         public function profile32(){
-                     $user=Auth::User();
+                     $user=FacadesAuth::User();
 //
-$results = DB::table('medicalresults')
+$results = FacadesDB::table('medicalresults')
 ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
 ->join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
 ->join('users', 'patientrecords.id_user', '=', 'users.id_user')
 ->join('clinics', 'appointments.id_clinic', '=', 'clinics.id_clinic')
-->join('services', '.clinics.id_service', '=', 'services.id_service')
-->where('users.id_user', Auth::User()->id_user)
+->join('services', 'clinics.id_service', '=', 'services.id_service')
+->where('users.id_user', FacadesAuth::User()->id_user)
 ->where('medicalresults.status', 'chưa thanh toán')
 ->select('medicalresults.*', 'patientrecords.prname','appointments.day','appointments.time','appointments.finishtime','clinics.clinicname','services.servicename','services.price')
 ->orderBy('medicalresults.id_result', 'desc') 
@@ -232,16 +243,16 @@ $results = DB::table('medicalresults')
         }
 
         public function profile33(){
-                     $user=Auth::User();
+                     $user=FacadesAuth::User();
 //
                 $statuses = ['đã khám', 'đã thanh toán'];
-                $results = DB::table('medicalresults')
+                $results = FacadesDB::table('medicalresults')
                 ->join('patientrecords', 'medicalresults.id_mr', '=', 'patientrecords.id_pr')
                 ->join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
                 ->join('users', 'patientrecords.id_user', '=', 'users.id_user')
                 ->join('clinics', 'appointments.id_clinic', '=', 'clinics.id_clinic')
-                ->join('services', '.clinics.id_service', '=', 'services.id_service')
-                ->where('users.id_user', Auth::User()->id_user)
+                ->join('services', 'clinics.id_service', '=', 'services.id_service')
+                ->where('users.id_user', FacadesAuth::User()->id_user)
                 ->whereIn('medicalresults.status', $statuses)
                 ->select('medicalresults.*', 'patientrecords.prname','appointments.day','appointments.time','appointments.finishtime','clinics.clinicname','services.servicename','services.price')
                 ->orderBy('medicalresults.id_result', 'desc') 
@@ -267,7 +278,7 @@ $results = DB::table('medicalresults')
         {
             $request->validate([
                 'name'=>'required|max:20',
-                'phonenumber' => 'required|regex:/^0[0-9]{9}$/|unique:users,phonenumber,' .  Auth::user()->id_user. ',id_user',                 
+                'phonenumber' => 'required|regex:/^0[0-9]{9}$/|unique:users,phonenumber,' .  FacadesAuth::user()->id_user. ',id_user',                 
                 'password' => 'nullable|min:6',
                  'confirm_password' => 'required_with:password|same:password',
 
@@ -281,7 +292,7 @@ $results = DB::table('medicalresults')
 
             ]);
             
-            $user = Auth::user();
+            $user = FacadesAuth::user();
             $id = $user->id_user;
 
             $user=User::find($id);
@@ -314,26 +325,38 @@ $results = DB::table('medicalresults')
                 'users.id_user',
                 'users.name',
                 'users.price',
-                DB::raw('COUNT(consults.user2_id) as consult_count'),
-                DB::raw('users.price * COUNT(consults.user2_id) as total_price')
+                FacadesDB::raw('COUNT(consults.user2_id) as consult_count'),
+                FacadesDB::raw('users.price * COUNT(consults.user2_id) as total_price')
             )
             ->leftJoin('consults', 'users.id_user', '=', 'consults.user2_id')//hiện cả bác sĩ không có đơn nào
             ->where('users.id_role', 3)
             ->groupBy('users.id_user', 'users.name', 'users.price')
-            ->orderByDesc(DB::raw('users.price * COUNT(consults.user2_id)'))//giảm dần
+            ->orderByDesc(FacadesDB::raw('users.price * COUNT(consults.user2_id)'))//giảm dần
             ->paginate(5);
             //Thống kê theo tháng trong năm hiện tại
+            /* MYSQL
             $results = MedicalResult::select(
-                DB::raw('MONTH(booking_date) as month'),
-                DB::raw('SUM(services.price) as total_amount')
+                FacadesDB::raw('MONTH(booking_date) as month'),
+                FacadesDB::raw('SUM(services.price) as total_amount')
             )
             ->join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
             ->join('clinics', 'appointments.id_clinic', '=', 'clinics.id_clinic')
             ->join('services', 'clinics.id_service', '=', 'services.id_service')
             ->whereIn('medicalresults.status', ['đã khám', 'đã thanh toán'])
             ->whereYear('medicalresults.booking_date', Carbon::now()->year)
-            ->groupBy(DB::raw('MONTH(booking_date)'))//nhóm dữ liệu để tính tổng theo tháng
-            ->orderBy(DB::raw('MONTH(booking_date)'))//sắp xếp theo tháng
+            ->groupBy(FacadesDB::raw('MONTH(booking_date)'))//nhóm dữ liệu để tính tổng theo tháng
+            ->orderBy(FacadesDB::raw('MONTH(booking_date)'))//sắp xếp theo tháng
+            ->get();*/
+            //sqlite
+            $results = DB::table('medicalresults')
+            ->join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
+            ->join('clinics', 'appointments.id_clinic', '=', 'clinics.id_clinic')
+            ->join('services', 'clinics.id_service', '=', 'services.id_service')
+            ->selectRaw("strftime('%m', medicalresults.booking_date) as month, SUM(services.price) as total_amount")
+            ->whereIn('medicalresults.status', ['đã khám', 'đã thanh toán'])
+            ->whereRaw("strftime('%Y', medicalresults.booking_date) = ?", ['2025'])
+            ->groupByRaw("strftime('%m', medicalresults.booking_date)")
+            ->orderByRaw("strftime('%m', medicalresults.booking_date)")
             ->get();
             $months = $results->pluck('month');
             $totals = $results->pluck('total_amount');
@@ -483,10 +506,10 @@ public function dathanhtoan_empl()
 //trang thông tin bác sĩ
 public function doctor(){
     $medicine = Medicine::paginate(5); 
-    $sp = Specialist::where('id_specialist',Auth::user()->id_specialist)->first();
+    $sp = Specialist::where('id_specialist',FacadesAuth::user()->id_specialist)->first();
     //phong va dichvu
     $clinic= Clinic::join('services', 'clinics.id_service', '=', 'services.id_service')
-    ->where('clinics.id_user',Auth::user()->id_user)
+    ->where('clinics.id_user',FacadesAuth::user()->id_user)
     ->select('clinics.*', 'services.*')
     ->first();
     //
@@ -502,11 +525,11 @@ $medicine = Medicine::where('medicinename','like', '%'.$request->dl.'%')->pagina
 //xem lịch làm việc
 public function lichlamviec()
 {//hiện lịch đã được duyệt
-    $userId = Auth::user()->id_user;
+    $userId = FacadesAuth::user()->id_user;
 
     $statuses = ['chưa thanh toán', 'đã thanh toán','đã khám'];
 
-    $mrRecords = DB::table('appointments')
+    $mrRecords = FacadesDB::table('appointments')
     ->join('clinics', 'appointments.id_clinic', '=', 'clinics.id_clinic')
     ->join('medicalresults', 'appointments.id_appointment', '=', 'medicalresults.id_sch')
     ->where('clinics.id_user', $userId)
@@ -528,12 +551,12 @@ public function lichlamviecf($date)//hiện lịch theo ngày đã chọn
 {
 
 
-    $userId = Auth::user()->id_user;
+    $userId = FacadesAuth::user()->id_user;
   
   //lấy các ngày có lịch
     $statuses = ['chưa thanh toán', 'đã thanh toán', 'đã khám'];
 
-    $mrRecords = DB::table('appointments')
+    $mrRecords = FacadesDB::table('appointments')
     ->join('clinics', 'appointments.id_clinic', '=', 'clinics.id_clinic')
     ->join('medicalresults', 'appointments.id_appointment', '=', 'medicalresults.id_sch')
     ->where('clinics.id_user', $userId)
@@ -546,7 +569,7 @@ public function lichlamviecf($date)//hiện lịch theo ngày đã chọn
     //
     $clinic = Clinic::where('id_user', $userId)->firstOrFail();
 //lấy ra danh sách ca khám
-    $results = DB::table('medicalresults')
+    $results = FacadesDB::table('medicalresults')
     ->join('appointments', 'medicalresults.id_sch', '=', 'appointments.id_appointment')
     ->where(function($query) {
         $query->where('medicalresults.status', 'chưa thanh toán')
@@ -567,13 +590,13 @@ public function lichlamviecf($date)//hiện lịch theo ngày đã chọn
 //thông tin bệnh nhân
 public function lichlamviecdetail($id)
 {
-    $patientRecords = DB::table('patientrecords')
+    $patientRecords = FacadesDB::table('patientrecords')
     ->join('medicalresults', 'patientrecords.id_pr', '=', 'medicalresults.id_mr')
     ->select('patientrecords.*', 'medicalresults.reason')
     ->where('medicalresults.id_sch', $id)
     ->first();
 //đã thanh toán, khám thì mới hiện chỗ cập nhật
-    $updatekq=DB::table('medicalresults')
+    $updatekq=FacadesDB::table('medicalresults')
     ->where('medicalresults.id_sch', $id)
     ->where('medicalresults.id_mr',   $patientRecords->id_pr)
     ->whereIn('medicalresults.status', ['đã thanh toán', 'đã khám'])
@@ -638,12 +661,12 @@ public function capnhatkq(Request $request,$id)
 public function themdonthuoc($id)
 {
 //Lấy thuốc đã có
-    $mr=DB::table('prescriptions')
+    $mr=FacadesDB::table('prescriptions')
     ->join('medicalresults', 'prescriptions.id_pre', '=', 'medicalresults.id_prescription')
     ->where('medicalresults.id_result', $id)
     ->first();
 //Lấy thuốc ngoại trừ các thuốc đã kê trong ds
-    $medi= DB::table('medicines')
+    $medi= FacadesDB::table('medicines')
     ->whereNotIn('id_medicine', function($query) use ($mr) {
         $query->select('id_medicine')
               ->from('prescription_medicines')
@@ -651,7 +674,7 @@ public function themdonthuoc($id)
     })
     ->get();
 //Trả về thông tin
-    $pm=DB::table('prescription_medicines')
+    $pm=FacadesDB::table('prescription_medicines')
     ->join('medicines', 'prescription_medicines.id_medicine', '=', 'medicines.id_medicine')
     ->where('prescription_medicines.id_prescription', $mr->id_prescription)
     ->get();
@@ -740,15 +763,15 @@ public function xoadtd(Request $request)
 public function themdonthuoc2($id)
 {
 //chi co 1 don
-$mrz=DB::table('consults') ->where('consults.id_cons', $id)->first();
+$mrz=FacadesDB::table('consults') ->where('consults.id_cons', $id)->first();
 
 
-    $mr=DB::table('prescriptions')
+    $mr=FacadesDB::table('prescriptions')
     ->where('id_pre', $mrz->id_prescription)
     ->first();
 
     //thuoc list
-    $medi= DB::table('medicines')
+    $medi= FacadesDB::table('medicines')
     ->whereNotIn('id_medicine', function($query) use ($mrz) {
         $query->select('id_medicine')
               ->from('prescription_medicines')
@@ -756,7 +779,7 @@ $mrz=DB::table('consults') ->where('consults.id_cons', $id)->first();
     })
     ->get();
     //donthuoc
-    $pm=DB::table('prescription_medicines')
+    $pm=FacadesDB::table('prescription_medicines')
     ->join('medicines', 'prescription_medicines.id_medicine', '=', 'medicines.id_medicine')
     ->where('prescription_medicines.id_prescription', $mrz->id_prescription)
     ->get();
@@ -767,8 +790,8 @@ $mrz=DB::table('consults') ->where('consults.id_cons', $id)->first();
 //admin quản lý bác sĩ
 //thembacsi
 public function qldoctor(){
-    $specialist= DB::select('SELECT * from specialists');
-    $user = DB::table('users')
+    $specialist= FacadesDB::select('SELECT * from specialists');
+    $user = FacadesDB::table('users')
     ->where('users.id_role', 3)
     ->select('users.*')
     ->paginate(5);
@@ -930,7 +953,7 @@ $imageName = time() . '.' . $request->avatar->extension();
             'wh.required' => 'Vui lòng nhập giờ làm việc.',
         ]);
         
-        $user = User::find(Auth::User()->id_user);
+        $user = User::find(FacadesAuth::User()->id_user);
         $user->working_hours=$request->wh;
         $user->update();
         return redirect()->back()->with('message', 'Cập nhật thành công');
@@ -938,7 +961,7 @@ $imageName = time() . '.' . $request->avatar->extension();
        
 //trang quản lý kh
     public function qlkhachhang(){
-        $user = DB::table('users')
+        $user = FacadesDB::table('users')
         ->where('users.id_role', 2)
         ->select('users.*')
         ->paginate(5);
@@ -1041,7 +1064,7 @@ $imageName = time() . '.' . $request->avatar->extension();
         
     //trang quản lý nhân viên
     public function qlnhanvien(){
-        $user = DB::table('users')
+        $user = FacadesDB::table('users')
         ->where('users.id_role', 4)
         ->select('users.*')
         ->paginate(5);
@@ -1084,8 +1107,8 @@ $imageName = time() . '.' . $request->avatar->extension();
             return redirect()->back()->with('message', 'Thêm thành công');
     }
     public function finddoctor(Request $request){
-        $specialist= DB::select('SELECT * from specialists');
-        $user = DB::table('users')
+        $specialist= FacadesDB::select('SELECT * from specialists');
+        $user = FacadesDB::table('users')
         ->where('users.id_role', 3)
         ->select('users.*')
         ->paginate(5);
