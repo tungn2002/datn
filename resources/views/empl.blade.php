@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,25 +21,29 @@
 </head>
 
 <body>
-    
+
     <div class="container-xxl position-relative bg-white d-flex p-0">
         <!-- Sidebar Start -->
-        <div class="sidebar pe-4 pb-3" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
-            <nav class="navbar bg-light navbar-light" >
+        <div class="sidebar pe-4 pb-3"
+            style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
+            <nav class="navbar bg-light navbar-light">
                 <a href="{{ route('empl') }}" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary"><i class="fas fa-user-check"></i> Nhân viên</h3>
                 </a>
-                <div class="d-flex align-items-center ms-4 mb-4" >
-                 
+                <div class="d-flex align-items-center ms-4 mb-4">
+
                 </div>
-                <div class="navbar-nav w-100" >
-                    <a href="{{ route('empl') }}" class="nav-item nav-link active"><i class="fas fa-id-card"></i>Thông tin cá nhân</a>
-                    <a href="{{ route('empl_choduyet') }}" class="nav-item nav-link"><i class="far fa-check-square"></i>Xác nhận đơn</a>
+                <div class="navbar-nav w-100">
+                    <a href="{{ route('empl') }}" class="nav-item nav-link active"><i class="fas fa-id-card"></i>Thông
+                        tin cá nhân</a>
+                    <a href="{{ route('empl_choduyet') }}" class="nav-item nav-link"><i
+                            class="far fa-check-square"></i>Xác nhận đơn</a>
 
-                    <a href="{{ route('trochuyenempl') }}" class="nav-item nav-link "><i class="fas fa-sms"></i>Trò chuyện</a>
-                
+                    <a href="{{ route('trochuyenempl') }}" class="nav-item nav-link "><i class="fas fa-sms"></i>Trò
+                        chuyện</a>
 
-                  
+
+
                 </div>
             </nav>
         </div>
@@ -50,24 +53,27 @@
         <!-- Content Start -->
         <div class="content">
             <!-- Navbar Start -->
-            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0"
+                style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1);">
                 <a href="{{ route('empl') }}" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fas fa-user-check"></i></h2>
                 </a>
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-              
+
                 <div class="navbar-nav align-items-center ms-auto">
-                   
-                   
+
+
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="{{ asset('anhnv.png') }}" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">  {{ Auth::user()->name }}</span>
+                            <img class="rounded-circle me-lg-2" src="{{ asset('anhnv.png') }}" alt=""
+                                style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex"> {{ Auth::user()->name }}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="{{ route('logout') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                            <a href="{{ route('logout') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i>
+                                Đăng xuất</a>
                         </div>
                     </div>
                 </div>
@@ -77,36 +83,39 @@
             <!-- Blank Start -->
 
             <div class="container-fluid pt-4 px-4 ">
-            <h4></h4>
+                <h4></h4>
 
-            <h4>Thông tin nhân viên:</h4>
-            <div class="col-sm-12 col-xl-6"  style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px; width: 50em">
+                <h4>Thông tin nhân viên:</h4>
+                <div class="col-sm-12 col-xl-6"
+                    style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-right: 3px solid rgba(0, 0, 0, 0.1); border-left: 3px solid lightblue; border-top: 3px solid lightblue; border-bottom: 1px solid lightblue; padding: 20px; border-radius: 10px; width: 50em">
                     <p><i class="fas fa-user"></i> Tên: <b style="color: #003553">{{ Auth::user()->name }}</b></p>
-                    <p><i class="fas fa-envelope"></i> Email: <b style="color: #003553">{{ Auth::user()->email }}</b></p>
-                    <p><i class="fas fa-phone-alt"></i> Số điện thoại: <b style="color: #003553">{{ Auth::user()->phonenumber }}</b></p>
-              
-            </div>
-                            @if (\Session::has('message'))
-                        <div class="alert alert-success">
-                        <strong>{!! \Session::get('message') !!}</strong>
-                        </div>
-                    @endif
-                    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-                        </div>
-                    </div>
-            </div>
-            <!-- Blank End -->
+                    <p><i class="fas fa-envelope"></i> Email: <b style="color: #003553">{{ Auth::user()->email }}</b>
+                    </p>
+                    <p><i class="fas fa-phone-alt"></i> Số điện thoại: <b
+                            style="color: #003553">{{ Auth::user()->phonenumber }}</b></p>
 
+                </div>
+                @if (\Session::has('message'))
+                    <div class="alert alert-success">
+                        <strong>{!! \Session::get('message') !!}</strong>
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+            </div>
         </div>
-      
+    </div>
+    <!-- Blank End -->
+
+    </div>
+
 
 
 
@@ -116,38 +125,38 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('ad/main.js') }}"></script>
-<script>
-  $(document).ready(function() {
-    $('#deleteModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Nút "Xóa" được click
-        var hospitalId = button.data('id'); // Lấy ID từ data-id của nút
+    <script>
+        $(document).ready(function() {
+            $('#deleteModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget); // Nút "Xóa" được click
+                var hospitalId = button.data('id'); // Lấy ID từ data-id của nút
 
-        var modal = $(this);
-        modal.find('#hospitalIdInput').val(hospitalId); // Điền ID vào input
+                var modal = $(this);
+                modal.find('#hospitalIdInput').val(hospitalId); // Điền ID vào input
 
-        // Cập nhật action của form
-        var form = modal.find('#deleteForm');
-        form.attr('action', form.attr('action').replace(':hospitalId', hospitalId)); 
-    });
-});
+                // Cập nhật action của form
+                var form = modal.find('#deleteForm');
+                form.attr('action', form.attr('action').replace(':hospitalId', hospitalId));
+            });
+        });
 
 
-$('.btn-edit').click(function() {
-    var hospitalId = $(this).data('id');
-    var row = $(this).closest('tr'); // Lấy hàng chứa nút "Sửa"
+        $('.btn-edit').click(function() {
+            var hospitalId = $(this).data('id');
+            var row = $(this).closest('tr'); // Lấy hàng chứa nút "Sửa"
 
-    // Lấy dữ liệu từ các ô trong hàng
-    var hospitalName = row.find('td:eq(1)').text(); // Ô thứ 2 chứa tên bệnh viện
-    var address = row.find('td:eq(2)').text(); // Ô thứ 3 chứa địa chỉ
+            // Lấy dữ liệu từ các ô trong hàng
+            var hospitalName = row.find('td:eq(1)').text(); // Ô thứ 2 chứa tên bệnh viện
+            var address = row.find('td:eq(2)').text(); // Ô thứ 3 chứa địa chỉ
 
-    // Điền dữ liệu vào form
-    $('#editHospitalId').val(hospitalId);
-    $('#hospitalname').val(hospitalName);
-    $('#address').val(address);
-    $('#editForm').attr('action', '{{ url("capnhathos") }}/id=' + hospitalId); 
+            // Điền dữ liệu vào form
+            $('#editHospitalId').val(hospitalId);
+            $('#hospitalname').val(hospitalName);
+            $('#address').val(address);
+            $('#editForm').attr('action', '{{ url('capnhathos') }}/id=' + hospitalId);
 
-});
-</script>
+        });
+    </script>
 
 </body>
 

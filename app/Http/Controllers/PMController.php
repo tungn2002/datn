@@ -8,7 +8,4 @@ use App\Models\PrescriptionMedicine;
 
 use DB;
 
-class PMController extends Controller
-{
-  
-}
+class PMController extends Controller {}

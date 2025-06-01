@@ -24,242 +24,242 @@ use Illuminate\Support\Facades\DB as FacadesDB;
 
 class PdfController extends Controller
 {
-    public function pdf($id){
-        $pdf = App::make('dompdf.wrapper');//tạo pdf
-        
-        //thong tin bv
-        $h = Hospital::first();
-        //thong tin bacsi
-        $user = FacadesAuth::user();
+  public function pdf($id)
+  {
+    $pdf = App::make('dompdf.wrapper'); //tạo pdf
 
-        // thong tin don thuoc
-        $p = Prescription::where('id_pre', $id)->first();
+    //thong tin bv
+    $h = Hospital::first();
+    //thong tin bacsi
+    $user = FacadesAuth::user();
 
-        $date = new \DateTime($p->day);
-        $day = $date->format('d');
-        $month = $date->format('m');
-        $year = $date->format('Y');
-        //chu ky
-        $imagePath= public_path('image/'.$user->signature);
+    // thong tin don thuoc
+    $p = Prescription::where('id_pre', $id)->first();
 
-        //thuoc
-        $donthuoc='Không có';
-        $stt=1;
+    $date = new \DateTime($p->day);
+    $day = $date->format('d');
+    $month = $date->format('m');
+    $year = $date->format('Y');
+    //chu ky
+    $imagePath = public_path('image/' . $user->signature);
 
-        $pm = FacadesDB::table('prescription_medicines')
-        ->join('medicines', 'prescription_medicines.id_medicine', '=', 'medicines.id_medicine')
-        ->where('prescription_medicines.id_prescription', $id)
-        ->select('prescription_medicines.*', 'medicines.*')
-        ->get();
+    //thuoc
+    $donthuoc = 'Không có';
+    $stt = 1;
 
-      if($pm){
-        $donthuoc='';
-        foreach ($pm as $record) {
-              // Xử lý từng bản ghi
-              $donthuoc=$donthuoc. 
-              '<div style="margin-left: 100px">
-          <b>'.$stt.'. '.$record->medicinename.'</b>
+    $pm = FacadesDB::table('prescription_medicines')
+      ->join('medicines', 'prescription_medicines.id_medicine', '=', 'medicines.id_medicine')
+      ->where('prescription_medicines.id_prescription', $id)
+      ->select('prescription_medicines.*', 'medicines.*')
+      ->get();
+
+    if ($pm) {
+      $donthuoc = '';
+      foreach ($pm as $record) {
+        // Xử lý từng bản ghi
+        $donthuoc = $donthuoc .
+          '<div style="margin-left: 100px">
+          <b>' . $stt . '. ' . $record->medicinename . '</b>
           </div>
                 <div style="margin-left: 100px">
-          <i>'.$record->information.'<i>
+          <i>' . $record->information . '<i>
         </div>';
         $stt++;
-
-          }
       }
-        //
-        $pdf->loadHTML('<style>body {
+    }
+    //
+    $pdf->loadHTML('<style>body {
         font-family:DejaVu Sans; 
         }</style><div>
         <div style="  text-align: center; ">
-      <h3>'.$h->hospitalname.'</h3>
+      <h3>' . $h->hospitalname . '</h3>
       </div>
        <div style="  text-align: right; ">
-      <p>Địa chỉ: '.$h->address.'</p>
+      <p>Địa chỉ: ' . $h->address . '</p>
       </div>
         </div>
         <h1><center>ĐƠN THUỐC</center></h1>
        <div>
-        <p style="display: inline-block; vertical-align: middle; margin-left: 100px">Họ và tên: '.$p->name.' </p>
+        <p style="display: inline-block; vertical-align: middle; margin-left: 100px">Họ và tên: ' . $p->name . ' </p>
     </div>
-    <div>  <p style="margin-left: 100px"> Chẩn đoán: '.$p->diagnostic.'
+    <div>  <p style="margin-left: 100px"> Chẩn đoán: ' . $p->diagnostic . '
     </div> 
     
-      '.$donthuoc.'
+      ' . $donthuoc . '
 
                 <div>
 
-        <p style="text-align: right"> Ngày '.$day.' tháng '.$month.' năm '.$year.'</p>
+        <p style="text-align: right"> Ngày ' . $day . ' tháng ' . $month . ' năm ' . $year . '</p>
                    <p style="text-align: right; margin-right:80px ">(Bác sĩ)</p>
-                    <img style=" margin-right:80px; float: right; height: 80px;width: 80px" src="data:image/png;base64,'.base64_encode(file_get_contents($imagePath)).'" alt="">
+                    <img style=" margin-right:80px; float: right; height: 80px;width: 80px" src="data:image/png;base64,' . base64_encode(file_get_contents($imagePath)) . '" alt="">
     </div>
 
-             <p style="text-align: right; margin-right: 50px; margin-top: 100px; ">'.$user->name.'</p>
+             <p style="text-align: right; margin-right: 50px; margin-top: 100px; ">' . $user->name . '</p>
 
         ');
-        return $pdf->stream();//hiển thị pdf
-    }
+    return $pdf->stream(); //hiển thị pdf
+  }
 
-    //user
-    public function pdff($id){
-     $pdf = App::make('dompdf.wrapper');
-      
+  //user
+  public function pdff($id)
+  {
+    $pdf = App::make('dompdf.wrapper');
 
-      //thong tin bv
-      $h = Hospital::first();
-      //thong tin bác sĩ
-      $user = FacadesAuth::user();
-      $ps = MedicalResult::where('id_result', $id)->first();
-      $pss = Appointment::where('id_appointment',$ps->id_sch )->first();
 
-      $psss = Clinic::where('id_clinic',$pss->id_clinic )->first();
-      $bacsi=User::where('id_user',$psss->id_user )->first();
+    //thong tin bv
+    $h = Hospital::first();
+    //thong tin bác sĩ
+    $user = FacadesAuth::user();
+    $ps = MedicalResult::where('id_result', $id)->first();
+    $pss = Appointment::where('id_appointment', $ps->id_sch)->first();
 
-      // thong tin don thuoc
-      $p = Prescription::where('id_pre', $ps->id_prescription)->first();
+    $psss = Clinic::where('id_clinic', $pss->id_clinic)->first();
+    $bacsi = User::where('id_user', $psss->id_user)->first();
 
-      $date = new \DateTime($p->day);
-      $day = $date->format('d');
-      $month = $date->format('m');
-      $year = $date->format('Y');
-      //chu ky
-      $imagePath= public_path('image/'.$bacsi->signature);
+    // thong tin don thuoc
+    $p = Prescription::where('id_pre', $ps->id_prescription)->first();
 
-      //thuoc
-      $donthuoc='Không có';
-      $stt=1;
+    $date = new \DateTime($p->day);
+    $day = $date->format('d');
+    $month = $date->format('m');
+    $year = $date->format('Y');
+    //chu ky
+    $imagePath = public_path('image/' . $bacsi->signature);
 
-      $pm = FacadesDB::table('prescription_medicines')
+    //thuoc
+    $donthuoc = 'Không có';
+    $stt = 1;
+
+    $pm = FacadesDB::table('prescription_medicines')
       ->join('medicines', 'prescription_medicines.id_medicine', '=', 'medicines.id_medicine')
       ->where('prescription_medicines.id_prescription', $ps->id_prescription)
       ->select('prescription_medicines.*', 'medicines.*')
       ->get();
 
-    if($pm){
-      $donthuoc='';
+    if ($pm) {
+      $donthuoc = '';
       foreach ($pm as $record) {
-            // Xử lý từng bản ghi
-            $donthuoc=$donthuoc. 
-            '<div style="margin-left: 100px">
-        <b>'.$stt.'. '.$record->medicinename.'</b>
+        // Xử lý từng bản ghi
+        $donthuoc = $donthuoc .
+          '<div style="margin-left: 100px">
+        <b>' . $stt . '. ' . $record->medicinename . '</b>
         </div>
               <div style="margin-left: 100px">
-        <i>'.$record->information.'<i>
+        <i>' . $record->information . '<i>
       </div>';
-      $stt++;
-
-        }
+        $stt++;
+      }
     }
-      //
-      $pdf->loadHTML('<style>body {
+    //
+    $pdf->loadHTML('<style>body {
       font-family:DejaVu Sans; 
       }</style><div>
       <div style="  text-align: center; ">
-      <h3>'.$h->hospitalname.'</h3>
+      <h3>' . $h->hospitalname . '</h3>
       </div>
        <div style="  text-align: right; ">
-      <p>Địa chỉ: '.$h->address.'</p>
+      <p>Địa chỉ: ' . $h->address . '</p>
       </div>
   </div>
       <h1><center>ĐƠN THUỐC</center></h1>
      <div>
-      <p style="display: inline-block; vertical-align: middle; margin-left: 100px">Họ và tên: '.$p->name.' </p>
+      <p style="display: inline-block; vertical-align: middle; margin-left: 100px">Họ và tên: ' . $p->name . ' </p>
   </div>
-  <div>  <p style="margin-left: 100px"> Chẩn đoán: '.$p->diagnostic.'
+  <div>  <p style="margin-left: 100px"> Chẩn đoán: ' . $p->diagnostic . '
   </div> 
   
-    '.$donthuoc.'
+    ' . $donthuoc . '
 
               <div>
 
-      <p style="text-align: right"> Ngày '.$day.' tháng '.$month.' năm '.$year.'</p>
+      <p style="text-align: right"> Ngày ' . $day . ' tháng ' . $month . ' năm ' . $year . '</p>
                  <p style="text-align: right; margin-right:80px ">(Bác sĩ)</p>
-                  <img style=" margin-right:80px; float: right; height: 80px;width: 80px" src="data:image/png;base64,'.base64_encode(file_get_contents($imagePath)).'" alt="">
+                  <img style=" margin-right:80px; float: right; height: 80px;width: 80px" src="data:image/png;base64,' . base64_encode(file_get_contents($imagePath)) . '" alt="">
   </div>
 
-           <p style="text-align: right; margin-right: 50px; margin-top: 100px; ">'.$bacsi->name.'</p>
+           <p style="text-align: right; margin-right: 50px; margin-top: 100px; ">' . $bacsi->name . '</p>
 
       ');
-      return $pdf->stream();
+    return $pdf->stream();
   }
 
-  public function pdff2($id){
+  public function pdff2($id)
+  {
     $pdf = App::make('dompdf.wrapper');
-     
-     $ps = Consult::where('id_cons', $id)->first();
 
-     //thong tin bv
-     $h = Hospital::first();
-     //thong tin bác sĩ
+    $ps = Consult::where('id_cons', $id)->first();
+
+    //thong tin bv
+    $h = Hospital::first();
+    //thong tin bác sĩ
 
 
-     $bacsi=User::where('id_user',$ps->user2_id )->first();
+    $bacsi = User::where('id_user', $ps->user2_id)->first();
 
-     // thong tin don thuoc
-     $p = Prescription::where('id_pre', $ps->id_prescription)->first();
+    // thong tin don thuoc
+    $p = Prescription::where('id_pre', $ps->id_prescription)->first();
 
-     $date = new \DateTime($p->day);
-     $day = $date->format('d');
-     $month = $date->format('m');
-     $year = $date->format('Y');
-     //chu ky
-     $imagePath= public_path('image/'.$bacsi->signature);
+    $date = new \DateTime($p->day);
+    $day = $date->format('d');
+    $month = $date->format('m');
+    $year = $date->format('Y');
+    //chu ky
+    $imagePath = public_path('image/' . $bacsi->signature);
 
-     //thuoc
-     $donthuoc='Không có';
-     $stt=1;
+    //thuoc
+    $donthuoc = 'Không có';
+    $stt = 1;
 
-     $pm = FacadesDB::table('prescription_medicines')
-     ->join('medicines', 'prescription_medicines.id_medicine', '=', 'medicines.id_medicine')
-     ->where('prescription_medicines.id_prescription', $ps->id_prescription)
-     ->select('prescription_medicines.*', 'medicines.*')
-     ->get();
+    $pm = FacadesDB::table('prescription_medicines')
+      ->join('medicines', 'prescription_medicines.id_medicine', '=', 'medicines.id_medicine')
+      ->where('prescription_medicines.id_prescription', $ps->id_prescription)
+      ->select('prescription_medicines.*', 'medicines.*')
+      ->get();
 
-   if($pm){
-     $donthuoc='';
-     foreach ($pm as $record) {
-           // Xử lý từng bản ghi
-           $donthuoc=$donthuoc. 
-           '<div style="margin-left: 100px">
-       <b>'.$stt.'. '.$record->medicinename.'</b>
+    if ($pm) {
+      $donthuoc = '';
+      foreach ($pm as $record) {
+        // Xử lý từng bản ghi
+        $donthuoc = $donthuoc .
+          '<div style="margin-left: 100px">
+       <b>' . $stt . '. ' . $record->medicinename . '</b>
        </div>
              <div style="margin-left: 100px">
-       <i>'.$record->information.'<i>
+       <i>' . $record->information . '<i>
      </div>';
-     $stt++;
-
-       }
-   }
-     //
-     $pdf->loadHTML('<style>body {
+        $stt++;
+      }
+    }
+    //
+    $pdf->loadHTML('<style>body {
      font-family:DejaVu Sans; 
      }</style><div>
     <div style="  text-align: center; ">
-      <h3>'.$h->hospitalname.'</h3>
+      <h3>' . $h->hospitalname . '</h3>
       </div>
        <div style="  text-align: right; ">
-      <p>Địa chỉ: '.$h->address.'</p>
+      <p>Địa chỉ: ' . $h->address . '</p>
       </div>
      </div>
      <h1><center>ĐƠN THUỐC</center></h1>
     <div>
-     <p style="display: inline-block; vertical-align: middle; margin-left: 100px">Họ và tên: '.$p->name.' </p>
+     <p style="display: inline-block; vertical-align: middle; margin-left: 100px">Họ và tên: ' . $p->name . ' </p>
  </div>
- <div>  <p style="margin-left: 100px"> Chẩn đoán: '.$p->diagnostic.'
+ <div>  <p style="margin-left: 100px"> Chẩn đoán: ' . $p->diagnostic . '
  </div> 
  
-   '.$donthuoc.'
+   ' . $donthuoc . '
 
              <div>
 
-     <p style="text-align: right"> Ngày '.$day.' tháng '.$month.' năm '.$year.'</p>
+     <p style="text-align: right"> Ngày ' . $day . ' tháng ' . $month . ' năm ' . $year . '</p>
                 <p style="text-align: right; margin-right:80px ">(Bác sĩ)</p>
-                 <img style=" margin-right:80px; float: right; height: 80px;width: 80px" src="data:image/png;base64,'.base64_encode(file_get_contents($imagePath)).'" alt="">
+                 <img style=" margin-right:80px; float: right; height: 80px;width: 80px" src="data:image/png;base64,' . base64_encode(file_get_contents($imagePath)) . '" alt="">
  </div>
 
-          <p style="text-align: right; margin-right: 50px; margin-top: 100px; ">'.$bacsi->name.'</p>
+          <p style="text-align: right; margin-right: 50px; margin-top: 100px; ">' . $bacsi->name . '</p>
 
      ');
-     return $pdf->stream();
- }
+    return $pdf->stream();
+  }
 }

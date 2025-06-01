@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Prescription;
 use App\Models\PrescriptionMedicine;
 
@@ -8,30 +9,31 @@ use Illuminate\Http\Request;
 
 class PrescriptionController extends Controller
 {
-    
-    public function index(){
-        $prescription = Prescription::paginate(5); 
+
+    public function index()
+    {
+        $prescription = Prescription::paginate(5);
         return view('pre', ['prescription' => $prescription]);
     }
 
     public function destroy(Request $request)
     {
         $request->validate([
-            'id_pre'=>'required',
-        ],[
-        'id_pre.required'=>'Hãy chọn đơn cần xóa',
+            'id_pre' => 'required',
+        ], [
+            'id_pre.required' => 'Hãy chọn đơn cần xóa',
 
         ]);
-        
-   
-             $pre = Prescription::find($request->id_pre);
-             $pre->name='chưa có';
-                 $pre->diagnostic='chưa có';
-                 $pre->update();
 
-                 PrescriptionMedicine::where('id_prescription', $request->id_pre)->delete();
 
-                return redirect()->back()->with('message', 'Xóa dữ liệu thành công');
+        $pre = Prescription::find($request->id_pre);
+        $pre->name = 'chưa có';
+        $pre->diagnostic = 'chưa có';
+        $pre->update();
+
+        PrescriptionMedicine::where('id_prescription', $request->id_pre)->delete();
+
+        return redirect()->back()->with('message', 'Xóa dữ liệu thành công');
     }/*
     public function update(Request $request,$id)
     {
@@ -67,10 +69,11 @@ class PrescriptionController extends Controller
         $pre->update();
         return redirect()->back()->with('message', 'Sửa thành công');
     }*/
-    public function findpre(Request $request){
-        
-        $prescription = Prescription::where('name', 'like', '%'.$request->dl.'%')
-        ->paginate(5); 
+    public function findpre(Request $request)
+    {
+
+        $prescription = Prescription::where('name', 'like', '%' . $request->dl . '%')
+            ->paginate(5);
         if (!$prescription) {
             return view('pre', ['message' => 'No record found.']);
         }

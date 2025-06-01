@@ -14,25 +14,27 @@ use Illuminate\Support\Facades\DB as FacadesDB;
 
 class MedicalResultController extends Controller
 {
-  
-    public function index() {
+
+    public function index()
+    {
         //bỏ
-        $patientRecords =PatientRecord::all();
-       
+        $patientRecords = PatientRecord::all();
+
         $appointments = FacadesDB::select('SELECT * FROM appointments WHERE id_appointment NOT IN (SELECT id_sch FROM medicalresults)');
 
         $prescriptions = FacadesDB::select('SELECT * FROM prescriptions WHERE id_pre NOT IN (SELECT id_prescription FROM medicalresults)');
-//
+        //
         $medicalResults = MedicalResult::paginate(5);
         return view('mr', [
             'medicalResults' => $medicalResults,
             'patientRecords' => $patientRecords,
             'appointments' => $appointments,
-            'prescriptions' => $prescriptions 
+            'prescriptions' => $prescriptions
         ]);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $validatedData = $request->validate([
             'status' => 'required|in:chờ duyệt,chưa thanh toán,đã thanh toán, đã khám',
             'reason' => 'required',
@@ -62,40 +64,39 @@ class MedicalResultController extends Controller
         if ($existingResult) {
             return redirect()->back()->with('message', 'Mã lịch đã tồn tại trong kết quả khám bệnh khác.');
         }
- // Kiểm tra xem id_mr đã tồn tại trong bảng medicalresults chưa
- $existingResult = MedicalResult::where('id_prescription', $request->id_prescription)->exists();
+        // Kiểm tra xem id_mr đã tồn tại trong bảng medicalresults chưa
+        $existingResult = MedicalResult::where('id_prescription', $request->id_prescription)->exists();
 
- if ($existingResult) {
-     return redirect()->back()->with('message', 'Mã thuốc đã tồn tại trong kết quả khám bệnh khác.');
- }
+        if ($existingResult) {
+            return redirect()->back()->with('message', 'Mã thuốc đã tồn tại trong kết quả khám bệnh khác.');
+        }
 
-        $medicalResult=new MedicalResult;
-        $medicalResult->status=$request->status;
-        $medicalResult->reason=$request->reason;
-        $medicalResult->detail=$request->detail;
-        $medicalResult->booking_date=$request->booking_date;
-        $medicalResult->id_mr=$request->id_mr;
-        $medicalResult->id_sch=$request->id_sch;
-        if($request->id_prescription!=null){
-            $medicalResult->id_prescription=$request->id_prescription;
-
+        $medicalResult = new MedicalResult;
+        $medicalResult->status = $request->status;
+        $medicalResult->reason = $request->reason;
+        $medicalResult->detail = $request->detail;
+        $medicalResult->booking_date = $request->booking_date;
+        $medicalResult->id_mr = $request->id_mr;
+        $medicalResult->id_sch = $request->id_sch;
+        if ($request->id_prescription != null) {
+            $medicalResult->id_prescription = $request->id_prescription;
         }
 
         $imageName = time() . '.' . $request->image->extension();
-        $request->image->move(public_path('image'), $imageName); 
-        $medicalResult->image = $imageName; 
+        $request->image->move(public_path('image'), $imageName);
+        $medicalResult->image = $imageName;
 
         $medicalResult->save();
         return redirect()->back()->with('message', 'Thêm kết quả khám bệnh thành công');
     }
     public function destroy(Request $request)
     {
-       
+
         $request->validate([
-            'id_result'=>'required|exists:medicalresults,id_result',
-        ],[
-        'id_result.required'=>'Hãy chọn đơn cần xóa',
-        'id_result.exists'=>'Không tồn tại đơn cần xóa',
+            'id_result' => 'required|exists:medicalresults,id_result',
+        ], [
+            'id_result.required' => 'Hãy chọn đơn cần xóa',
+            'id_result.exists' => 'Không tồn tại đơn cần xóa',
         ]);
         $medicalResult = MedicalResult::find($request->id_result);
         $medicalResult->delete();
@@ -128,62 +129,61 @@ class MedicalResultController extends Controller
             'image.image' => 'Hình ảnh phải là file ảnh hợp lệ.',
         ]);
         $existingResult = MedicalResult::where('id_sch', $request->id_sch)
-        ->where('id_result', '!=', $id) // Loại trừ bản ghi hiện tại
-        ->exists();
+            ->where('id_result', '!=', $id) // Loại trừ bản ghi hiện tại
+            ->exists();
 
-if ($existingResult) {
-return redirect()->back()->with('error', 'Mã lịch đã tồn tại trong kết quả khám bệnh khác.');
-}
-$existingResult = MedicalResult::where('id_prescription', $request->id_prescription)
-->where('id_result', '!=', $id) // Loại trừ bản ghi hiện tại
-->exists();
+        if ($existingResult) {
+            return redirect()->back()->with('error', 'Mã lịch đã tồn tại trong kết quả khám bệnh khác.');
+        }
+        $existingResult = MedicalResult::where('id_prescription', $request->id_prescription)
+            ->where('id_result', '!=', $id) // Loại trừ bản ghi hiện tại
+            ->exists();
 
-if ($existingResult) {
-return redirect()->back()->with('error', 'Mã thuốc đã tồn tại trong kết quả khám bệnh khác.');
-}
+        if ($existingResult) {
+            return redirect()->back()->with('error', 'Mã thuốc đã tồn tại trong kết quả khám bệnh khác.');
+        }
 
         $medicalResult = MedicalResult::find($id);
         if (!$medicalResult) {
             return redirect()->back()->with('error', 'Không tìm thấy kết quả khám bệnh.');
         }
 
-        $medicalResult->status=$request->status;
-        $medicalResult->reason=$request->reason;
-        $medicalResult->detail=$request->detail;
-        $medicalResult->booking_date=$request->booking_date;
-        $medicalResult->id_mr=$request->id_mr;
-        $medicalResult->id_sch=$request->id_sch;
-        if($request->id_prescription!=null){
-            $medicalResult->id_prescription=$request->id_prescription;
-
+        $medicalResult->status = $request->status;
+        $medicalResult->reason = $request->reason;
+        $medicalResult->detail = $request->detail;
+        $medicalResult->booking_date = $request->booking_date;
+        $medicalResult->id_mr = $request->id_mr;
+        $medicalResult->id_sch = $request->id_sch;
+        if ($request->id_prescription != null) {
+            $medicalResult->id_prescription = $request->id_prescription;
         }
 
         $imageName = time() . '.' . $request->image->extension();
-        $request->image->move(public_path('image'), $imageName); 
-        $medicalResult->image = $imageName; 
+        $request->image->move(public_path('image'), $imageName);
+        $medicalResult->image = $imageName;
 
         $medicalResult->update();
         return redirect()->back()->with('message', 'Cập nhật kết quả khám bệnh thành công');
     }
 
-       
-    public function findmr(Request $request) {
-         //bỏ
-        $patientRecords =PatientRecord::all();
-      
+
+    public function findmr(Request $request)
+    {
+        //bỏ
+        $patientRecords = PatientRecord::all();
+
         $appointments = FacadesDB::select('SELECT * FROM appointments WHERE id_appointment NOT IN (SELECT id_sch FROM medicalresults)');
 
         $prescriptions = FacadesDB::select('SELECT * FROM prescriptions WHERE id_pre NOT IN (SELECT id_prescription FROM medicalresults)');
-//
+        //
         $medicalResults = MedicalResult::where('booking_date', $request->dl)
-        ->paginate(5); 
+            ->paginate(5);
 
         return view('mr', [
             'medicalResults' => $medicalResults,
             'patientRecords' => $patientRecords,
             'appointments' => $appointments,
-            'prescriptions' => $prescriptions 
+            'prescriptions' => $prescriptions
         ]);
     }
-
 }
